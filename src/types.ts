@@ -23,11 +23,13 @@ export interface EnemieDetails {
     [key: number]: {
         move: Function
         img: string
+        getMoveVector: Function
     }
 }
 export interface Enemie extends GameObject {
     move: Function
     damage: number
+    getMoveVector: Function
 }
 export interface Plasma extends GameObject {
     move: Function

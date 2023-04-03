@@ -23,6 +23,11 @@ export const details = ref<ItemdDetails>({
         img: "public/img/items/stun.png",
         effect: () => increaseEffectDuration(2, 0.5),
     },
+    3: {
+        name: "heal",
+        img: "public/img/items/heal.png",
+        effect: () => { if (player.value.hp < player.value.hpMax) player.value.hp += 1 },
+    },
 
 })
 export function spawn() {

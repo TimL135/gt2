@@ -3,9 +3,10 @@ import { Enemie, EnemieDetails } from "../types";
 import { speedConstant } from "./config";
 import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './helpers';
-import { norVec } from "./vector";
+import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
 import { slowEffect, stunEffect } from "./items";
+import { player } from "./player";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -15,9 +16,66 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * slowEffect.value * stunEffect.value;
             }
         },
-        img: 'public/img/enemies/enemie1.png',
-    }
+        img: 'public/img/enemies/normal.png',
+        getMoveVector: (enemie: Enemie) => {
+            if (enemie.cords.y == -enemie.size) {
+                enemie.moveVector.y = 1;
+                enemie.moveVector.x = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.x == -enemie.size) {
+                enemie.moveVector.x = 1;
+                enemie.moveVector.y = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.y == field.size.y) {
+                enemie.moveVector.y = -1;
+                enemie.moveVector.x = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.x == field.size.x) {
+                enemie.moveVector.x = -1;
+                enemie.moveVector.y = (Math.random() - 0.5) * 2;
+            }
+        }
+    },
+    1: {
+        move: (enemie: Enemie, multiplier: number) => {
+            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * slowEffect.value * stunEffect.value;
+            }
+        },
+        img: 'public/img/enemies/normal.png',
+        getMoveVector: (enemie: Enemie) => {
+            enemie.moveVector = dirVec(player.value.cords, enemie.cords)
+        }
+    },
+    2: {
+        move: (enemie: Enemie, multiplier: number) => {
+            enemie.getMoveVector(enemie)
+            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * slowEffect.value * stunEffect.value;
+            }
+        },
+        img: 'public/img/enemies/normal.png',
+        getMoveVector: (enemie: Enemie) => {
+            enemie.moveVector = dirVec(player.value.cords, enemie.cords)
+        }
+    },
 })
+function getSpawnPosition(enemie: Enemie) {
+    ({
+        0: () => enemie.cords.y = 0 - enemie.size,
+        1: () => enemie.cords.y = field.size.y,
+        2: () => enemie.cords.x = field.size.x,
+        3: () => enemie.cords.x = 0 - enemie.size
+    } as { [key: number]: Function })[getRandomInt(4)]()
+    if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.size.x);
+    if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.size.y);
+}
+function getSpecial(enemie: Enemie) {
+    ({
+        0: () => enemie.size *= 2,
+        1: () => enemie.speed *= 2,
+    } as { [key: number]: Function })[getRandomInt(2)]()
+}
 export function spawn() {
     const enemie = {
         ...defaultGameObject(),
@@ -25,31 +83,10 @@ export function spawn() {
         damage: 1,
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
-    switch (getRandomInt(4)) {
-        case 0:
-            enemie.cords.y = 0 - enemie.size;
-            enemie.moveVector.x = (Math.random() - 0.5) * 2;
-            enemie.moveVector.y = 1;
-            break;
-        case 1:
-            enemie.cords.y = field.size.y;
-            enemie.moveVector.x = (Math.random() - 0.5) * 2;
-            enemie.moveVector.y = -1;
-            break;
-        case 2:
-            enemie.cords.x = field.size.x;
-            enemie.moveVector.x = -1;
-            enemie.moveVector.y = (Math.random() - 0.5) * 2;
-            break;
-        case 3:
-            enemie.cords.x = 0 - enemie.size;
-            enemie.moveVector.x = 1;
-            enemie.moveVector.y = (Math.random() - 0.5) * 2;
-            break;
-    }
+    getSpawnPosition(enemie)
+    getSpecial(enemie)
+    enemie.getMoveVector(enemie)
     enemie.moveVector = norVec(enemie.moveVector)
-    if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.size.x);
-    if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.size.y);
     enemies.value.push(enemie)
 }
 

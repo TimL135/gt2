@@ -11,7 +11,7 @@ import { move } from "./gameObject";
 import { computed, ref } from "vue";
 import { plasmas } from "./plasma";
 import { makeSec } from "./helpers";
-import { spawn as spawnItem } from "./items";
+import { decreaseLifeDuration, spawn as spawnItem } from "./items";
 
 export const field = {
     size: {
@@ -57,6 +57,7 @@ function gameloop() {
     abilitiesPlayer(pressedKeys)
     reduceCooldowns()
     decreaseEffectDuration()
+    decreaseLifeDuration()
     gameloopTicks.value++
     executeActionEverySec(7.5, increaseEnemySpeed)
     executeActionEverySec(15, spawnEnemie)

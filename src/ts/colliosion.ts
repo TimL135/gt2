@@ -1,4 +1,4 @@
-import { Player, Enemie, Item } from "../types";
+import { Player, Enemie, Item, Plasma } from "../types";
 import { lenVecSqrt, subVec, addVec } from "./vector"
 import { enemies, hitPlasma as hitPlasmaEnemie } from "./enemies";
 import { player, enemieHit as enemieHitPlayer } from "./player";
@@ -12,8 +12,8 @@ export function collisions() {
 }
 
 export function collisionsCheck(
-    object1: Player | Enemie | Item,
-    object2: Player | Enemie | Item,
+    object1: Player | Enemie | Item | Plasma,
+    object2: Player | Enemie | Item | Plasma,
 ) {
     return (
         lenVecSqrt(subVec(addVec(object1.cords, object1.size / 2), addVec(object2.cords, object2.size / 2))) <

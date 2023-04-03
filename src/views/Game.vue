@@ -1,7 +1,6 @@
 <template>
     <div class="game row g-0" style="height: 100%;">
         <div class="col" style="height: 90vh;">
-            {{ player.effects }}
         </div>
         <div class="col-8">
             <PlayingArea></PlayingArea>
