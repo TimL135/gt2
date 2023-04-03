@@ -1,25 +1,29 @@
 import { ref } from "vue";
-import { Enemie } from "../types";
+import { Enemie, EnemieDetails } from "../types";
 import { speedConstant } from "./config";
 import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './helpers';
 import { norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
+import { slowEffect, stunEffect } from "./items";
 
 export const enemies = ref<Enemie[]>([])
-
+export const details = ref<EnemieDetails>({
+    0: {
+        move: (enemie: Enemie, multiplier: number) => {
+            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * slowEffect.value * stunEffect.value;
+            }
+        },
+        img: 'public/img/enemies/enemie1.png',
+    }
+})
 export function spawn() {
     const enemie = {
         ...defaultGameObject(),
-        img: 'public/img/enemies/enemie1.png',
         speed: 2,
         damage: 1,
-        move: (enemie: Enemie, multiplier: number) => {
-            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier;
-            }
-
-        },
+        ...details.value[getRandomInt(Object.values(details.value).length)]
     }
     switch (getRandomInt(4)) {
         case 0:

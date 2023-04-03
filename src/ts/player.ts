@@ -7,6 +7,7 @@ import { remove as removeEnemie } from "./enemies";
 import { spawn as spawnPlasma } from "./plasma";
 import { makeSec } from "./helpers";
 import { defaultGameObject } from "./gameObject";
+import { speedEffect } from "./items";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -38,7 +39,7 @@ export function move(pressedKeys: Record<string, boolean>) {
     if (pressedKeys["ArrowDown"]) player.value.moveVector.y = 1;
     player.value.moveVector = norVec(player.value.moveVector)
     for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant
+        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * speedEffect.value
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
     }
@@ -88,6 +89,10 @@ export function reload() {
 export function increaseEffectDuration(effect: number, sec: number) {
     if (player.value.effects[effect]) player.value.effects[effect] += makeSec(sec)
     else player.value.effects[effect] = makeSec(sec)
+}
+
+export function decreaseEffectDuration() {
+    Object.keys(player.value.effects).forEach(e => player.value.effects[e] -= +!!player.value.effects[e])
 }
 
 export function checkHp() {

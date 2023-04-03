@@ -1,4 +1,4 @@
-import { move as movePlayer, reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, } from "./player";
+import { move as movePlayer, reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, decreaseEffectDuration, } from "./player";
 import {
     spawn as spawnEnemie,
     checkPosition as checkPositionEnemies,
@@ -11,6 +11,7 @@ import { move } from "./gameObject";
 import { computed, ref } from "vue";
 import { plasmas } from "./plasma";
 import { makeSec } from "./helpers";
+import { spawn as spawnItem } from "./items";
 
 export const field = {
     size: {
@@ -55,9 +56,11 @@ function gameloop() {
     collisions()
     abilitiesPlayer(pressedKeys)
     reduceCooldowns()
+    decreaseEffectDuration()
     gameloopTicks.value++
     executeActionEverySec(7.5, increaseEnemySpeed)
     executeActionEverySec(15, spawnEnemie)
+    executeActionEverySec(5, spawnItem)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {

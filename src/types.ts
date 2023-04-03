@@ -19,6 +19,12 @@ export interface Item extends GameObject {
     lifeDuration: number
     name: string
 }
+export interface EnemieDetails {
+    [key: number]: {
+        move: Function
+        img: string
+    }
+}
 export interface Enemie extends GameObject {
     move: Function
     damage: number
