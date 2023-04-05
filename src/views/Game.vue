@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 5vh;" v-if="gameloopInterval" class="py-2">
+    <div style="height: 5vh;" v-if="gameloopInterval" class="py-xl-2 ">
         <div class="row g-0 ">
             <div class="col-2"></div>
             <div class="progress col-8">
@@ -7,7 +7,7 @@
                 </div>
             </div>
         </div>
-        <div class="row g-0 mt-2">
+        <div class="row g-0 mt-xl-2 mt-1">
             <div class="col-2"></div>
             <div class="progress col-8">
                 <div class="progress-bar bg-info" :class="isReloading ? 'bg-danger' : 'bg-info'"
@@ -40,8 +40,6 @@
 import PlayingArea from '../components/PlayingArea.vue';
 import { player, isReloading } from "../ts/player"
 import { gameloopInterval } from "../ts/game"
-
-
 </script>
 <style scoped>
 .game {
