@@ -49,4 +49,9 @@ const props = withDefaults(
 
 .heal {
     background-image: url("/public/img/items/heal.png");
-}</style>
+}
+
+.plasma {
+    background-image: url("/public/img/player/plasma.png");
+}
+</style>

@@ -10,7 +10,7 @@ export function spawn() {
     const plasma = {
         cords: { ...player.value.cords },
         moveVector: angleToDirectionVector(player.value.direction),
-        img: 'public/img/player/plasma.png',
+        img: 'plasma',
         size: 50,
         speed: 6,
         direction: 0,
@@ -22,7 +22,7 @@ export function spawn() {
 
         },
         id: getRandomInt(100000)
-    }
+    } as Plasma
     plasmas.value.push(plasma)
 }
 
