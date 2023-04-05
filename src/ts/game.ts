@@ -11,7 +11,7 @@ import { move } from "./gameObject";
 import { computed, ref } from "vue";
 import { plasmas } from "./plasma";
 import { makeSec } from "./helpers";
-import { decreaseLifeDuration, spawn as spawnItem } from "./items";
+import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 
 export const field = {
     size: {
@@ -34,6 +34,7 @@ export const gameloopInterval = ref(0)
 export function start() {
     if (gameloopInterval.value) return
     clearEnemies()
+    clearItems()
     resetPlayer()
     gameloopTicks.value = 0
     for (let i = 0; i < 5; i++)spawnEnemie()
