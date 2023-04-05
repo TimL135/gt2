@@ -7,7 +7,7 @@ import { remove as removeEnemie } from "./enemies";
 import { spawn as spawnPlasma } from "./plasma";
 import { makeSec } from "./helpers";
 import { defaultGameObject } from "./gameObject";
-import { speedEffect } from "./items";
+import { details as detailsItem } from "./items";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -38,8 +38,8 @@ export function move(pressedKeys: Record<string, boolean>) {
     if (pressedKeys["ArrowUp"]) player.value.moveVector.y = -1;
     if (pressedKeys["ArrowDown"]) player.value.moveVector.y = 1;
     player.value.moveVector = norVec(player.value.moveVector)
-    for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * speedEffect.value
+    for (const e of ["x", "y"] as const) {
+        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * detailsItem.value[1].multiplier()
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
     }

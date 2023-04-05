@@ -16,7 +16,7 @@ export function spawn() {
         direction: 0,
         damage: 1,
         move: (plasma: Plasma) => {
-            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
+            for (const e of ["x", "y"] as const) {
                 plasma.cords[e] += plasma.moveVector[e] * plasma.speed * speedConstant;
             }
 

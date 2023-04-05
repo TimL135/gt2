@@ -5,15 +5,15 @@ import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './helpers';
 import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
-import { slowEffect, stunEffect } from "./items";
+import { details as detailsItem } from "./items";
 import { player } from "./player";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
     0: {
         move: (enemie: Enemie, multiplier: number) => {
-            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * slowEffect.value * stunEffect.value;
+            for (const e of ["x", "y"] as const) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
         img: 'public/img/enemies/normal.png',
@@ -38,8 +38,8 @@ export const details = ref<EnemieDetails>({
     },
     1: {
         move: (enemie: Enemie, multiplier: number) => {
-            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * slowEffect.value * stunEffect.value;
+            for (const e of ["x", "y"] as const) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
         img: 'public/img/enemies/normal.png',
@@ -50,8 +50,8 @@ export const details = ref<EnemieDetails>({
     2: {
         move: (enemie: Enemie, multiplier: number) => {
             enemie.getMoveVector(enemie)
-            for (const e of ["x", "y"] as unknown as ["x" | "y"]) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * slowEffect.value * stunEffect.value;
+            for (const e of ["x", "y"] as const) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
         img: 'public/img/enemies/normal.png',
@@ -72,8 +72,8 @@ function getSpawnPosition(enemie: Enemie) {
 }
 function getSpecial(enemie: Enemie) {
     ({
-        0: () => enemie.size *= 2,
-        1: () => enemie.speed *= 2,
+        0: () => enemie.size *= 1.5,
+        1: () => enemie.speed *= 1.5,
     } as { [key: number]: Function })[getRandomInt(2)]()
 }
 export function spawn() {
@@ -82,7 +82,7 @@ export function spawn() {
         speed: 2,
         damage: 1,
         ...details.value[getRandomInt(Object.values(details.value).length)]
-    }
+    } as Enemie
     getSpawnPosition(enemie)
     getSpecial(enemie)
     enemie.getMoveVector(enemie)
@@ -92,7 +92,7 @@ export function spawn() {
 
 export function checkPosition() {
     for (const e of enemies.value) {
-        for (const c of ["x", "y"] as unknown as ["x" | "y"]) {
+        for (const c of ["x", "y"] as const) {
             if (e.cords[c] < - e.size || e.cords[c] > field.size[c]) kill(e)
         }
     }

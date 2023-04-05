@@ -1,5 +1,5 @@
 <template>
-    <div class="game row g-0" style="height: 100%;">
+    <div class="game row g-0">
         <div class="col" style="height: 90vh;">
         </div>
         <div class="col-8">

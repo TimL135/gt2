@@ -7,11 +7,26 @@ export interface Player extends GameObject {
     cooldowns: { [key: string]: number }
     cooldownsMax: { [key: string]: number }
 }
+export interface skillDetails {
+    [key: number]: {
+        name: string
+        description: string
+        skillTreeId: number
+        usedPointsNeed: number
+        required: [{
+            skillId: number,
+            skillLvl: number
+        }]
+        maxLvl: number
+        multiplier: (lvl: number) => number
+    }
+}
 export interface ItemdDetails {
     [key: number]: {
         name: string
         img: string
-        effect: Function
+        effect: () => void
+        multiplier: () => number
     }
 }
 export interface Item extends GameObject {
@@ -23,16 +38,16 @@ export interface EnemieDetails {
     [key: number]: {
         move: Function
         img: string
-        getMoveVector: Function
+        getMoveVector: (enemie: Enemie) => void
     }
 }
 export interface Enemie extends GameObject {
-    move: Function
+    move: () => void
     damage: number
-    getMoveVector: Function
+    getMoveVector: (enemie: Enemie) => void
 }
 export interface Plasma extends GameObject {
-    move: Function
+    move: () => void
     damage: number
 }
 export interface GameObject {
