@@ -11,7 +11,7 @@ import { details as detailsItem } from "./items";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
-    img: 'public/img/player/player.png',
+    img: '../../public/img/player/player.png',
     speed: 4,
     hp: 5,
     hpMax: 5,

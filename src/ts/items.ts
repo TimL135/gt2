@@ -10,25 +10,25 @@ export const items = ref<Item[]>([])
 export const details = ref<ItemdDetails>({
     0: {
         name: "slow",
-        img: 'public/img/items/slow.png',
+        img: '../../public/img/items/slow.png',
         effect: () => increaseEffectDuration(0, 2),
         multiplier: () => player.value.effects[0] ? 0.5 : 1
     },
     1: {
         name: "speed",
-        img: "public/img/items/speed.png",
+        img: "../../public/img/items/speed.png",
         effect: () => increaseEffectDuration(1, 2),
         multiplier: () => player.value.effects[1] ? 2 : 1
     },
     2: {
         name: "stun",
-        img: "public/img/items/stun.png",
+        img: "../../public/img/items/stun.png",
         effect: () => increaseEffectDuration(2, 0.5),
         multiplier: () => player.value.effects[2] ? 0 : 1
     },
     3: {
         name: "heal",
-        img: "public/img/items/heal.png",
+        img: "../../public/img/items/heal.png",
         effect: () => { if (player.value.hp < player.value.hpMax) player.value.hp += 1 },
         multiplier: () => 1
     },

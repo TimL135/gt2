@@ -5,5 +5,5 @@ export function getRandomInt(max: number) {
 }
 
 export function makeSec(sec: number) {
-    return gameTicks * sec
+    return Math.round(gameTicks * sec)
 }
