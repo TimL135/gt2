@@ -6,6 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   build: {
     outDir: "./docs",
+    assetsInlineLimit: 0
   },
   plugins: [
     vue(),
