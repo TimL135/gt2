@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div style="height: 5vh;">
+        <div style="height: 5vh;" v-if="gameloopInterval">
             <div class="row g-0 mt-2">
                 <div class="col-2"></div>
                 <div class="progress col-8">
@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
 import { player, isReloading } from "../ts/player"
-import { enemySpeedMultiplier } from "../ts/game"
+import { gameloopInterval } from "../ts/game"
 
 
 </script>
