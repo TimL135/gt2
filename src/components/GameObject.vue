@@ -1,11 +1,11 @@
 <template>
-    <div class="object" :style="{
+    <div class="object" :class="object.img" :style="{
         width: object.size + 'px',
         height: object.size + 'px',
         left: object.cords.x + 'px',
         top: object.cords.y + 'px',
         transform: `rotate(${object.direction}deg)`,
-        backgroundImage: `url(${object.img})`
+
 
     }"></div>
 </template>
@@ -26,4 +26,27 @@ const props = withDefaults(
     background-size: contain;
     background-repeat: no-repeat;
 }
-</style>
+
+.player {
+    background-image: url("/public/img/player/player.png");
+}
+
+.normal {
+    background-image: url("/public/img/enemies/normal.png");
+}
+
+.slow {
+    background-image: url("/public/img/items/slow.png");
+}
+
+.speed {
+    background-image: url("/public/img/items/speed.png");
+}
+
+.stun {
+    background-image: url("/public/img/items/stun.png");
+}
+
+.heal {
+    background-image: url("/public/img/items/heal.png");
+}</style>

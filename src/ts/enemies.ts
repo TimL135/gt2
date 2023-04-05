@@ -16,7 +16,7 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
-        img: 'public/img/enemies/normal.png',
+        img: 'normal',
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -42,7 +42,7 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
-        img: 'public/img/enemies/normal.png',
+        img: 'normal',
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -54,7 +54,7 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
             }
         },
-        img: 'public/img/enemies/normal.png',
+        img: 'normal',
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
