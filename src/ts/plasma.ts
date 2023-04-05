@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { Plasma } from "../types";
-import { speedConstant } from "./config";
+import { speedConstant, generalSize } from "./config";
 import { getRandomInt } from "./helpers";
 import { player } from "./player";
 import { angleToDirectionVector } from "./vector";
@@ -11,7 +11,7 @@ export function spawn() {
         cords: { ...player.value.cords },
         moveVector: angleToDirectionVector(player.value.direction),
         img: 'plasma',
-        size: 50,
+        size: 50 * generalSize,
         speed: 6,
         direction: 0,
         damage: 1,

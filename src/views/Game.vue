@@ -1,4 +1,20 @@
 <template>
+    <div style="height: 5vh;" v-if="gameloopInterval" class="py-2">
+        <div class="row g-0 ">
+            <div class="col-2"></div>
+            <div class="progress col-8">
+                <div class="progress-bar bg-success" :style="{ width: (player.hp / player.hpMax) * 100 + '%' }">
+                </div>
+            </div>
+        </div>
+        <div class="row g-0 mt-2">
+            <div class="col-2"></div>
+            <div class="progress col-8">
+                <div class="progress-bar bg-info" :class="isReloading ? 'bg-danger' : 'bg-info'"
+                    :style="{ width: (player.magazine / player.magazineMax) * 100 + '%' }"></div>
+            </div>
+        </div>
+    </div>
     <div class="game row g-0">
         <div class="col" style="height: 90vh;">
         </div>
@@ -15,21 +31,6 @@
                         :class="(player.cooldowns['shot'] || 0) == 0 && !isReloading ? 'bg-success' : 'bg-danger'"
                         :style="{ width: ((player.cooldownsMax['shot'] - (player.cooldowns['shot'] || 0)) / player.cooldownsMax['shot']) * 100 + '%' }">
                     </div>
-                </div>
-            </div>
-        </div>
-        <div style="height: 5vh;" v-if="gameloopInterval">
-            <div class="row g-0 mt-2">
-                <div class="col-2"></div>
-                <div class="progress col-8">
-                    <div class="progress-bar bg-success" :style="{ width: (player.hp / player.hpMax) * 100 + '%' }"></div>
-                </div>
-            </div>
-            <div class="row g-0 mt-2">
-                <div class="col-2"></div>
-                <div class="progress col-8">
-                    <div class="progress-bar bg-info" :class="isReloading ? 'bg-danger' : 'bg-info'"
-                        :style="{ width: (player.magazine / player.magazineMax) * 100 + '%' }"></div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 5vh;" id="navbar " v-if="!gameloopInterval">
+    <div style="height: 5vh;" id="navbar" v-if="!gameloopInterval" class="d-flex justify-content-center">
         <span @click="view = 'game'">game</span>
     </div>
     <div style="height: 95vh; width: 100vw;">
