@@ -16,7 +16,7 @@ import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from ".
 export const field = {
     size: {
         x: window.innerWidth / 12 * 8,
-        y: window.innerHeight * 0.9
+        y: window.innerHeight * 0.95
     }
 }
 

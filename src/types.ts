@@ -8,18 +8,19 @@ export interface Player extends GameObject {
     cooldownsMax: { [key: string]: number }
 }
 export interface skillDetails {
-    [key: number]: {
-        name: string
-        description: string
-        skillTreeId: number
-        usedPointsNeed: number
-        required: [{
-            skillId: number,
-            skillLvl: number
-        }]
-        maxLvl: number
-        multiplier: (lvl: number) => number
+    [key: number]: skillDetail
+}
+export interface skillDetail {
+    name: string
+    description: string
+    skillTreeId: number
+    usedPointsNeed: number
+    required?: {
+        skillId: number,
+        skillLvl: number
     }
+    maxLvl: number
+    multiplier: (lvl: number) => number
 }
 export interface ItemdDetails {
     [key: number]: {
