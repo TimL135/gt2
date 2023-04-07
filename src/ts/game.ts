@@ -1,4 +1,7 @@
-import { move as movePlayer, reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, decreaseEffectDuration, } from "./player";
+import {
+    move as movePlayer,
+    reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, decreaseEffectDuration, actions as actionsPlayer, savedPlayer
+} from "./player";
 import {
     spawn as spawnEnemie,
     checkPosition as checkPositionEnemies,
@@ -10,8 +13,11 @@ import { collisions } from "./colliosion";
 import { move } from "./gameObject";
 import { computed, ref } from "vue";
 import { plasmas } from "./plasma";
-import { makeSec } from "./helpers";
+import { secondsToTicks } from "./helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
+import { getPoints } from "./skills";
+import { details as detailsSkill } from "./skills";
+
 
 export const field = {
     size: {
@@ -45,6 +51,9 @@ export function start() {
 
 export function stop() {
     if (!gameloopInterval) return
+    enemySpeed.value = 1
+    getPoints()
+    actionsPlayer.value = {}
     clearInterval(gameloopInterval.value)
     gameloopInterval.value = 0
 }
@@ -62,11 +71,11 @@ function gameloop() {
     gameloopTicks.value++
     executeActionEverySec(7.5, increaseEnemySpeed)
     executeActionEverySec(15, spawnEnemie)
-    executeActionEverySec(5, spawnItem)
+    executeActionEverySec(5 * detailsSkill.value[200].multiplier(savedPlayer.value.skills[200]), spawnItem)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {
-    if (gameloopTicks.value % Math.round(makeSec(sec)) == 0) action()
+    if (gameloopTicks.value % secondsToTicks(sec) == 0) action()
 }
 const enemySpeed = ref(1)
 export function increaseEnemySpeed() {

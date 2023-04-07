@@ -2,9 +2,10 @@ import { ref } from "vue";
 import { Item, ItemdDetails } from "../types";
 import { getRandomInt } from './helpers';
 import { field } from "./game";
-import { makeSec } from "./helpers";
-import { increaseEffectDuration, player } from "./player";
+import { secondsToTicks } from "./helpers";
+import { increaseEffectDuration, player, actions as actionsPlayer, savedPlayer } from "./player";
 import { defaultGameObject } from "./gameObject";
+import { details as detailsSkill } from "./skills";
 
 export const items = ref<Item[]>([])
 export const details = ref<ItemdDetails>({
@@ -37,7 +38,7 @@ export const details = ref<ItemdDetails>({
 export function spawn() {
     const item = {
         ...defaultGameObject(),
-        lifeDuration: makeSec(3),
+        lifeDuration: secondsToTicks(3 * detailsSkill.value[201].multiplier(savedPlayer.value.skills[201])),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
     for (const e of ["x", "y"] as const) {
@@ -54,6 +55,7 @@ export function decreaseLifeDuration() {
 }
 
 export function collectItem(item: Item) {
+    actionsPlayer.value["collect"] = (actionsPlayer.value["collect"] || 0) + 1
     item.effect()
     deleteItem(item)
 }

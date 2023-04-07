@@ -10,8 +10,8 @@
         <div class="row g-0 mt-xl-2 mt-1">
             <div class="col-2"></div>
             <div class="progress col-8">
-                <div class="progress-bar bg-info" :class="isReloading ? 'bg-danger' : 'bg-info'"
-                    :style="{ width: (player.magazine / player.magazineMax) * 100 + '%' }"></div>
+                <div class="progress-bar bg-info" :class="isCharging ? 'bg-danger' : 'bg-info'"
+                    :style="{ width: (player.energy / player.energyMax) * 100 + '%' }"></div>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="progress">
                     <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
-                        :class="(player.cooldowns['shot'] || 0) == 0 && !isReloading ? 'bg-success' : 'bg-danger'"
+                        :class="(player.cooldowns['shot'] || 0) == 0 && !isCharging ? 'bg-success' : 'bg-danger'"
                         :style="{ width: ((player.cooldownsMax['shot'] - (player.cooldowns['shot'] || 0)) / player.cooldownsMax['shot']) * 100 + '%' }">
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 </template>
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
-import { player, isReloading } from "../ts/player"
+import { player, isCharging } from "../ts/player"
 import { gameloopInterval } from "../ts/game"
 </script>
 <style scoped>

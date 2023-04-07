@@ -1,7 +1,7 @@
 import { Player, Enemie, Item, Plasma } from "../types";
 import { lenVecSqrt, subVec, addVec } from "./vector"
 import { enemies, hitPlasma as hitPlasmaEnemie } from "./enemies";
-import { player, enemieHit as enemieHitPlayer } from "./player";
+import { player, enemieHit as enemieHitPlayer, savedPlayer } from "./player";
 import { collectItem, items } from "./items";
 import { plasmas } from "./plasma";
 
@@ -9,6 +9,7 @@ export function collisions() {
     collisionPlayerEnemies()
     colliosionPlasmaEnemies()
     colliosionPlayerItems()
+    collisionPlasmaItem()
 }
 
 export function collisionsCheck(
@@ -35,7 +36,14 @@ function colliosionPlasmaEnemies() {
         }
     }
 }
-
+function collisionPlasmaItem() {
+    if (savedPlayer.value.skills[3])
+        for (const plasma of plasmas.value) {
+            for (const item of items.value) {
+                if (collisionsCheck(plasma, item)) collectItem(item)
+            }
+        }
+}
 function colliosionPlayerItems() {
     for (const item of items.value) {
         if (collisionsCheck(player.value, item)) collectItem(item)

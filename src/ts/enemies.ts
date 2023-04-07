@@ -6,7 +6,7 @@ import { getRandomInt } from './helpers';
 import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
 import { details as detailsItem } from "./items";
-import { player } from "./player";
+import { player, actions as actionsPlayer } from "./player";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -99,6 +99,7 @@ export function checkPosition() {
 }
 
 export function hitPlasma(enemie: Enemie) {
+    actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
     remove(enemie)
 }
 

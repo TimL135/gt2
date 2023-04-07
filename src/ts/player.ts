@@ -5,9 +5,10 @@ import { norVec } from "./vector";
 import { speedConstant } from "./config";
 import { remove as removeEnemie } from "./enemies";
 import { spawn as spawnPlasma } from "./plasma";
-import { makeSec } from "./helpers";
+import { secondsToTicks } from "./helpers";
 import { defaultGameObject } from "./gameObject";
 import { details as detailsItem } from "./items";
+import { details as detailsSkill } from "./skills";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -15,20 +16,26 @@ export const player = ref<Player>({
     speed: 4,
     hp: 5,
     hpMax: 5,
-    magazine: 5,
-    magazineMax: 5,
+    energy: 5,
+    energyMax: 5,
     cooldowns: {},
-    cooldownsMax: { shot: 30 },
+    cooldownsMax: { shot: secondsToTicks(1.5) },
     effects: {},
 
 })
-
+export const savedPlayer = ref({
+    skills: {} as { [key: number]: number },
+    points: {} as { [key: number]: number }
+})
+export const actions = ref({} as { [key: string]: number })
 export function reset() {
     player.value.cords = {
         x: field.size.x / 2 - player.value.size / 2,
         y: field.size.y / 2 - player.value.size / 2
     }
     player.value.hp = player.value.hpMax
+    player.value.energyMax += detailsSkill.value[0].multiplier(savedPlayer.value.skills[0])
+    player.value.energy = player.value.energyMax
 }
 
 export function move(pressedKeys: Record<string, boolean>) {
@@ -39,12 +46,14 @@ export function move(pressedKeys: Record<string, boolean>) {
     if (pressedKeys["ArrowDown"]) player.value.moveVector.y = 1;
     player.value.moveVector = norVec(player.value.moveVector)
     for (const e of ["x", "y"] as const) {
-        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * detailsItem.value[1].multiplier()
+        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * detailsItem.value[1].multiplier() * detailsSkill.value[100].multiplier(savedPlayer.value.skills[100])
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
     }
-    if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0)
+    if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
+        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * detailsItem.value[1].multiplier()
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
+    }
 }
 
 export function enemieHit(enemie: Enemie) {
@@ -58,11 +67,11 @@ export function abilities(pressedKeys: Record<string, boolean>) {
 }
 
 export function shot() {
-    if (player.value.magazine < 1 || player.value.cooldowns["shot"] || isReloading.value) return
-    player.value.magazine--
-    player.value.cooldowns["shot"] = player.value.cooldownsMax["shot"]
+    if (player.value.energy < 1 || player.value.cooldowns["shot"] || isCharging.value) return
+    player.value.energy--
+    player.value.cooldowns["shot"] = player.value.cooldownsMax["shot"] * detailsSkill.value[2].multiplier(savedPlayer.value.skills[2])
     spawnPlasma()
-    if (player.value.magazine < 1) reload()
+    if (player.value.energy < 1) reload()
 }
 
 export function reduceCooldowns() {
@@ -72,23 +81,23 @@ export function reduceCooldowns() {
         if (player.value.cooldowns[e[0]] < 0) player.value.cooldowns[e[0]] = 0
     }
 }
-export const isReloading = ref(false)
+export const isCharging = ref(false)
 let reloadInterval = 0
 export function reload() {
-    isReloading.value = true
+    isCharging.value = true
     reloadInterval = setInterval(() => {
-        player.value.magazine++
-        if (player.value.magazine == player.value.magazineMax) {
-            isReloading.value = false
+        player.value.energy++
+        if (player.value.energy == player.value.energyMax) {
+            isCharging.value = false
             clearInterval(reloadInterval)
         }
-    }, 5000 / player.value.magazineMax);
+    }, (5000 / player.value.energyMax) * detailsSkill.value[1].multiplier(savedPlayer.value.skills[1]));
 
 }
 
 export function increaseEffectDuration(effect: number, sec: number) {
-    if (player.value.effects[effect]) player.value.effects[effect] += makeSec(sec)
-    else player.value.effects[effect] = makeSec(sec)
+    if (player.value.effects[effect]) player.value.effects[effect] += secondsToTicks(sec)
+    else player.value.effects[effect] = secondsToTicks(sec)
 }
 
 export function decreaseEffectDuration() {

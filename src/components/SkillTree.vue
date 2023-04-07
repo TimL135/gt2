@@ -1,14 +1,19 @@
 <template>
+    <div>
+        used points: {{ points[0] }}/{{ points[1] }}
+    </div>
     <div v-for="tier of tiers">
-        <button v-for="skill of tier" class="m-1 btn btn-primary" :title="getTitle(skill)">
-            {{ skill.name }}
+        <button v-for="skill of tier" @click="buy(+skill[0])" class="m-1 btn btn-primary" :title="getTitle(skill[1])">
+            <p> {{ skill[1].name }}</p>
+            <p class="m-0"> {{ savedPlayer.skills[+skill[0]] || 0 }} / {{ detailsSkill[+skill[0]].maxLvl }}</p>
         </button>
     </div>
 </template>
 <script setup lang='ts'>
 import { computed, toRefs } from 'vue';
 import { details as detailsSkill } from '../ts/skills';
-import { skillDetail } from '../types';
+import { SkillDetail } from '../types';
+import { savedPlayer } from '../ts/player';
 
 const props = withDefaults(
     defineProps<{
@@ -17,7 +22,7 @@ const props = withDefaults(
 );
 const { treeId } = toRefs(props)
 const tiers = computed(() => {
-    const obj = {} as { [key: number]: [string, skillDetail][] }
+    const obj = {} as { [key: number]: [string, SkillDetail][] }
     const tree = Object.entries(detailsSkill.value).filter(e => e[1].skillTreeId === treeId.value)
     tree.forEach(e => (obj[e[1].usedPointsNeed] = obj[e[1].usedPointsNeed] || []).push(e))
     const arr = Object.keys(obj)
@@ -30,10 +35,31 @@ const tiers = computed(() => {
             }
         })
     })
-    return Object.values(obj).map(arr => arr.map(e => e[1]))
+    return obj
 })
-function getTitle(skill: skillDetail) {
-    return skill.description
+const points = computed(() => {
+    return [Object.keys(tiers.value).reduce((a, b) => a += (savedPlayer.value.skills[+b] || 0), 0), (savedPlayer.value.points[treeId.value] || 0)]
+})
+function getTitle(skill: SkillDetail) {
+    let text = ""
+    if (skill.usedPointsNeed > points.value[0]) text += `you must use ${skill.usedPointsNeed} point${skill.usedPointsNeed > 1 ? 's' : ''}. \n`
+    const required = skill.required
+    if (required && (savedPlayer.value.skills[required.skillId] || 0) < required.skillLvl)
+        text += `you need "${detailsSkill.value[required.skillId].name}" on level ${required.skillLvl}.\n`
+    text += skill.description
+    return text
+}
+function buy(skillId: number) {
+    const lvl = savedPlayer.value.skills[skillId] || 0
+    if (lvl < detailsSkill.value[skillId].maxLvl && points.value[0] < points.value[1] && points.value[0] >= detailsSkill.value[skillId].usedPointsNeed) {
+        const required = detailsSkill.value[skillId].required
+        if (required) {
+            if (savedPlayer.value.skills[required.skillId] < required.skillLvl) {
+                return
+            }
+        }
+        savedPlayer.value.skills[skillId] = lvl + 1
+    }
 }
 </script>
 <style scoped></style>

@@ -1,16 +1,16 @@
 export interface Player extends GameObject {
     hp: number
     hpMax: number
-    magazine: number
-    magazineMax: number
+    energy: number
+    energyMax: number
     effects: { [key: string]: number }
     cooldowns: { [key: string]: number }
     cooldownsMax: { [key: string]: number }
 }
-export interface skillDetails {
-    [key: number]: skillDetail
+export interface SkillDetails {
+    [key: number]: SkillDetail
 }
-export interface skillDetail {
+export interface SkillDetail {
     name: string
     description: string
     skillTreeId: number
