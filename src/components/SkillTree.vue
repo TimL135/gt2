@@ -3,9 +3,15 @@
         used points: {{ points[0] }}/{{ points[1] }}
     </div>
     <div v-for="tier of tiers">
-        <button v-for="skill of tier" @click="buy(+skill[0])" class="m-1 btn btn-primary" :title="getTitle(skill[1])">
+        <button v-for="skill of tier" @click="buy(+skill[0])" class="shadow-none m-1 btn btn-primary"
+            :title="getTitle(skill[1])">
             <p> {{ skill[1].name }}</p>
             <p class="m-0"> {{ savedPlayer.skills[+skill[0]] || 0 }} / {{ detailsSkill[+skill[0]].maxLvl }}</p>
+        </button>
+    </div>
+    <div>
+        <button class="btn btn-danger" @click="reset()">
+            reset
         </button>
     </div>
 </template>
@@ -14,6 +20,7 @@ import { computed, toRefs } from 'vue';
 import { details as detailsSkill } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
+import { pressedKeys } from '../ts/game';
 
 const props = withDefaults(
     defineProps<{
@@ -38,7 +45,10 @@ const tiers = computed(() => {
     return obj
 })
 const points = computed(() => {
-    return [Object.keys(tiers.value).reduce((a, b) => a += (savedPlayer.value.skills[+b] || 0), 0), (savedPlayer.value.points[treeId.value] || 0)]
+    let used = 0
+    let keys = Object.keys(tiers.value)
+    keys.forEach(k => used += tiers.value[+k].reduce((a, b) => a += (savedPlayer.value.skills[+b[0]] || 0), 0))
+    return [used, (savedPlayer.value.points[treeId.value] || 0)]
 })
 function getTitle(skill: SkillDetail) {
     let text = ""
@@ -50,16 +60,25 @@ function getTitle(skill: SkillDetail) {
     return text
 }
 function buy(skillId: number) {
-    const lvl = savedPlayer.value.skills[skillId] || 0
-    if (lvl < detailsSkill.value[skillId].maxLvl && points.value[0] < points.value[1] && points.value[0] >= detailsSkill.value[skillId].usedPointsNeed) {
-        const required = detailsSkill.value[skillId].required
-        if (required) {
-            if (savedPlayer.value.skills[required.skillId] < required.skillLvl) {
-                return
+    let amount = 1
+    if (pressedKeys["Control"]) amount = 10
+    if (pressedKeys["Shift"]) amount = 20
+    for (let i = 0; i < amount; i++) {
+        const lvl = savedPlayer.value.skills[skillId] || 0
+        if (lvl < detailsSkill.value[skillId].maxLvl && points.value[0] < points.value[1] && points.value[0] >= detailsSkill.value[skillId].usedPointsNeed) {
+            const required = detailsSkill.value[skillId].required
+            if (required && savedPlayer.value.skills[required.skillId] < required.skillLvl) {
+                break
             }
+            savedPlayer.value.skills[skillId] = lvl + 1
+        } else {
+            break
         }
-        savedPlayer.value.skills[skillId] = lvl + 1
     }
+}
+function reset() {
+    let keys = Object.keys(tiers.value)
+    keys.forEach(k => tiers.value[+k].forEach(e => savedPlayer.value.skills[+e[0]] = 0))
 }
 </script>
 <style scoped></style>

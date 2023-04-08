@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import { Enemie, Player } from "../types";
+import { ref, watch } from "vue";
+import { Enemie, Player, SavedPlayer } from "../types";
 import { field, stop as stopGame } from "./game";
 import { norVec } from "./vector";
 import { speedConstant } from "./config";
@@ -9,6 +9,8 @@ import { secondsToTicks } from "./helpers";
 import { defaultGameObject } from "./gameObject";
 import { details as detailsItem } from "./items";
 import { details as detailsSkill } from "./skills";
+import { setSavedPlayer } from "./api";
+import { getSavedPlayer } from "./api";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -23,10 +25,16 @@ export const player = ref<Player>({
     effects: {},
 
 })
-export const savedPlayer = ref({
-    skills: {} as { [key: number]: number },
-    points: {} as { [key: number]: number }
-})
+export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
+
+watch(
+    () => savedPlayer.value,
+    (newValue, oldValue) => {
+        setSavedPlayer(savedPlayer.value);
+    },
+    { deep: true }
+);
+
 export const actions = ref({} as { [key: string]: number })
 export function reset() {
     player.value.cords = {

@@ -6,7 +6,8 @@ import { getRandomInt } from './helpers';
 import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
 import { details as detailsItem } from "./items";
-import { player, actions as actionsPlayer } from "./player";
+import { player, actions as actionsPlayer, savedPlayer } from "./player";
+import { details as detailsSkill } from "./skills";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({

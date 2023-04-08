@@ -15,7 +15,7 @@ import { computed, ref } from "vue";
 import { plasmas } from "./plasma";
 import { secondsToTicks } from "./helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
-import { getPoints } from "./skills";
+import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { details as detailsSkill } from "./skills";
 
 
@@ -42,6 +42,7 @@ export function start() {
     clearEnemies()
     clearItems()
     resetPlayer()
+    resetInfoDisplay()
     gameloopTicks.value = 0
     for (let i = 0; i < 5; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
@@ -83,6 +84,8 @@ export function increaseEnemySpeed() {
 }
 
 export const enemySpeedMultiplier = computed(() => {
-    return enemySpeed.value
+    return enemySpeed.value * detailsSkill.value[101].multiplier(savedPlayer.value.skills[101])
 })
-
+export function resetInfoDisplay() {
+    resetInfoSkill()
+}

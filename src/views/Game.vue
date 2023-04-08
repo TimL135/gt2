@@ -33,13 +33,27 @@
                     </div>
                 </div>
             </div>
+            <div v-for="effect of [0, 1, 2]" class="mx-2">
+                <div class="text-center">
+                    {{ detailsItem[effect].name }}
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar bg-success" style="--bs-progress-bar-transition: width 0.0s ease;"
+                        :style="{ width: (((player.effects[effect] || 0)) / secondsToTicks(2)) * 100 + '%' }">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
 import { player, isCharging } from "../ts/player"
-import { gameloopInterval } from "../ts/game"
+import { gameloopInterval, resetInfoDisplay } from "../ts/game"
+import { details as detailsItem } from "../ts/items";
+import { secondsToTicks } from '../ts/helpers';
+resetInfoDisplay()
 </script>
 <style scoped>
 .game {

@@ -12,19 +12,19 @@ export const details = ref<ItemdDetails>({
     0: {
         name: "slow",
         img: 'slow',
-        effect: () => increaseEffectDuration(0, 2),
+        effect: () => increaseEffectDuration(0, 2 * detailsSkill.value[202].multiplier(savedPlayer.value.skills[202])),
         multiplier: () => player.value.effects[0] ? 0.5 : 1
     },
     1: {
         name: "speed",
         img: "speed",
-        effect: () => increaseEffectDuration(1, 2),
+        effect: () => increaseEffectDuration(1, 2 * detailsSkill.value[203].multiplier(savedPlayer.value.skills[203])),
         multiplier: () => player.value.effects[1] ? 2 : 1
     },
     2: {
         name: "stun",
         img: "stun",
-        effect: () => increaseEffectDuration(2, 0.5),
+        effect: () => increaseEffectDuration(2, 0.5 * detailsSkill.value[204].multiplier(savedPlayer.value.skills[204])),
         multiplier: () => player.value.effects[2] ? 0 : 1
     },
     3: {

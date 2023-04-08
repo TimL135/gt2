@@ -7,6 +7,10 @@ export interface Player extends GameObject {
     cooldowns: { [key: string]: number }
     cooldownsMax: { [key: string]: number }
 }
+export interface SavedPlayer {
+    points: { [key: number]: number }
+    skills: { [key: number]: number }
+}
 export interface SkillDetails {
     [key: number]: SkillDetail
 }
