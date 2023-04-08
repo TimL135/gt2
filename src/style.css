@@ -1,3 +1,8 @@
 body {
     user-select: none;
+    text-transform: uppercase !important;
+}
+
+button {
+    text-transform: uppercase !important;
 }

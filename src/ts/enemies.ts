@@ -110,6 +110,7 @@ export function kill(enemie: Enemie) {
 
 export function remove(enemie: Enemie) {
     if (gameloopInterval.value) {
+        savedPlayer.value.currency = (savedPlayer.value.currency || 0) + 1
         enemies.value = enemies.value.filter(e => e.id != enemie.id)
         spawn()
     }

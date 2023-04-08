@@ -54,6 +54,7 @@ export function rotVec(vec: Vector, angle: number) {
     angle /= 180 / Math.PI;
     helpVec.x = vec.x * Math.cos(angle) - vec.y * Math.sin(angle);
     helpVec.y = vec.x * Math.sin(angle) + vec.y * Math.cos(angle);
+    console.log(helpVec)
     return helpVec as Vector;
 }
 

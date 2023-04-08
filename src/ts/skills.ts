@@ -106,7 +106,6 @@ export const details = ref({
         maxLvl: 20,
         multiplier: (lvl = 0) => percent(lvl, "in")
     } as SkillDetail,
-
 } as SkillDetails)
 export const newPointsInfo = ref<string[]>([])
 export function resetInfo() {
@@ -115,7 +114,8 @@ export function resetInfo() {
 export function getPoints() {
     for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2]] as const)
         if (Math.round(actionsPlayer.value[e[0]] / e[1]) > (savedPlayer.value.points[e[2]] || 0)) {
-            newPointsInfo.value.push(`you got ${Math.round(actionsPlayer.value[e[0]] / e[1]) - (savedPlayer.value.points[e[2]] || 0)} points for the "${skillTrees.value[e[2]].name}" tree.`)
+            const points = Math.round(actionsPlayer.value[e[0]] / e[1]) - (savedPlayer.value.points[e[2]] || 0)
+            newPointsInfo.value.push(`you got ${points} point${points > 1 ? 's' : ''} for the "${skillTrees.value[e[2]].name}" tree.`)
             savedPlayer.value.points[e[2]] = Math.round(actionsPlayer.value[e[0]] / e[1])
         }
 }

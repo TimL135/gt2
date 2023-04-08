@@ -11,6 +11,7 @@ import { details as detailsItem } from "./items";
 import { details as detailsSkill } from "./skills";
 import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
+import { details as detailsWeapon } from "./weapon";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -21,7 +22,6 @@ export const player = ref<Player>({
     energy: 5,
     energyMax: 5,
     cooldowns: {},
-    cooldownsMax: { shot: secondsToTicks(1.5) },
     effects: {},
 
 })
@@ -77,8 +77,8 @@ export function abilities(pressedKeys: Record<string, boolean>) {
 export function shot() {
     if (player.value.energy < 1 || player.value.cooldowns["shot"] || isCharging.value) return
     player.value.energy--
-    player.value.cooldowns["shot"] = player.value.cooldownsMax["shot"] * detailsSkill.value[2].multiplier(savedPlayer.value.skills[2])
-    spawnPlasma()
+    player.value.cooldowns["shot"] = detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * detailsSkill.value[2].multiplier(savedPlayer.value.skills[2])
+    detailsWeapon.value[savedPlayer.value.weapons.selected].shot()
     if (player.value.energy < 1) reload()
 }
 

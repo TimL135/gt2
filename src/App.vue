@@ -26,7 +26,6 @@ const view = ref("game")
 <style scoped>
 .link {
     cursor: pointer;
-    text-transform: uppercase;
     height: min-content;
 }
 </style>

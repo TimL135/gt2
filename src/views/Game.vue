@@ -29,7 +29,7 @@
                 <div class="progress">
                     <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
                         :class="(player.cooldowns['shot'] || 0) == 0 && !isCharging ? 'bg-success' : 'bg-danger'"
-                        :style="{ width: ((player.cooldownsMax['shot'] - (player.cooldowns['shot'] || 0)) / player.cooldownsMax['shot']) * 100 + '%' }">
+                        :style="{ width: ((detailsWeapon[savedPlayer.weapons.selected].cooldown - (player.cooldowns['shot'] || 0)) / detailsWeapon[savedPlayer.weapons.selected].cooldown) * 100 + '%' }">
                     </div>
                 </div>
             </div>
@@ -49,10 +49,11 @@
 </template>
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
-import { player, isCharging } from "../ts/player"
+import { player, isCharging, savedPlayer } from "../ts/player"
 import { gameloopInterval, resetInfoDisplay } from "../ts/game"
 import { details as detailsItem } from "../ts/items";
 import { secondsToTicks } from '../ts/helpers';
+import { details as detailsWeapon } from "../ts/weapon";
 resetInfoDisplay()
 </script>
 <style scoped>

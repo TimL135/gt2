@@ -1,28 +1,26 @@
 import { ref } from "vue";
-import { Plasma } from "../types";
-import { speedConstant, generalSize } from "./config";
+import { Plasma, Vector, WeaponDetail } from "../types";
 import { getRandomInt } from "./helpers";
 import { player } from "./player";
-import { angleToDirectionVector } from "./vector";
 
 export const plasmas = ref<Plasma[]>([])
-export function spawn() {
+export function clear() {
+    plasmas.value = []
+}
+export function spawn(details: WeaponDetail, index = 0) {
     const plasma = {
-        cords: { ...player.value.cords },
-        moveVector: angleToDirectionVector(player.value.direction),
-        img: 'plasma',
-        size: 50 * generalSize,
-        speed: 6,
-        direction: 0,
-        damage: 1,
-        move: (plasma: Plasma) => {
-            for (const e of ["x", "y"] as const) {
-                plasma.cords[e] += plasma.moveVector[e] * plasma.speed * speedConstant;
-            }
-
+        ...details,
+        cords: {
+            x: player.value.cords.x + (player.value.size * 0, 5 - details.size * 0, 5),
+            y: player.value.cords.y + player.value.size * 0.5
         },
+        img: 'plasma',
+        moveVector: {} as Vector,
+        direction: 0,
         id: getRandomInt(100000)
     } as Plasma
+    plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
+    console.log(plasmas.value)
 }
 

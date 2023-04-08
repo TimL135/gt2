@@ -12,7 +12,7 @@ import { gameTicks } from "./config";
 import { collisions } from "./colliosion";
 import { move } from "./gameObject";
 import { computed, ref } from "vue";
-import { plasmas } from "./plasma";
+import { clear as clearPlasma, plasmas } from "./plasma";
 import { secondsToTicks } from "./helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
@@ -41,6 +41,7 @@ export function start() {
     if (gameloopInterval.value) return
     clearEnemies()
     clearItems()
+    clearPlasma()
     resetPlayer()
     resetInfoDisplay()
     gameloopTicks.value = 0
