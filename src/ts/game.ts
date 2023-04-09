@@ -11,12 +11,12 @@ import {
 import { gameTicks } from "./config";
 import { collisions } from "./colliosion";
 import { move } from "./gameObject";
-import { computed, ref } from "vue";
-import { clear as clearPlasma, plasmas } from "./plasma";
+import { ref } from "vue";
+import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
 import { secondsToTicks } from "./helpers";
-import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
+import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems, itemMultiplier } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
-import { details as detailsSkill } from "./skills";
+import { getMultiplier, multiplier } from "./multiplier";
 
 
 export const field = {
@@ -39,6 +39,7 @@ export const gameloopInterval = ref(0)
 
 export function start() {
     if (gameloopInterval.value) return
+    multiplier.value.enemieSpeed.speed = 1
     clearEnemies()
     clearItems()
     clearPlasma()
@@ -53,7 +54,7 @@ export function start() {
 
 export function stop() {
     if (!gameloopInterval) return
-    enemySpeed.value = 1
+
     getPoints()
     actionsPlayer.value = {}
     clearInterval(gameloopInterval.value)
@@ -62,31 +63,29 @@ export function stop() {
 
 function gameloop() {
     movePlayer(pressedKeys)
-    move(enemies.value, enemySpeedMultiplier.value)
+    move(enemies.value)
     move(plasmas.value)
     checkPositionEnemies()
+    checkPositionPlasma()
     collisions()
     abilitiesPlayer(pressedKeys)
     reduceCooldowns()
     decreaseEffectDuration()
     decreaseLifeDuration()
+    itemMultiplier()
     gameloopTicks.value++
     executeActionEverySec(7.5, increaseEnemySpeed)
     executeActionEverySec(15, spawnEnemie)
-    executeActionEverySec(5 * detailsSkill.value[200].multiplier(savedPlayer.value.skills[200]), spawnItem)
+    executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {
     if (gameloopTicks.value % secondsToTicks(sec) == 0) action()
 }
-const enemySpeed = ref(1)
 export function increaseEnemySpeed() {
-    enemySpeed.value += 0.25
+    multiplier.value.enemieSpeed.speed += 0.25
 }
 
-export const enemySpeedMultiplier = computed(() => {
-    return enemySpeed.value * detailsSkill.value[101].multiplier(savedPlayer.value.skills[101])
-})
 export function resetInfoDisplay() {
     resetInfoSkill()
 }

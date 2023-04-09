@@ -49,7 +49,7 @@ export interface ItemdDetails {
         name: string
         img: string
         effect: () => void
-        multiplier: () => number
+        multiplier: () => void
     }
 }
 export interface Item extends GameObject {
@@ -65,7 +65,7 @@ export interface EnemieDetails {
     }
 }
 export interface Enemie extends GameObject {
-    move: (array: Enemie | Plasma, multiplier: number) => void
+    move: (array: Enemie | Plasma) => void
     damage: number
     getMoveVector: (enemie: Enemie) => void
 }

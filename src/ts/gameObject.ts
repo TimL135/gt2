@@ -2,9 +2,9 @@ import { Enemie, Plasma } from "../types";
 import { getRandomInt } from "./helpers";
 import { generalSize } from "./config";
 
-export function move(array: Enemie[] | Plasma[], multiplier = 1) {
+export function move(array: Enemie[] | Plasma[]) {
     for (const e of array) {
-        e.move(e, multiplier)
+        e.move(e)
         e.direction = Math.atan2(e.moveVector.x, e.moveVector.y * -1) * 180 / Math.PI;
     }
 }

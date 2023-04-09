@@ -78,7 +78,7 @@ function buy(skillId: number) {
 }
 function reset() {
     let keys = Object.keys(tiers.value)
-    keys.forEach(k => tiers.value[+k].forEach(e => savedPlayer.value.skills[+e[0]] = 0))
+    keys.forEach(k => tiers.value[+k].forEach(e => delete savedPlayer.value.skills[+e[0]]))
 }
 </script>
 <style scoped></style>

@@ -12,6 +12,7 @@ import { details as detailsSkill } from "./skills";
 import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
+import { getMultiplier } from "./multiplier";
 
 export const player = ref<Player>({
     ...defaultGameObject(),
@@ -54,7 +55,8 @@ export function move(pressedKeys: Record<string, boolean>) {
     if (pressedKeys["ArrowDown"]) player.value.moveVector.y = 1;
     player.value.moveVector = norVec(player.value.moveVector)
     for (const e of ["x", "y"] as const) {
-        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * speedConstant * detailsItem.value[1].multiplier() * detailsSkill.value[100].multiplier(savedPlayer.value.skills[100])
+
+        player.value.cords[e] += player.value.moveVector[e] * player.value.speed * getMultiplier("playerSpeed")
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
     }
@@ -77,7 +79,7 @@ export function abilities(pressedKeys: Record<string, boolean>) {
 export function shot() {
     if (player.value.energy < 1 || player.value.cooldowns["shot"] || isCharging.value) return
     player.value.energy--
-    player.value.cooldowns["shot"] = detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * detailsSkill.value[2].multiplier(savedPlayer.value.skills[2])
+    player.value.cooldowns["shot"] = detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * getMultiplier("reloadSpeed")
     detailsWeapon.value[savedPlayer.value.weapons.selected].shot()
     if (player.value.energy < 1) reload()
 }
@@ -99,7 +101,7 @@ export function reload() {
             isCharging.value = false
             clearInterval(reloadInterval)
         }
-    }, (5000 / player.value.energyMax) * detailsSkill.value[1].multiplier(savedPlayer.value.skills[1]));
+    }, (5000 / player.value.energyMax) * getMultiplier("chargeSpeed"));
 
 }
 

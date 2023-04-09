@@ -5,16 +5,15 @@ import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './helpers';
 import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
-import { details as detailsItem } from "./items";
 import { player, actions as actionsPlayer, savedPlayer } from "./player";
-import { details as detailsSkill } from "./skills";
+import { getMultiplier, multiplier } from "./multiplier";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
     0: {
-        move: (enemie: Enemie, multiplier: number) => {
+        move: (enemie: Enemie) => {
             for (const e of ["x", "y"] as const) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * getMultiplier("enemieSpeed");
             }
         },
         img: 'normal',
@@ -38,9 +37,9 @@ export const details = ref<EnemieDetails>({
         }
     },
     1: {
-        move: (enemie: Enemie, multiplier: number) => {
+        move: (enemie: Enemie) => {
             for (const e of ["x", "y"] as const) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * multiplier * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * getMultiplier("enemieSpeed");
             }
         },
         img: 'normal',
@@ -49,10 +48,10 @@ export const details = ref<EnemieDetails>({
         }
     },
     2: {
-        move: (enemie: Enemie, multiplier: number) => {
+        move: (enemie: Enemie) => {
             enemie.getMoveVector(enemie)
             for (const e of ["x", "y"] as const) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * detailsItem.value[0].multiplier() * detailsItem.value[2].multiplier();
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * getMultiplier("enemieSpeed") / multiplier.value.enemieSpeed.speed;
             }
         },
         img: 'normal',

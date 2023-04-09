@@ -3,29 +3,29 @@ import { Item, ItemdDetails } from "../types";
 import { getRandomInt } from './helpers';
 import { field } from "./game";
 import { secondsToTicks } from "./helpers";
-import { increaseEffectDuration, player, actions as actionsPlayer, savedPlayer } from "./player";
+import { increaseEffectDuration, player, actions as actionsPlayer } from "./player";
 import { defaultGameObject } from "./gameObject";
-import { details as detailsSkill } from "./skills";
+import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
 
 export const items = ref<Item[]>([])
 export const details = ref<ItemdDetails>({
     0: {
         name: "slow",
         img: 'slow',
-        effect: () => increaseEffectDuration(0, 2 * detailsSkill.value[202].multiplier(savedPlayer.value.skills[202])),
-        multiplier: () => player.value.effects[0] ? 0.5 : 1
+        effect: () => increaseEffectDuration(0, 2 * getMultiplier("slowDuration")),
+        multiplier: () => updateMultiplier("enemieSpeed", "item0", player.value.effects[0] ? 0.5 : 1)
     },
     1: {
         name: "speed",
         img: "speed",
-        effect: () => increaseEffectDuration(1, 2 * detailsSkill.value[203].multiplier(savedPlayer.value.skills[203])),
-        multiplier: () => player.value.effects[1] ? 2 : 1
+        effect: () => increaseEffectDuration(1, 2 * getMultiplier("speedDuration")),
+        multiplier: () => updateMultiplier("playerSpeed", "item1", player.value.effects[1] ? 2 : 1)
     },
     2: {
         name: "stun",
         img: "stun",
-        effect: () => increaseEffectDuration(2, 0.5 * detailsSkill.value[204].multiplier(savedPlayer.value.skills[204])),
-        multiplier: () => player.value.effects[2] ? 0 : 1
+        effect: () => increaseEffectDuration(2, 0.5 * getMultiplier("stunDuration")),
+        multiplier: () => updateMultiplier("enemieSpeed", "item2", player.value.effects[2] ? 0 : 1)
     },
     3: {
         name: "heal",
@@ -35,10 +35,13 @@ export const details = ref<ItemdDetails>({
     },
 
 })
+export function itemMultiplier() {
+    Object.values(details.value).forEach(e => e.multiplier())
+}
 export function spawn() {
     const item = {
         ...defaultGameObject(),
-        lifeDuration: secondsToTicks(3 * detailsSkill.value[201].multiplier(savedPlayer.value.skills[201])),
+        lifeDuration: secondsToTicks(3 * getMultiplier("itemDespawn")),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
     for (const e of ["x", "y"] as const) {
