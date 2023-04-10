@@ -15,10 +15,10 @@
     <div v-for="ability of [0, 1, 2, 3]" class="px-2 d-flex justify-content-center">
         <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]">
             <option :value="savedPlayer.abilitys.selected[ability]">{{
-                detailsAbilitys[savedPlayer.abilitys.selected[ability]].name }}</option>
+                detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
             <option v-for="availableAbility of availableAbilitys" :value="availableAbility">{{
-                detailsAbilitys[savedPlayer.abilitys.selected[availableAbility]].name }}</option>
-            <option :value="-1">none</option>
+                detailsAbilitys[savedPlayer.abilitys.owned[availableAbility]]?.name }}</option>
+            <option :value="-1" v-if="savedPlayer.abilitys.selected[ability] != -1">none</option>
         </select>
     </div>
     <div class="text-center mt-2">
@@ -38,7 +38,7 @@ import { details as detailsWeapons } from '../ts/weapon';
 import { computed } from 'vue';
 
 const availableAbilitys = computed(() => {
-    return savedPlayer.value.abilitys.owned.filter(e => savedPlayer.value.abilitys.selected.includes(e))
+    return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))
 })
 function selected(id: number) {
     savedPlayer.value.spaceShip.selected = id
