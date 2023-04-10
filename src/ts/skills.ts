@@ -1,8 +1,9 @@
 import { ref } from "vue";
 import { SkillDetail, SkillDetails } from "../types";
-import { actions as actionsPlayer, savedPlayer } from './player';
+import { actions as actionsPlayer, player, savedPlayer } from './player';
 import { percent } from "./helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
+import { generalSize } from "./config";
 
 export const skillTrees = ref([
     {
@@ -70,7 +71,7 @@ export const details = ref({
     } as SkillDetail,
     101: {
         name: "4680 battery",
-        description: "you are smaller.",
+        description: "increases the maximum energy.",
         skillTreeId: 1,
         usedPointsNeed: 0,
         maxLvl: 20,
@@ -78,11 +79,27 @@ export const details = ref({
     } as SkillDetail,
     102: {
         name: "shrink ray",
-        description: "increases the maximum energy.",
+        description: "you are smaller.",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill102", percent(lvl * getMultiplier("skills102"), "de"))
+        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill102", percent(lvl * getMultiplier("skills100"), "de"))
+    } as SkillDetail,
+    103: {
+        name: "growth ray",
+        description: "you are bigger.",
+        skillTreeId: 1,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill103", percent(lvl * getMultiplier("skills100"), "in"))
+    } as SkillDetail,
+    104: {
+        name: "armor",
+        description: "gives you more life especially effective when your spaceship is big.",
+        skillTreeId: 1,
+        usedPointsNeed: 40,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => Math.round(((player.value.size / generalSize) / 100) * lvl * getMultiplier("skills100"))
     } as SkillDetail,
     200: {
         name: "more items",
@@ -123,6 +140,30 @@ export const details = ref({
         usedPointsNeed: 20,
         maxLvl: 20,
         multiplier: (lvl = 0) => updateMultiplier("stunDuration", "skill204", percent(lvl * getMultiplier("skills200"), "in"))
+    } as SkillDetail,
+    205: {
+        name: "stronger slow",
+        description: "the slow effect is stronger.",
+        skillTreeId: 2,
+        usedPointsNeed: 40,
+        required: {
+            skillId: 202,
+            skillLvl: 20
+        },
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("slowStrength", "skill205", percent(lvl * getMultiplier("skills200"), "de"))
+    } as SkillDetail,
+    206: {
+        name: "stronger speed",
+        description: "the speed effect is stronger.",
+        skillTreeId: 2,
+        usedPointsNeed: 40,
+        required: {
+            skillId: 203,
+            skillLvl: 20
+        },
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("speedStrength", "skill206", percent(lvl * getMultiplier("skills200"), "in"))
     } as SkillDetail,
 } as SkillDetails)
 export function skillMultiplier() {

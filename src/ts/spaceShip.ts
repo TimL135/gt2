@@ -21,4 +21,4 @@ export const details = ref({
         size: 60
     }
 } as SpaceShipDetails)
-export const imgs = ["player"]
+export const imgs = ["player", "player2", "player3", "player4", "player5"]

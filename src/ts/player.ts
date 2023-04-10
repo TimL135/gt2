@@ -5,7 +5,7 @@ import { norVec } from "./vector";
 import { remove as removeEnemie } from "./enemies";
 import { secondsToTicks } from "./helpers";
 import { defaultGameObject } from "./gameObject";
-import { details as detailsSkill } from "./skills";
+import { details as detailsSkill, skillMultiplier } from "./skills";
 import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
@@ -35,17 +35,19 @@ watch(
 
 export const actions = ref({} as { [key: string]: number })
 export function reset() {
+    const stats = detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats]
+    skillMultiplier()
+    player.value.size = stats.size * getMultiplier("playerSize")
     player.value.cords = {
         x: field.size.x / 2 - player.value.size / 2,
         y: field.size.y / 2 - player.value.size / 2
     }
     player.value.cooldowns = {}
-    const stats = detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats]
-    player.value.size = stats.size * getMultiplier("playerSize")
-    player.value.hpMax = stats.hpMax
+    player.value.hpMax = stats.hpMax + detailsSkill.value[104].multiplier(savedPlayer.value.skills[104])
     player.value.hp = player.value.hpMax
-    player.value.energyMax = stats.energyMax + detailsSkill.value[0].multiplier(savedPlayer.value.skills[0])
+    player.value.energyMax = stats.energyMax + detailsSkill.value[101].multiplier(savedPlayer.value.skills[101])
     player.value.energy = player.value.energyMax
+
 }
 
 export function move(pressedKeys: Record<string, boolean>) {

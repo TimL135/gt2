@@ -38,7 +38,7 @@ const tiers = computed(() => {
         obj[+key].forEach((e, i) => {
             if (e[1].required && index > 0) {
                 obj[+key].unshift(...obj[+key].splice(i, 1))
-                obj[+arr[index - 1]].unshift(...obj[index - 1].splice(obj[index - 1].findIndex(s => +s[0] == e[1].required?.skillId), 1))
+                obj[+arr[index - 1]].unshift(...obj[+arr[index - 1]].splice(obj[+arr[index - 1]].findIndex(s => +s[0] == e[1].required?.skillId), 1))
             }
         })
     })

@@ -42,7 +42,7 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * getMultiplier("enemieSpeed");
             }
         },
-        img: 'normal',
+        img: 'aim',
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -54,7 +54,7 @@ export const details = ref<EnemieDetails>({
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * speedConstant * getMultiplier("enemieSpeed") / multiplier.value.enemieSpeed.speed;
             }
         },
-        img: 'normal',
+        img: 'chase',
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }

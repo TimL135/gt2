@@ -13,13 +13,13 @@ export const details = ref<ItemdDetails>({
         name: "slow",
         img: 'slow',
         effect: () => increaseEffectDuration(0, 2 * getMultiplier("slowDuration")),
-        multiplier: () => updateMultiplier("enemieSpeed", "item0", player.value.effects[0] ? 0.5 : 1)
+        multiplier: () => updateMultiplier("enemieSpeed", "item0", player.value.effects[0] ? 0.5 * getMultiplier("slowStrength") : 1)
     },
     1: {
         name: "speed",
         img: "speed",
         effect: () => increaseEffectDuration(1, 2 * getMultiplier("speedDuration")),
-        multiplier: () => updateMultiplier("playerSpeed", "item1", player.value.effects[1] ? 2 : 1)
+        multiplier: () => updateMultiplier("playerSpeed", "item1", player.value.effects[1] ? 2 * getMultiplier("speedStrength") : 1)
     },
     2: {
         name: "stun",
