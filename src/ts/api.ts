@@ -8,6 +8,10 @@ export function getSavedPlayer(): SavedPlayer {
         skills: {},
         points: {},
         buildings: {},
+        abilitys: {
+            selected: [-1, -1, -1, -1],
+            owned: []
+        },
         weapons: {
             owned: [0],
             selected: 0

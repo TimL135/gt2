@@ -9,6 +9,7 @@ import { details as detailsSkill } from "./skills";
 import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
+import { details as detailsAbilitys } from "./abilitys";
 import { details as detailsSpaceShip } from "./spaceShip";
 import { getMultiplier } from "./multiplier";
 
@@ -38,6 +39,7 @@ export function reset() {
         x: field.size.x / 2 - player.value.size / 2,
         y: field.size.y / 2 - player.value.size / 2
     }
+    player.value.cooldowns = {}
     const stats = detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats]
     player.value.size = stats.size * getMultiplier("playerSize")
     player.value.hpMax = stats.hpMax
@@ -72,15 +74,25 @@ export function enemieHit(enemie: Enemie) {
 }
 
 export function abilities(pressedKeys: Record<string, boolean>) {
+    if (isCharging.value) return
     if (pressedKeys[" "]) shot()
+    for (let i = 0; i < 4; i++) {
+        let ability = savedPlayer.value.abilitys.selected[i]
+        if (pressedKeys[i + 1] && typeof ability == 'number' && detailsAbilitys.value[ability].condition() && !player.value.cooldowns[ability] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
+            player.value.cooldowns[i] = detailsAbilitys.value[ability].cooldown
+            player.value.energy -= detailsAbilitys.value[ability].energyCost
+            detailsAbilitys.value[ability].effect()
+        }
+    }
+    if (player.value.energy < 1) reload()
 }
 
 export function shot() {
-    if (player.value.energy < 1 || player.value.cooldowns["shot"] || isCharging.value) return
+    if (player.value.energy < 1 || player.value.cooldowns["shot"]) return
     player.value.energy--
     player.value.cooldowns["shot"] = detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * getMultiplier("reloadSpeed")
     detailsWeapon.value[savedPlayer.value.weapons.selected].shot()
-    if (player.value.energy < 1) reload()
+
 }
 
 export function reduceCooldowns() {

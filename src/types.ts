@@ -16,6 +16,10 @@ export interface SavedPlayer {
             }
         }
     }
+    abilitys: {
+        selected: number[]
+        owned: number[]
+    }
     points: { [key: number]: number }
     skills: { [key: number]: number }
     buildings: { [key: number]: number }
@@ -31,6 +35,16 @@ export interface SpaceShipDetails {
         hpMax: number,
         energyMax: number,
         size: number
+    }
+}
+export interface AbilityDetails {
+    [key: number]: {
+        name: string
+        description: string
+        cooldown: number
+        effect: () => void
+        condition: () => boolean
+        energyCost: number
     }
 }
 export interface SkillDetails {

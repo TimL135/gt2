@@ -22,9 +22,12 @@
             <PlayingArea></PlayingArea>
         </div>
         <div class="col">
+            <div class="text-center">
+                cooldowns
+            </div>
             <div class="mx-2">
                 <div class="text-center">
-                    shot cooldown
+                    shot
                 </div>
                 <div class="progress">
                     <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
@@ -33,11 +36,27 @@
                     </div>
                 </div>
             </div>
+
+            <div v-for="ability of [0, 1, 2, 3]" class="mx-2">
+                <div v-if="savedPlayer.abilitys.selected[ability] != -1">
+                    <div class="text-center">
+                        {{ detailsAbilitys[savedPlayer.abilitys.selected[ability]].name }}
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
+                            :class="(player.cooldowns[ability] || 0) == 0 && !isCharging ? 'bg-success' : 'bg-danger'"
+                            :style="{ width: ((detailsAbilitys[savedPlayer.abilitys.selected[ability]].cooldown - (player.cooldowns[ability] || 0)) / detailsAbilitys[savedPlayer.abilitys.selected[ability]].cooldown) * 100 + '%' }">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                effects
+            </div>
             <div v-for="effect of [0, 1, 2]" class="mx-2">
                 <div class="text-center">
                     {{ detailsItem[effect].name }}
                 </div>
-
                 <div class="progress">
                     <div class="progress-bar bg-success" style="--bs-progress-bar-transition: width 0.0s ease;"
                         :style="{ width: (((player.effects[effect] || 0)) / secondsToTicks(2)) * 100 + '%' }">
@@ -56,6 +75,7 @@ import { skillMultiplier } from "../ts/skills";
 import { buildingMultiplier } from "../ts/building";
 import { secondsToTicks } from '../ts/helpers';
 import { details as detailsWeapon } from "../ts/weapon";
+import { details as detailsAbilitys } from "../ts/abilitys";
 resetInfoDisplay()
 skillMultiplier()
 buildingMultiplier()
