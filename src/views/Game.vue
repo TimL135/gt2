@@ -53,10 +53,12 @@ import { player, isCharging, savedPlayer } from "../ts/player"
 import { gameloopInterval, resetInfoDisplay } from "../ts/game"
 import { details as detailsItem } from "../ts/items";
 import { skillMultiplier } from "../ts/skills";
+import { buildingMultiplier } from "../ts/building";
 import { secondsToTicks } from '../ts/helpers';
 import { details as detailsWeapon } from "../ts/weapon";
 resetInfoDisplay()
 skillMultiplier()
+buildingMultiplier()
 </script>
 <style scoped>
 .game {

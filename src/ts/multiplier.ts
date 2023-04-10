@@ -1,16 +1,27 @@
 import { ref } from "vue";
-import { speedConstant } from "./config";
+import { speedConstant, generalSize } from "./config";
 
 export const multiplier = ref<{ [key: string]: { [key: string]: number } }>({
     playerSpeed: {
-        speedConstant
+        speedConstant,
+        generalSize
     },
     enemieSpeed: {
-        speedConstant
+        speedConstant,
+        generalSize
     },
+    playerSize: {
+        generalSize
+    },
+    enemieSize: {
+        generalSize
+    },
+    itemSize: {
+        generalSize
+    }
 })
 export function getMultiplier(type: string) {
-    return Object.values(multiplier.value[type]).reduce((a, b) => a *= b, 1) || 1
+    return Object.values(multiplier.value[type] || {}).reduce((a, b) => a *= b, 1)
 }
 export function updateMultiplier(product: string, category: string, value: number) {
     if (multiplier.value[product]) multiplier.value[product][category] = value;

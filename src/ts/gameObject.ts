@@ -1,6 +1,5 @@
 import { Enemie, Plasma } from "../types";
 import { getRandomInt } from "./helpers";
-import { generalSize } from "./config";
 
 export function move(array: Enemie[] | Plasma[]) {
     for (const e of array) {
@@ -19,7 +18,7 @@ export function defaultGameObject() {
             x: -0,
             y: -0
         },
-        size: 50 * generalSize,
+        size: 50,
         speed: 0,
         direction: 0,
         id: getRandomInt(100000)

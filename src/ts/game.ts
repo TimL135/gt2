@@ -56,6 +56,7 @@ export function stop() {
     if (!gameloopInterval) return
 
     getPoints()
+    getCurrency()
     actionsPlayer.value = {}
     clearInterval(gameloopInterval.value)
     gameloopInterval.value = 0
@@ -88,4 +89,12 @@ export function increaseEnemySpeed() {
 
 export function resetInfoDisplay() {
     resetInfoSkill()
+    currencyInfo.value = ""
+}
+export const currencyInfo = ref("")
+function getCurrency() {
+    if (actionsPlayer.value["currency"]) {
+        currencyInfo.value = `you got ${actionsPlayer.value["currency"]} scrap`
+        savedPlayer.value.currency += actionsPlayer.value["currency"]
+    }
 }

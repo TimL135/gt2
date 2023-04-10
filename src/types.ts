@@ -7,12 +7,30 @@ export interface Player extends GameObject {
     cooldowns: { [key: string]: number }
 }
 export interface SavedPlayer {
+    spaceShip: {
+        selected: number
+        owned: {
+            [key: number]: {
+                img: string
+                stats: number
+            }
+        }
+    }
     points: { [key: number]: number }
     skills: { [key: number]: number }
+    buildings: { [key: number]: number }
     currency: number
     weapons: {
         selected: number
         owned: number[]
+    }
+}
+export interface SpaceShipDetails {
+    [key: number]: {
+        speed: number,
+        hpMax: number,
+        energyMax: number,
+        size: number
     }
 }
 export interface SkillDetails {

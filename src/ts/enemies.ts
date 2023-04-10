@@ -83,6 +83,7 @@ export function spawn() {
         damage: 1,
         ...details.value[getRandomInt(Object.values(details.value).length)]
     } as Enemie
+    enemie.size *= getMultiplier("enemieSize")
     getSpecial(enemie)
     getSpawnPosition(enemie)
     enemie.getMoveVector(enemie)
@@ -109,7 +110,7 @@ export function kill(enemie: Enemie) {
 
 export function remove(enemie: Enemie) {
     if (gameloopInterval.value) {
-        savedPlayer.value.currency = (savedPlayer.value.currency || 0) + 1
+        actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 1
         enemies.value = enemies.value.filter(e => e.id != enemie.id)
         spawn()
     }

@@ -44,6 +44,7 @@ export function spawn() {
         lifeDuration: secondsToTicks(3 * getMultiplier("itemDespawn")),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
+    item.size *= getMultiplier("itemSize")
     for (const e of ["x", "y"] as const) {
         item.cords[e] = getRandomInt(field.size[e] - item.size)
     }

@@ -1,7 +1,5 @@
 <template>
-    <div>
-        scrap: {{ savedPlayer.currency || 0 }}
-    </div>
+    <Currency></Currency>
     <div class="accordion px-2" id="accordionExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -25,7 +23,7 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-
+                    <SpaceShip></SpaceShip>
                 </div>
             </div>
         </div>
@@ -34,6 +32,8 @@
 </template>
 <script setup lang='ts'>
 import { savedPlayer } from '../ts/player';
+import Currency from './Currency.vue';
 import Weapon from "./shop/Weapons.vue"
+import SpaceShip from "./shop/SpaceShips.vue"
 </script>
 <style scoped></style>

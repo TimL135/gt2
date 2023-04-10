@@ -22,9 +22,7 @@ export function spawn(details: WeaponDetail, index = 0) {
     } as Plasma
     plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
-    console.log(plasmas.value)
 }
 export function checkPosition() {
     plasmas.value = plasmas.value.filter(e => !(e.cords.x < - e.size || e.cords.x > field.size.x || e.cords.y < - e.size || e.cords.y > field.size.y))
-
 }

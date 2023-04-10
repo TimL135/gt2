@@ -2,31 +2,27 @@ import { ref, watch } from "vue";
 import { Enemie, Player, SavedPlayer } from "../types";
 import { field, stop as stopGame } from "./game";
 import { norVec } from "./vector";
-import { speedConstant } from "./config";
 import { remove as removeEnemie } from "./enemies";
-import { spawn as spawnPlasma } from "./plasma";
 import { secondsToTicks } from "./helpers";
 import { defaultGameObject } from "./gameObject";
-import { details as detailsItem } from "./items";
 import { details as detailsSkill } from "./skills";
 import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
+import { details as detailsSpaceShip } from "./spaceShip";
 import { getMultiplier } from "./multiplier";
 
+export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
     ...defaultGameObject(),
-    img: 'player',
-    speed: 4,
-    hp: 5,
-    hpMax: 5,
-    energy: 5,
-    energyMax: 5,
+    ...detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats],
+    img: savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].img,
+    hp: 0,
+    energy: 0,
     cooldowns: {},
     effects: {},
-
 })
-export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
+
 
 watch(
     () => savedPlayer.value,
@@ -42,8 +38,11 @@ export function reset() {
         x: field.size.x / 2 - player.value.size / 2,
         y: field.size.y / 2 - player.value.size / 2
     }
+    const stats = detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats]
+    player.value.size = stats.size * getMultiplier("playerSize")
+    player.value.hpMax = stats.hpMax
     player.value.hp = player.value.hpMax
-    player.value.energyMax += detailsSkill.value[0].multiplier(savedPlayer.value.skills[0])
+    player.value.energyMax = stats.energyMax + detailsSkill.value[0].multiplier(savedPlayer.value.skills[0])
     player.value.energy = player.value.energyMax
 }
 
@@ -61,7 +60,7 @@ export function move(pressedKeys: Record<string, boolean>) {
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
-        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * detailsItem.value[1].multiplier()
+        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
     }
 }
