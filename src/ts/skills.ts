@@ -10,7 +10,7 @@ export const skillTrees = ref([
         id: 0
     },
     {
-        name: "movement",
+        name: "space ship",
         id: 1
     },
     {
@@ -19,37 +19,46 @@ export const skillTrees = ref([
     },
 ])
 export const details = ref({
+
     0: {
-        name: "4680 battery",
-        description: "increases the maximum energy.",
-        skillTreeId: 0,
-        usedPointsNeed: 0,
-        maxLvl: 20,
-        multiplier: (lvl = 0) => Math.round(lvl * getMultiplier("skills0"))
-    } as SkillDetail,
-    1: {
         name: "super charger",
         description: "increases the energy production.",
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("chargeSpeed", "skill1", percent(lvl * getMultiplier("skills0"), "in"))
+        multiplier: (lvl = 0) => updateMultiplier("chargeSpeed", "skill0", percent(lvl * getMultiplier("skills0"), "in"))
     } as SkillDetail,
-    2: {
+    1: {
         name: "reload automatic",
         description: "increases the reloading speed.",
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("reloadSpeed", "skill2", percent(lvl * getMultiplier("skills0"), "de"))
+        multiplier: (lvl = 0) => updateMultiplier("reloadSpeed", "skill1", percent(lvl * getMultiplier("skills0"), "de"))
     } as SkillDetail,
-    3: {
+    2: {
         name: "magnetic plasma",
         description: "your plasma can collect items.",
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 1,
         multiplier: (lvl = 0) => lvl
+    } as SkillDetail,
+    3: {
+        name: "slow enemies",
+        description: "enemies move slower.",
+        skillTreeId: 0,
+        usedPointsNeed: 40,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("enemieSpeed", "skill3", percent(lvl * getMultiplier("skills0"), "de"))
+    } as SkillDetail,
+    4: {
+        name: "smaller enemies",
+        description: "enemies are smaller.",
+        skillTreeId: 0,
+        usedPointsNeed: 40,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("enemieSize", "skill4", percent(lvl * getMultiplier("skills5"), "de"))
     } as SkillDetail,
     100: {
         name: "plaid",
@@ -60,12 +69,20 @@ export const details = ref({
         multiplier: (lvl = 0) => updateMultiplier("playerSpeed", "skill100", percent(lvl * getMultiplier("skills100"), "in"))
     } as SkillDetail,
     101: {
-        name: "slow enemies",
-        description: "enemies move slower.",
+        name: "4680 battery",
+        description: "you are smaller.",
         skillTreeId: 1,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("enemieSpeed", "skill101", percent(lvl * getMultiplier("skills100"), "de"))
+        multiplier: (lvl = 0) => Math.round(lvl * getMultiplier("skills100"))
+    } as SkillDetail,
+    102: {
+        name: "shrink ray",
+        description: "increases the maximum energy.",
+        skillTreeId: 1,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill102", percent(lvl * getMultiplier("skills102"), "de"))
     } as SkillDetail,
     200: {
         name: "more items",

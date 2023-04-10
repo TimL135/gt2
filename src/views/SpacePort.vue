@@ -1,7 +1,8 @@
 <template>
     <div class="text-center">
         <div class="mb-2">
-            <button v-for="port of ['shop', 'building', 'hangar']" @click="view = port" class="me-1 btn btn-secondary">
+            <button v-for="port of ['shop', 'building', 'hangar']" @click="view = port" class="me-1 btn "
+                :class="view == port ? 'btn-success' : 'btn-primary'">
                 {{ port }}</button>
         </div>
         <Shop v-if="view == 'shop'"></Shop>

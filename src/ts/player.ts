@@ -108,7 +108,8 @@ export function reload() {
     isCharging.value = true
     reloadInterval = setInterval(() => {
         player.value.energy++
-        if (player.value.energy == player.value.energyMax) {
+        if (player.value.energy >= player.value.energyMax) {
+            player.value.energy = player.value.energyMax
             isCharging.value = false
             clearInterval(reloadInterval)
         }
