@@ -12,6 +12,7 @@ import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
 import { details as detailsSpaceShip } from "./spaceShip";
 import { getMultiplier } from "./multiplier";
+import { keys } from "./config";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -52,13 +53,12 @@ export function reset() {
 
 export function move(pressedKeys: Record<string, boolean>) {
     player.value.moveVector = { x: 0, y: 0 }
-    if (pressedKeys["ArrowLeft"]) player.value.moveVector.x = -1;
-    if (pressedKeys["ArrowRight"]) player.value.moveVector.x = 1;
-    if (pressedKeys["ArrowUp"]) player.value.moveVector.y = -1;
-    if (pressedKeys["ArrowDown"]) player.value.moveVector.y = 1;
+    if (pressedKeys[keys.moveUp]) player.value.moveVector.y = -1;
+    if (pressedKeys[keys.moveDown]) player.value.moveVector.y = 1;
+    if (pressedKeys[keys.moveLeft]) player.value.moveVector.x = -1;
+    if (pressedKeys[keys.moveRight]) player.value.moveVector.x = 1;
     player.value.moveVector = norVec(player.value.moveVector)
     for (const e of ["x", "y"] as const) {
-
         player.value.cords[e] += player.value.moveVector[e] * player.value.speed * getMultiplier("playerSpeed")
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
         if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
@@ -77,11 +77,11 @@ export function enemieHit(enemie: Enemie) {
 
 export function abilities(pressedKeys: Record<string, boolean>) {
     if (isCharging.value) return
-    if (pressedKeys[" "]) shot()
-    for (let i = 0; i < 4; i++) {
-        let ability = savedPlayer.value.abilitys.selected[i]
-        if (pressedKeys[i + 1] && typeof ability == 'number' && detailsAbilitys.value[ability].condition() && !player.value.cooldowns[ability] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
-            player.value.cooldowns[i] = detailsAbilitys.value[ability].cooldown
+    if (pressedKeys[keys.shot]) shot()
+    for (let i in savedPlayer.value.abilitys.selected) {
+        let ability = savedPlayer.value.abilitys.selected[+i]
+        if (pressedKeys[keys[`ability${i}` as 'ability0']] && ability != -1 && detailsAbilitys.value[ability]?.condition() && !player.value.cooldowns[ability] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
+            player.value.cooldowns[+i] = detailsAbilitys.value[ability].cooldown
             player.value.energy -= detailsAbilitys.value[ability].energyCost
             detailsAbilitys.value[ability].effect()
         }
@@ -92,18 +92,10 @@ export function abilities(pressedKeys: Record<string, boolean>) {
 export function shot() {
     if (player.value.energy < 1 || player.value.cooldowns["shot"]) return
     player.value.energy--
-    player.value.cooldowns["shot"] = detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * getMultiplier("reloadSpeed")
+    player.value.cooldowns["shot"] = Math.round(detailsWeapon.value[savedPlayer.value.weapons.selected].cooldown * getMultiplier("reloadSpeed"))
     detailsWeapon.value[savedPlayer.value.weapons.selected].shot()
-
 }
 
-export function reduceCooldowns() {
-    for (const e of Object.entries(player.value.cooldowns)) {
-        if (player.value.cooldowns[e[0]] > 0)
-            player.value.cooldowns[e[0]]--
-        if (player.value.cooldowns[e[0]] < 0) player.value.cooldowns[e[0]] = 0
-    }
-}
 export const isCharging = ref(false)
 let reloadInterval = 0
 export function reload() {
@@ -120,10 +112,12 @@ export function reload() {
 }
 
 export function increaseEffectDuration(effect: number, sec: number) {
-    if (player.value.effects[effect]) player.value.effects[effect] += secondsToTicks(sec)
-    else player.value.effects[effect] = secondsToTicks(sec)
+    player.value.effects[effect] = (player.value.effects[effect] || 0) + secondsToTicks(sec)
 }
 
+export function reduceCooldowns() {
+    Object.keys(player.value.cooldowns).forEach(e => player.value.cooldowns[e] -= +!!player.value.cooldowns[e])
+}
 export function decreaseEffectDuration() {
     Object.keys(player.value.effects).forEach(e => player.value.effects[e] -= +!!player.value.effects[e])
 }

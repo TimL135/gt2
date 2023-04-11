@@ -43,7 +43,6 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { savedPlayer } from '../ts/player';
 import Currency from './Currency.vue';
 import Weapon from "./shop/Weapons.vue"
 import SpaceShip from "./shop/SpaceShips.vue"

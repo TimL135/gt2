@@ -8,10 +8,11 @@
 </template>
 <script setup lang='ts'>
 import { details as detailsBuilding } from '../ts/building';
+import { buildingCost } from '../ts/config';
 import { savedPlayer } from '../ts/player';
 import Currency from './Currency.vue';
 function getCost(id: number) {
-    return 500 * ((savedPlayer.value.buildings[id] || 0) + 1)
+    return buildingCost * ((savedPlayer.value.buildings[id] || 0) + 1)
 }
 function buy(id: number) {
     const cost = getCost(id)

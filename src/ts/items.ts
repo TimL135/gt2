@@ -5,7 +5,7 @@ import { field } from "./game";
 import { secondsToTicks } from "./helpers";
 import { increaseEffectDuration, player, actions as actionsPlayer } from "./player";
 import { defaultGameObject } from "./gameObject";
-import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
+import { getMultiplier, updateMultiplier } from "./multiplier";
 
 export const items = ref<Item[]>([])
 export const details = ref<ItemdDetails>({

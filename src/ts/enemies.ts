@@ -5,7 +5,7 @@ import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './helpers';
 import { dirVec, norVec } from "./vector";
 import { defaultGameObject } from "./gameObject";
-import { player, actions as actionsPlayer, savedPlayer } from "./player";
+import { player, actions as actionsPlayer } from "./player";
 import { getMultiplier, multiplier } from "./multiplier";
 
 export const enemies = ref<Enemie[]>([])
@@ -61,20 +61,22 @@ export const details = ref<EnemieDetails>({
     },
 })
 function getSpawnPosition(enemie: Enemie) {
-    ({
+    const positions = {
         0: () => enemie.cords.y = 0 - enemie.size,
         1: () => enemie.cords.y = field.size.y,
         2: () => enemie.cords.x = field.size.x,
         3: () => enemie.cords.x = 0 - enemie.size
-    } as { [key: number]: Function })[getRandomInt(4)]()
+    } as { [key: number]: Function }
+    positions[getRandomInt(Object.keys(positions).length)]()
     if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.size.x);
     if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.size.y);
 }
 function getSpecial(enemie: Enemie) {
-    ({
+    const specials = {
         0: () => enemie.size *= 1.5,
         1: () => enemie.speed *= 1.5,
-    } as { [key: number]: Function })[getRandomInt(2)]()
+    } as { [key: number]: Function }
+    specials[getRandomInt(Object.keys(specials).length)]()
 }
 export function spawn() {
     const enemie = {

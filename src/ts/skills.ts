@@ -61,6 +61,22 @@ export const details = ref({
         maxLvl: 20,
         multiplier: (lvl = 0) => updateMultiplier("enemieSize", "skill4", percent(lvl * getMultiplier("skills5"), "de"))
     } as SkillDetail,
+    5: {
+        name: "big plasma",
+        description: "plasma are bigger.",
+        skillTreeId: 0,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("plasmaSize", "skill5", percent(lvl * getMultiplier("skills5"), "in"))
+    } as SkillDetail,
+    6: {
+        name: "fast plasma",
+        description: "plasma move faster.",
+        skillTreeId: 0,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("plasmaSpeed", "skill6", percent(lvl * getMultiplier("skills5"), "in"))
+    } as SkillDetail,
     100: {
         name: "plaid",
         description: "you move faster.",
@@ -79,7 +95,7 @@ export const details = ref({
     } as SkillDetail,
     102: {
         name: "shrink ray",
-        description: "you are smaller.",
+        description: "makes you smaller.",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -87,7 +103,7 @@ export const details = ref({
     } as SkillDetail,
     103: {
         name: "growth ray",
-        description: "you are bigger.",
+        description: "makes you bigger.",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,

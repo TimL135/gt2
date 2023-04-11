@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { Plasma, WeaponDetail, WeaponDetails } from "../types";
-import { generalSize, speedConstant } from "./config";
+import { speedConstant } from "./config";
 import { angleToDirectionVector, rotVec } from "./vector";
 import { player } from "./player";
 import { spawn } from "./plasma";
@@ -15,7 +15,7 @@ export const details = ref<WeaponDetails>({
         name: 'standard',
         description: 'the standard gun.',
         damage: 1,
-        size: 40 * generalSize,
+        size: 40,
         speed: 6,
         cooldown: secondsToTicks(1.5),
         getMoveVector: (plasma: Plasma) => plasma.moveVector = angleToDirectionVector(player.value.direction),
@@ -27,7 +27,7 @@ export const details = ref<WeaponDetails>({
         name: 'mg',
         description: 'faster reload.',
         damage: 1,
-        size: 40 * generalSize,
+        size: 40,
         speed: 6,
         cooldown: secondsToTicks(1),
         getMoveVector: (plasma: Plasma) => plasma.moveVector = angleToDirectionVector(player.value.direction),
@@ -38,7 +38,7 @@ export const details = ref<WeaponDetails>({
         name: 'bazooka',
         description: 'fires a huge powerful plasma ball.',
         damage: 1,
-        size: 60 * generalSize,
+        size: 60,
         speed: 4,
         cooldown: secondsToTicks(4),
         getMoveVector: (plasma: Plasma) => plasma.moveVector = angleToDirectionVector(player.value.direction),
@@ -49,7 +49,7 @@ export const details = ref<WeaponDetails>({
         name: 'shotgun',
         description: 'shot 3 plasmas.',
         damage: 1,
-        size: 20 * generalSize,
+        size: 20,
         speed: 6,
         cooldown: secondsToTicks(2),
         getMoveVector: (plasma: Plasma, index = 3) => plasma.moveVector = rotVec(angleToDirectionVector(player.value.direction), 15 * (index - 1)),

@@ -37,15 +37,15 @@
                 </div>
             </div>
 
-            <div v-for="ability of [0, 1, 2, 3]" class="mx-2">
-                <div v-if="savedPlayer.abilitys.selected[ability] != -1">
+            <div v-for="index in savedPlayer.abilitys.selected.length" class="mx-2">
+                <div v-if="savedPlayer.abilitys.selected[index - 1] != -1">
                     <div class="text-center">
-                        {{ detailsAbilitys[savedPlayer.abilitys.selected[ability]].name }}
+                        {{ detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].name }}
                     </div>
                     <div class="progress">
                         <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
-                            :class="(player.cooldowns[ability] || 0) == 0 && !isCharging ? 'bg-success' : 'bg-danger'"
-                            :style="{ width: ((detailsAbilitys[savedPlayer.abilitys.selected[ability]].cooldown - (player.cooldowns[ability] || 0)) / detailsAbilitys[savedPlayer.abilitys.selected[ability]].cooldown) * 100 + '%' }">
+                            :class="(player.cooldowns[index - 1] || 0) == 0 && !isCharging ? 'bg-success' : 'bg-danger'"
+                            :style="{ width: ((detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].cooldown - (player.cooldowns[index - 1] || 0)) / detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].cooldown) * 100 + '%' }">
                         </div>
                     </div>
                 </div>
@@ -53,13 +53,13 @@
             <div class="text-center mt-2">
                 effects
             </div>
-            <div v-for="effect of [0, 1, 2]" class="mx-2">
+            <div v-for="index in Object.keys(detailsItem).length" class="mx-2">
                 <div class="text-center">
-                    {{ detailsItem[effect].name }}
+                    {{ detailsItem[index - 1].name }}
                 </div>
                 <div class="progress">
                     <div class="progress-bar bg-success" style="--bs-progress-bar-transition: width 0.0s ease;"
-                        :style="{ width: (((player.effects[effect] || 0)) / secondsToTicks(2)) * 100 + '%' }">
+                        :style="{ width: (((player.effects[index - 1] || 0)) / secondsToTicks(2)) * 100 + '%' }">
                     </div>
                 </div>
             </div>

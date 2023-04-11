@@ -3,6 +3,7 @@ import { Plasma, Vector, WeaponDetail } from "../types";
 import { getRandomInt } from "./helpers";
 import { player } from "./player";
 import { field } from "./game";
+import { getMultiplier } from "./multiplier";
 
 export const plasmas = ref<Plasma[]>([])
 export function clear() {
@@ -20,6 +21,8 @@ export function spawn(details: WeaponDetail, index = 0) {
         direction: 0,
         id: getRandomInt(100000)
     } as Plasma
+    plasma.size *= getMultiplier("plasmaSize")
+    plasma.speed *= getMultiplier("plasmaSpeed")
     plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
 }

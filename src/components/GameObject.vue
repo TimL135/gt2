@@ -15,8 +15,6 @@ const props = withDefaults(
         object: GameObject
     }>(), {}
 );
-
-
 </script>
 <style scoped>
 .object {

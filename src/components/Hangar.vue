@@ -12,7 +12,7 @@
     <div class="text-center mt-2">
         abilitys
     </div>
-    <div v-for="ability of [0, 1, 2, 3]" class="px-2 d-flex justify-content-center">
+    <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
         <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]">
             <option :value="savedPlayer.abilitys.selected[ability]">{{
                 detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
