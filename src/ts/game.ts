@@ -54,7 +54,7 @@ export function start() {
 
 export function stop() {
     if (!gameloopInterval) return
-
+    actionsPlayer.value["time"] = gameloopTicks.value
     getPoints()
     getCurrency()
     actionsPlayer.value = {}

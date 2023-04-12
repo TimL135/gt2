@@ -4,7 +4,7 @@ export function setSavedPlayer(savedPlayer: SavedPlayer) {
     localStorage.setItem('savedPlayer', JSON.stringify(savedPlayer))
 }
 export function getSavedPlayer(): SavedPlayer {
-    const savePlayer = JSON.stringify({
+    const savePlayer = {
         skills: {},
         points: {},
         buildings: {},
@@ -24,7 +24,14 @@ export function getSavedPlayer(): SavedPlayer {
                     stats: 0
                 }
             }
+        },
+        passivs: {
+            owned: [0],
+            selected: 0
         }
-    })
-    return JSON.parse(localStorage.getItem('savedPlayer') || savePlayer)
+    }
+    return {
+        ...savePlayer,
+        ...JSON.parse(localStorage.getItem('savedPlayer') || '{}')
+    }
 }

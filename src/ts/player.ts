@@ -23,6 +23,7 @@ export const player = ref<Player>({
     energy: 0,
     cooldowns: {},
     effects: {},
+    invincible: false
 })
 
 
@@ -70,6 +71,7 @@ export function move(pressedKeys: Record<string, boolean>) {
 }
 
 export function enemieHit(enemie: Enemie) {
+    if (player.value.invincible) return
     player.value.hp -= enemie.damage
     checkHp()
     removeEnemie(enemie)
@@ -80,7 +82,7 @@ export function abilities(pressedKeys: Record<string, boolean>) {
     if (pressedKeys[keys.shot]) shot()
     for (let i in savedPlayer.value.abilitys.selected) {
         let ability = savedPlayer.value.abilitys.selected[+i]
-        if (pressedKeys[keys[`ability${i}` as 'ability0']] && ability != -1 && detailsAbilitys.value[ability]?.condition() && !player.value.cooldowns[ability] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
+        if (pressedKeys[keys[`ability${i}` as 'ability0']] && ability != -1 && detailsAbilitys.value[ability]?.condition() && !player.value.cooldowns[+i] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
             player.value.cooldowns[+i] = detailsAbilitys.value[ability].cooldown
             player.value.energy -= detailsAbilitys.value[ability].energyCost
             detailsAbilitys.value[ability].effect()
@@ -116,7 +118,10 @@ export function increaseEffectDuration(effect: number, sec: number) {
 }
 
 export function reduceCooldowns() {
-    Object.keys(player.value.cooldowns).forEach(e => player.value.cooldowns[e] -= +!!player.value.cooldowns[e])
+    Object.keys(player.value.cooldowns).forEach(e => {
+        player.value.cooldowns[e] -= +!!player.value.cooldowns[e]
+        if (player.value.cooldowns[e] < 0) player.value.cooldowns[e] = 0
+    })
 }
 export function decreaseEffectDuration() {
     Object.keys(player.value.effects).forEach(e => player.value.effects[e] -= +!!player.value.effects[e])

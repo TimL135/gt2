@@ -47,5 +47,7 @@ import Currency from './Currency.vue';
 import Weapon from "./shop/Weapons.vue"
 import SpaceShip from "./shop/SpaceShips.vue"
 import Abilitys from "./shop/Abilitys.vue"
+import { skillMultiplier } from '../ts/skills';
+skillMultiplier()
 </script>
 <style scoped></style>

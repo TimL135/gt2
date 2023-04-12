@@ -22,6 +22,12 @@ export const details = ref({
         description: `Improves skills in the "${skillTrees.value[2].name}" skill tree.`,
         maxLvl: 5,
         multiplier: (lvl = 0) => updateMultiplier("skills200", "building200", percent(lvl, "in"))
+    },
+    300: {
+        name: "city hall",
+        description: `Improves skills in the "${skillTrees.value[3].name}" skill tree.`,
+        maxLvl: 5,
+        multiplier: (lvl = 0) => updateMultiplier("skills300", "building300", percent(lvl, "in"))
     }
 })
 export function buildingMultiplier() {

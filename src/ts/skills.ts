@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { SkillDetail, SkillDetails } from "../types";
 import { actions as actionsPlayer, player, savedPlayer } from './player';
-import { percent } from "./helpers";
+import { percent, secondsToTicks } from "./helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
 import { generalSize } from "./config";
 
@@ -18,6 +18,10 @@ export const skillTrees = ref([
         name: "collect",
         id: 2
     },
+    {
+        name: "generell",
+        id: 3
+    }
 ])
 export const details = ref({
 
@@ -37,14 +41,14 @@ export const details = ref({
         maxLvl: 20,
         multiplier: (lvl = 0) => updateMultiplier("reloadSpeed", "skill1", percent(lvl * getMultiplier("skills0"), "de"))
     } as SkillDetail,
-    2: {
-        name: "magnetic plasma",
-        description: "your plasma can collect items.",
-        skillTreeId: 0,
-        usedPointsNeed: 20,
-        maxLvl: 1,
-        multiplier: (lvl = 0) => lvl
-    } as SkillDetail,
+    // 2: {
+    //     name: "magnetic plasma",
+    //     description: "your plasma can collect items.",
+    //     skillTreeId: 0,
+    //     usedPointsNeed: 20,
+    //     maxLvl: 1,
+    //     multiplier: (lvl = 0) => lvl
+    // } as SkillDetail,
     3: {
         name: "slow enemies",
         description: "enemies move slower.",
@@ -181,6 +185,47 @@ export const details = ref({
         maxLvl: 20,
         multiplier: (lvl = 0) => updateMultiplier("speedStrength", "skill206", percent(lvl * getMultiplier("skills200"), "in"))
     } as SkillDetail,
+    300: {
+        name: "discount",
+        description: "reduces the scrap costs.",
+        skillTreeId: 3,
+        usedPointsNeed: 0,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("discount", "300", percent(lvl * getMultiplier("skills300"), "de"))
+    } as SkillDetail,
+    301: {
+        name: "more points",
+        description: `you get more points for the ${skillTrees.value[0].name} tree.`,
+        skillTreeId: 3,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("tree0", "301", percent(lvl * getMultiplier("skills300"), "in"))
+    } as SkillDetail,
+    302: {
+        name: "more points",
+        description: `you get more points for the ${skillTrees.value[1].name} tree.`,
+        skillTreeId: 3,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("tree1", "302", percent(lvl * getMultiplier("skills300"), "in"))
+    } as SkillDetail,
+    303: {
+        name: "more points",
+        description: `you get more points for the ${skillTrees.value[2].name} tree.`,
+        skillTreeId: 3,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("tree2", "303", percent(lvl * getMultiplier("skills300"), "in"))
+    } as SkillDetail,
+    304: {
+        name: "more points",
+        description: `you get more points for the ${skillTrees.value[3].name} tree.`,
+        skillTreeId: 3,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: (lvl = 0) => updateMultiplier("tree3", "304", percent(lvl * getMultiplier("skills300"), "in"))
+    } as SkillDetail,
+
 } as SkillDetails)
 export function skillMultiplier() {
     Object.entries(details.value).forEach(e => e[1].multiplier(savedPlayer.value.skills[+e[0]]))
@@ -190,8 +235,8 @@ export function resetInfo() {
     newPointsInfo.value = []
 }
 export function getPoints() {
-    for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2]] as const)
-        if (Math.round(actionsPlayer.value[e[0]] / e[1]) > (savedPlayer.value.points[e[2]] || 0)) {
+    for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", secondsToTicks(10), 3]] as const)
+        if (Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1]) > (savedPlayer.value.points[e[2]] || 0)) {
             const points = Math.round(actionsPlayer.value[e[0]] / e[1]) - (savedPlayer.value.points[e[2]] || 0)
             newPointsInfo.value.push(`you got ${points} point${points > 1 ? 's' : ''} for the "${skillTrees.value[e[2]].name}" tree.`)
             savedPlayer.value.points[e[2]] = Math.round(actionsPlayer.value[e[0]] / e[1])

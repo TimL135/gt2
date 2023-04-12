@@ -5,6 +5,7 @@ export interface Player extends GameObject {
     energyMax: number
     effects: { [key: string]: number }
     cooldowns: { [key: string]: number }
+    invincible: boolean
 }
 export interface SavedPlayer {
     spaceShip: {
@@ -25,6 +26,10 @@ export interface SavedPlayer {
     buildings: { [key: number]: number }
     currency: number
     weapons: {
+        selected: number
+        owned: number[]
+    }
+    passivs: {
         selected: number
         owned: number[]
     }
