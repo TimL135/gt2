@@ -25,7 +25,8 @@ export const field = {
         y: window.innerHeight * 0.95
     }
 }
-
+console.log(field)
+export const handy = field.size.x < 500
 export const gameloopTicks = ref(0)
 
 export const pressedKeys = {} as Record<string, boolean>

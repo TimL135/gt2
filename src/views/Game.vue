@@ -79,9 +79,16 @@ resetInfoDisplay()
 
 buildingMultiplier()
 </script>
-<style scoped>
+<style scoped lang="scss">
 .game {
     height: 100%;
     width: 100%;
+}
+
+.progress {
+    @media screen and (max-width: 750px) {
+        height: 8px;
+    }
+
 }
 </style>
