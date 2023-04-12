@@ -43,8 +43,8 @@ export function reset() {
     skillMultiplier()
     player.value.size = stats.size * getMultiplier("playerSize")
     player.value.cords = {
-        x: field.size.x / 2 - player.value.size / 2,
-        y: field.size.y / 2 - player.value.size / 2
+        x: field.value.size.x / 2 - player.value.size / 2,
+        y: field.value.size.y / 2 - player.value.size / 2
     }
     player.value.cooldowns = {}
     player.value.hpMax = stats.hpMax + detailsSkill.value[104].multiplier(savedPlayer.value.skills[104])
@@ -64,7 +64,7 @@ export function move(pressedKeys: Record<string, boolean>) {
     for (const e of ["x", "y"] as const) {
         player.value.cords[e] += player.value.moveVector[e] * player.value.speed * getMultiplier("playerSpeed")
         if (player.value.cords[e] < 0) player.value.cords[e] = 0
-        if (player.value.cords[e] > field.size[e] - player.value.size) player.value.cords[e] = field.size[e] - player.value.size
+        if (player.value.cords[e] > field.value.size[e] - player.value.size) player.value.cords[e] = field.value.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed

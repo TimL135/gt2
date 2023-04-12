@@ -19,14 +19,26 @@ import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier } from "./multiplier";
 
 
-export const field = {
+export const field = ref({
     size: {
         x: window.innerWidth / 12 * 8,
         y: window.innerHeight * 0.95
     }
+})
+export const handy = ref(field.value.size.x < 500)
+window.onresize = () => {
+    changeDisplaySize()
+};
+function changeDisplaySize() {
+    field.value = {
+        size: {
+            x: window.innerWidth / 12 * 8,
+            y: window.innerHeight * 0.95
+        }
+    }
+    handy.value = field.value.size.x < 500
 }
-console.log(field)
-export const handy = field.size.x < 500
+
 export const gameloopTicks = ref(0)
 
 export const pressedKeys = {} as Record<string, boolean>

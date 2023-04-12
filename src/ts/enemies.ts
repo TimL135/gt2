@@ -26,11 +26,11 @@ export const details = ref<EnemieDetails>({
                 enemie.moveVector.x = 1;
                 enemie.moveVector.y = (Math.random() - 0.5) * 2;
             }
-            if (enemie.cords.y == field.size.y) {
+            if (enemie.cords.y == field.value.size.y) {
                 enemie.moveVector.y = -1;
                 enemie.moveVector.x = (Math.random() - 0.5) * 2;
             }
-            if (enemie.cords.x == field.size.x) {
+            if (enemie.cords.x == field.value.size.x) {
                 enemie.moveVector.x = -1;
                 enemie.moveVector.y = (Math.random() - 0.5) * 2;
             }
@@ -63,13 +63,13 @@ export const details = ref<EnemieDetails>({
 function getSpawnPosition(enemie: Enemie) {
     const positions = {
         0: () => enemie.cords.y = 0 - enemie.size,
-        1: () => enemie.cords.y = field.size.y,
-        2: () => enemie.cords.x = field.size.x,
+        1: () => enemie.cords.y = field.value.size.y,
+        2: () => enemie.cords.x = field.value.size.x,
         3: () => enemie.cords.x = 0 - enemie.size
     } as { [key: number]: Function }
     positions[getRandomInt(Object.keys(positions).length)]()
-    if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.size.x);
-    if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.size.y);
+    if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.value.size.x);
+    if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.value.size.y);
 }
 function getSpecial(enemie: Enemie) {
     const specials = {
@@ -96,7 +96,7 @@ export function spawn() {
 export function checkPosition() {
     for (const e of enemies.value) {
         for (const c of ["x", "y"] as const) {
-            if (e.cords[c] < - e.size || e.cords[c] > field.size[c]) kill(e)
+            if (e.cords[c] < - e.size || e.cords[c] > field.value.size[c]) kill(e)
         }
     }
 }

@@ -27,5 +27,5 @@ export function spawn(details: WeaponDetail, index = 0) {
     plasmas.value.push(plasma)
 }
 export function checkPosition() {
-    plasmas.value = plasmas.value.filter(e => !(e.cords.x < - e.size || e.cords.x > field.size.x || e.cords.y < - e.size || e.cords.y > field.size.y))
+    plasmas.value = plasmas.value.filter(e => !(e.cords.x < - e.size || e.cords.x > field.value.size.x || e.cords.y < - e.size || e.cords.y > field.value.size.y))
 }

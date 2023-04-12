@@ -46,7 +46,7 @@ export function spawn() {
     }
     item.size *= getMultiplier("itemSize")
     for (const e of ["x", "y"] as const) {
-        item.cords[e] = getRandomInt(field.size[e] - item.size)
+        item.cords[e] = getRandomInt(field.value.size[e] - item.size)
     }
     items.value.push(item)
 }
