@@ -2,16 +2,18 @@
     <div>
         <div style="position: fixed; bottom: 0 ;left:0; z-index: 1;" class="moveButtons">
             <button v-for="key of ['moveUp', 'moveDown', 'moveLeft', 'moveRight']" :style="`grid-area: ${key}`"
-                class="button" @mouseover="pressedKeys[keys[key]] = true" @mouseleave="pressedKeys[keys[key]] = false">
+                class="button" @touchstart="pressedKeys[keys[key]] = true" @touchcancel="pressedKeys[keys[key]] = false"
+                @touchend="pressedKeys[keys[key]] = false">
             </button>
         </div>
     </div>
-    <button class="space" style="position: fixed; bottom: 0;left:40vw; z-index: 1;" @mouseover="pressedKeys[' '] = true"
-        @mouseleave="pressedKeys[' '] = false"></button>
+    <button class="space" style="position: fixed; bottom: 0;left:40vw; z-index: 1;" @touchstart="pressedKeys[' '] = true"
+        @touchcancel="pressedKeys[' '] = false" @touchend="pressedKeys[' '] = false"></button>
     <div>
         <div style="position: fixed; bottom: 0;right:0; z-index: 1;" class="abilityButtons">
             <button v-for="key of ['ability', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
-                class="button" @mouseover="pressedKeys[keys[key]] = true" @mouseleave="pressedKeys[keys[key]] = false">
+                class="button" @touchstart="pressedKeys[keys[key]] = true" @touchcancel="pressedKeys[keys[key]] = false"
+                @touchend="pressedKeys[keys[key]] = false">
             </button>
         </div>
     </div>
