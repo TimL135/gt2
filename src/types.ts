@@ -6,6 +6,7 @@ export interface Player extends GameObject {
     effects: { [key: string]: number }
     cooldowns: { [key: string]: number }
     invincible: boolean
+    big: boolean
 }
 export interface SavedPlayer {
     spaceShip: {

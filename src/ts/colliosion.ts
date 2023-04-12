@@ -4,6 +4,7 @@ import { enemies, hitPlasma as hitPlasmaEnemie } from "./enemies";
 import { player, enemieHit as enemieHitPlayer, savedPlayer } from "./player";
 import { collectItem, items } from "./items";
 import { plasmas } from "./plasma";
+import { details as detailsPassiv } from "./passivs";
 
 export function collisions() {
     collisionPlayerEnemies()
@@ -37,12 +38,8 @@ function colliosionPlasmaEnemies() {
     }
 }
 function collisionPlasmaItem() {
-    if (savedPlayer.value.skills[3])
-        for (const plasma of plasmas.value) {
-            for (const item of items.value) {
-                if (collisionsCheck(plasma, item)) collectItem(item)
-            }
-        }
+    if (savedPlayer.value.passivs.selected == 1)
+        detailsPassiv.value[1].effect()
 }
 function colliosionPlayerItems() {
     for (const item of items.value) {

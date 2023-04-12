@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 import { Enemie, Player, SavedPlayer } from "../types";
-import { field, stop as stopGame } from "./game";
+import { field, stop as stopGame, gameloopTicks } from "./game";
 import { norVec } from "./vector";
 import { remove as removeEnemie } from "./enemies";
 import { secondsToTicks } from "./helpers";
@@ -11,8 +11,9 @@ import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
 import { details as detailsSpaceShip } from "./spaceShip";
-import { getMultiplier } from "./multiplier";
+import { getMultiplier, updateMultiplier } from "./multiplier";
 import { keys } from "./config";
+import { details as detailsPassiv } from "./passivs";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -23,7 +24,8 @@ export const player = ref<Player>({
     energy: 0,
     cooldowns: {},
     effects: {},
-    invincible: false
+    invincible: false,
+    big: false
 })
 
 
@@ -51,7 +53,7 @@ export function reset() {
     player.value.energy = player.value.energyMax
 
 }
-
+let charge = 0
 export function move(pressedKeys: Record<string, boolean>) {
     player.value.moveVector = { x: 0, y: 0 }
     if (pressedKeys[keys.moveUp]) player.value.moveVector.y = -1;
@@ -66,15 +68,23 @@ export function move(pressedKeys: Record<string, boolean>) {
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed
+        if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
     }
 }
-
 export function enemieHit(enemie: Enemie) {
-    if (player.value.invincible) return
-    player.value.hp -= enemie.damage
-    checkHp()
     removeEnemie(enemie)
+    if (player.value.invincible) return
+    if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
+    if (savedPlayer.value.passivs.selected == 5) detailsPassiv.value[5].effect()
+    if (player.value.big) {
+        player.value.big = false
+        updateMultiplier("playerSize", "ability8", 1)
+    } else {
+        player.value.hp -= enemie.damage
+        checkHp()
+    }
+
 }
 
 export function abilities(pressedKeys: Record<string, boolean>) {
@@ -107,6 +117,7 @@ export function reload() {
         if (player.value.energy >= player.value.energyMax) {
             player.value.energy = player.value.energyMax
             isCharging.value = false
+            if (savedPlayer.value.passivs.selected == 3) detailsPassiv.value[3].effect()
             clearInterval(reloadInterval)
         }
     }, (5000 / player.value.energyMax) * getMultiplier("chargeSpeed"));
@@ -128,5 +139,6 @@ export function decreaseEffectDuration() {
 }
 
 export function checkHp() {
+
     if (player.value.hp <= 0) stopGame()
 }

@@ -30,12 +30,21 @@
         :title="detailsWeapons[weapon].description" @click="savedPlayer.weapons.selected = weapon">
         {{ detailsWeapons[weapon].name }}
     </button>
+    <div class="text-center mt-2">
+        Passivs
+    </div>
+    <button v-for="passiv of savedPlayer.passivs.owned" class="btn  me-1"
+        :class="savedPlayer.passivs.selected == passiv ? 'btn-success' : 'btn-primary'"
+        :title="detailsPassivs[passiv].description" @click="savedPlayer.passivs.selected = passiv">
+        {{ detailsPassivs[passiv].name }}
+    </button>
 </template>
 <script setup lang='ts'>
 import { savedPlayer } from '../ts/player';
 import { details as detailsSpaceShip } from '../ts/spaceShip';
 import { details as detailsAbilitys } from '../ts/abilitys';
 import { details as detailsWeapons } from '../ts/weapon';
+import { details as detailsPassivs } from '../ts/passivs';
 import { computed } from 'vue';
 
 const availableAbilitys = computed(() => {

@@ -3,6 +3,7 @@ export const speedConstant = 30 / gameTicks
 export const generalSize = (window.innerWidth / 2560 + window.innerHeight / 1360) / 2
 
 export const abilityCost = 500
+export const passivsCost = 500
 export const spaceShipCost = 250
 export const weaponCost = 500
 export const buildingCost = 500

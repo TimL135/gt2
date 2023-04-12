@@ -40,6 +40,19 @@
                 </div>
             </div>
         </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour">
+                    passivs
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <Passivs></Passivs>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang='ts'>
@@ -47,6 +60,7 @@ import Currency from './Currency.vue';
 import Weapon from "./shop/Weapons.vue"
 import SpaceShip from "./shop/SpaceShips.vue"
 import Abilitys from "./shop/Abilitys.vue"
+import Passivs from "./shop/Passivs.vue"
 import { skillMultiplier } from '../ts/skills';
 skillMultiplier()
 </script>

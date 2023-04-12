@@ -99,5 +99,16 @@ export const details = ref({
         },
         condition: () => player.value.hp < player.value.hpMax,
         energyCost: 1
+    },
+    8: {
+        name: "mushroom",
+        description: "if you would not be hit for a while you will become bigger and get an extra life",
+        cooldown: secondsToTicks(15),
+        effect: () => {
+            player.value.big = true
+            updateMultiplier("playerSize", "ability8", 1.2)
+        },
+        condition: () => player.value.hp < player.value.hpMax,
+        energyCost: 1
     }
 } as AbilityDetails)

@@ -41,14 +41,6 @@ export const details = ref({
         maxLvl: 20,
         multiplier: (lvl = 0) => updateMultiplier("reloadSpeed", "skill1", percent(lvl * getMultiplier("skills0"), "de"))
     } as SkillDetail,
-    // 2: {
-    //     name: "magnetic plasma",
-    //     description: "your plasma can collect items.",
-    //     skillTreeId: 0,
-    //     usedPointsNeed: 20,
-    //     maxLvl: 1,
-    //     multiplier: (lvl = 0) => lvl
-    // } as SkillDetail,
     3: {
         name: "slow enemies",
         description: "enemies move slower.",
