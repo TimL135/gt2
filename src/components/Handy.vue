@@ -2,9 +2,9 @@
     <div>
         <div style="position: fixed; bottom: 0 ;left:0; z-index: 1;" class="moveButtons">
             <button
-                v-for="key of ['moveUp', 'moveUp&&moveLeft', 'moveUp&&moveRight', 'moveDown', 'moveDown&&moveLeft', 'moveDown&&moveRight', 'moveLeft', 'moveRight']"
+                v-for="key of ['moveUp', 'moveUp_moveLeft', 'moveUp_moveRight', 'moveDown', 'moveDown_moveLeft', 'moveDown_moveRight', 'moveLeft', 'moveRight']"
                 :style="`grid-area: ${key}`" class="button" @touchstart="pressButton(key, true)"
-                @touchend="pressedKeys[keys[key]] = false">
+                @touchend="pressButton(key, false)">
             </button>
         </div>
     </div>
@@ -13,7 +13,7 @@
     </button>
     <div>
         <div style=" position: fixed; bottom: 0;right:0; z-index: 1;" class="abilityButtons">
-            <button v-for="key of ['ability', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
+            <button v-for="key of ['ability0', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
                 class="button" @touchstart="pressButton(key, true)" @touchend="pressButton(key, false)">
             </button>
         </div>
@@ -23,34 +23,37 @@
 import { keys } from '../ts/config';
 import { pressedKeys } from '../ts/game';
 function pressButton(buttons: string, touch: boolean) {
-    buttons.split("&&").forEach(e => pressedKeys[keys[e]] = touch)
+    console.log(buttons)
+    buttons.split("_").forEach(e => pressedKeys[keys[e]] = touch)
 }
 </script>
 <style scoped>
 .moveButtons {
     display: grid;
+    gap: 2px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-        'moveUp&&moveLeft moveUp moveUp&&moveRight'
+        'moveUp_moveLeft moveUp moveUp_moveRight'
         'moveLeft . moveRight '
-        'moveDown&&moveLeft moveDown moveDown&&moveRight'
+        'moveDown_moveLeft moveDown moveDown_moveRight'
     ;
 }
 
 .abilityButtons {
     display: grid;
+    gap: 2px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-        '. ability .'
+        '. ability0 .'
         'ability1 . ability2 '
         '. ability3 .'
     ;
 }
 
 .button {
-    opacity: 0.25;
-    height: 25vh;
-    width: 12.5vw;
+    opacity: 0.3;
+    height: 15vh;
+    width: 7.5vw;
 }
 
 .space {
