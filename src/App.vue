@@ -1,5 +1,4 @@
 <template>
-    <Handy v-if="handy"></Handy>
     <div style="height: 5vh;" id="navbar" v-if="!gameloopInterval" class="d-flex justify-content-center">
         <span class="link " :class="view == 'game' ? 'text-primary text-decoration-underline' : 'text-info'"
             @click="view = 'game'">game</span>
@@ -22,8 +21,7 @@ import Game from './views/Game.vue';
 import SkillTrees from './views/SkillTrees.vue';
 import SpacePort from './views/SpacePort.vue';
 import { gameloopInterval } from './ts/game';
-import Handy from './components/Handy.vue';
-import { handy } from './ts/game';
+
 const view = ref("game")
 </script>
 <style scoped>

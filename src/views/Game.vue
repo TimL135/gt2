@@ -1,4 +1,5 @@
 <template>
+    <Handy v-if="handy"></Handy>
     <div style="height: 5vh;" v-if="gameloopInterval" class="py-xl-2 ">
         <div class="row g-0 ">
             <div class="col-2"></div>
@@ -75,6 +76,8 @@ import { buildingMultiplier } from "../ts/building";
 import { secondsToTicks } from '../ts/helpers';
 import { details as detailsWeapon } from "../ts/weapon";
 import { details as detailsAbilitys } from "../ts/abilitys";
+import Handy from '../components/Handy.vue';
+import { handy } from '../ts/game';
 resetInfoDisplay()
 
 buildingMultiplier()
