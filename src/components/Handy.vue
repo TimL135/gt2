@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="position: fixed; bottom: 0 ;left:0; z-index: 1;" class="moveButtons">
+        <div style="position: fixed; bottom: 10% ;left:10%; z-index: 1;" class="moveButtons">
             <button
                 v-for="key of ['moveUp', 'moveUp_moveLeft', 'moveUp_moveRight', 'moveDown', 'moveDown_moveLeft', 'moveDown_moveRight', 'moveLeft', 'moveRight']"
                 :style="`grid-area: ${key}`" class="button" @touchstart="pressButton(key, true)"
@@ -8,11 +8,11 @@
             </button>
         </div>
     </div>
-    <button class="space" style="position: fixed; bottom: 0;left:40vw; z-index: 1;" @touchstart="pressButton('shot', true)"
-        @touchend="pressButton('shot', false)">
+    <button class="space" style="position: fixed; bottom: 10%;left:35vw; z-index: 1;"
+        @touchstart="pressButton('shot', true)" @touchend="pressButton('shot', false)">
     </button>
     <div>
-        <div style=" position: fixed; bottom: 0;right:0; z-index: 1;" class="abilityButtons">
+        <div style=" position: fixed; bottom: 10%;right:10%; z-index: 1;" class="abilityButtons">
             <button v-for="key of ['ability0', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
                 class="button" @touchstart="pressButton(key, true)" @touchend="pressButton(key, false)">
             </button>
@@ -23,7 +23,6 @@
 import { keys } from '../ts/config';
 import { pressedKeys } from '../ts/game';
 function pressButton(buttons: string, touch: boolean) {
-    console.log(buttons)
     buttons.split("_").forEach(e => pressedKeys[keys[e]] = touch)
 }
 </script>
