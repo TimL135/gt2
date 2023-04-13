@@ -25,7 +25,7 @@ export const field = ref({
         y: window.innerHeight * 0.95
     }
 })
-export const handy = ref(field.value.size.x < 800)
+export const handy = ref(field.value.size.x < 650)
 window.onresize = () => {
     changeDisplaySize()
 };
@@ -36,7 +36,7 @@ function changeDisplaySize() {
             y: window.innerHeight * 0.95
         }
     }
-    handy.value = field.value.size.x < 800
+    handy.value = field.value.size.x < 650
 }
 
 export const gameloopTicks = ref(0)

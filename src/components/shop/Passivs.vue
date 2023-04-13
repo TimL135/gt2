@@ -1,5 +1,6 @@
 <template>
-    <button v-for="passiv of passivs" class="me-1 btn btn-primary" :title="passiv[1].description" @click="buy(+passiv[0])">
+    <button v-for="passiv of passivs" class="me-1 btn btn-primary mb-1" :title="passiv[1].description"
+        @click="buy(+passiv[0])">
         <p>{{ passiv[1].name }}</p>
         <p class="m-0">cost: {{ Math.round(passivsCost * getMultiplier("discount")) }}</p>
     </button>

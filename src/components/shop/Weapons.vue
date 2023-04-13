@@ -1,5 +1,6 @@
 <template>
-    <button v-for="weapon of Weapons" class="me-1 btn btn-primary" :title="weapon[1].description" @click="buy(+weapon[0])">
+    <button v-for="weapon of Weapons" class="me-1 btn btn-primary mb-1" :title="weapon[1].description"
+        @click="buy(+weapon[0])">
         <p>{{ weapon[1].name }}</p>
         <p class="m-0">cost: {{ Math.round(weaponCost * getMultiplier("discount")) }}</p>
     </button>

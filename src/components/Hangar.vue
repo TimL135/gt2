@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-center px-2">
-        <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border p-1 me-1"
+        <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
             :class="+spaceShip[0] == savedPlayer.spaceShip.selected ? 'border-dark' : ''" @click="selected(+spaceShip[0])">
             <div :class="spaceShip[1].img" class="img"></div>
             <div v-for="stat of Object.entries(detailsSpaceShip[spaceShip[1].stats]) ">
@@ -25,7 +25,7 @@
     <div class="text-center mt-2">
         Weapons
     </div>
-    <button v-for="weapon of savedPlayer.weapons.owned" class="btn  me-1"
+    <button v-for="weapon of savedPlayer.weapons.owned" class="btn mb-1 me-1"
         :class="savedPlayer.weapons.selected == weapon ? 'btn-success' : 'btn-primary'"
         :title="detailsWeapons[weapon].description" @click="savedPlayer.weapons.selected = weapon">
         {{ detailsWeapons[weapon].name }}
@@ -33,7 +33,7 @@
     <div class="text-center mt-2">
         Passivs
     </div>
-    <button v-for="passiv of savedPlayer.passivs.owned" class="btn  me-1"
+    <button v-for="passiv of savedPlayer.passivs.owned" class="btn mb-1 me-1"
         :class="savedPlayer.passivs.selected == passiv ? 'btn-success' : 'btn-primary'"
         :title="detailsPassivs[passiv].description" @click="savedPlayer.passivs.selected = passiv">
         {{ detailsPassivs[passiv].name }}
