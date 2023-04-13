@@ -2,7 +2,7 @@
     <div>
         <button class="btn btn-primary" @click="buy()">
             <p> buy</p>
-            <p class="m-0">cost: {{ spaceShipCost * getMultiplier("discount") }}</p>
+            <p class="m-0">cost: {{ Math.round(spaceShipCost * getMultiplier("discount")) }}</p>
         </button>
     </div>
 </template>
@@ -14,8 +14,8 @@ import { spaceShipCost } from '../../ts/config';
 import { getMultiplier } from '../../ts/multiplier';
 
 function buy() {
-    if (Object.keys(savedPlayer.value.spaceShip.owned).length < 5 && savedPlayer.value.currency >= spaceShipCost * getMultiplier("discount")) {
-        savedPlayer.value.currency -= spaceShipCost * getMultiplier("discount")
+    if (Object.keys(savedPlayer.value.spaceShip.owned).length < 5 && savedPlayer.value.currency >= Math.round(spaceShipCost * getMultiplier("discount"))) {
+        savedPlayer.value.currency -= Math.round(spaceShipCost * getMultiplier("discount"))
         savedPlayer.value.spaceShip.owned[getRandomInt(100000)] = {
             stats: +Object.keys(details.value)[getRandomInt(Object.keys(details.value).length)],
             img: imgs[getRandomInt(imgs.length)]

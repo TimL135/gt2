@@ -2,7 +2,7 @@
     <button v-for="ability of abilitys" class="me-1 btn btn-primary" :title="ability[1].description"
         @click="buy(+ability[0])">
         <p>{{ ability[1].name }}</p>
-        <p class="m-0">cost: {{ abilityCost * getMultiplier("discount") }}</p>
+        <p class="m-0">cost: {{ Math.round(abilityCost * getMultiplier("discount")) }}</p>
     </button>
 </template>
 <script setup lang='ts'>
@@ -16,8 +16,8 @@ const abilitys = computed(() =>
 )
 
 function buy(id: number) {
-    if (savedPlayer.value.currency >= abilityCost * getMultiplier("discount")) {
-        savedPlayer.value.currency -= abilityCost * getMultiplier("discount")
+    if (savedPlayer.value.currency >= Math.round(abilityCost * getMultiplier("discount"))) {
+        savedPlayer.value.currency -= Math.round(abilityCost * getMultiplier("discount"))
         savedPlayer.value.abilitys.owned.push(id)
     }
 }

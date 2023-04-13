@@ -1,7 +1,7 @@
 <template>
     <button v-for="weapon of Weapons" class="me-1 btn btn-primary" :title="weapon[1].description" @click="buy(+weapon[0])">
         <p>{{ weapon[1].name }}</p>
-        <p class="m-0">cost: {{ weaponCost * getMultiplier("discount") }}</p>
+        <p class="m-0">cost: {{ Math.round(weaponCost * getMultiplier("discount")) }}</p>
     </button>
 </template>
 <script setup lang='ts'>
@@ -15,8 +15,8 @@ const Weapons = computed(() =>
     Object.entries(detailsWeapon.value).filter((e) => !savedPlayer.value.weapons.owned.includes(+e[0]))
 )
 function buy(id: number) {
-    if (savedPlayer.value.currency >= weaponCost * getMultiplier("discount")) {
-        savedPlayer.value.currency -= weaponCost * getMultiplier("discount")
+    if (savedPlayer.value.currency >= Math.round(weaponCost * getMultiplier("discount"))) {
+        savedPlayer.value.currency -= Math.round(weaponCost * getMultiplier("discount"))
         savedPlayer.value.weapons.owned.push(id)
     }
 }
