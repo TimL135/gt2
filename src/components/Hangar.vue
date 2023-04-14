@@ -13,12 +13,13 @@
         abilitys
     </div>
     <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
-        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]">
+        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]"
+            :title="detailsAbilitys[ability].description">
             <option :value="savedPlayer.abilitys.selected[ability]" :title="detailsAbilitys[ability].description">{{
                 detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
             <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
-                :title="detailsAbilitys[savedPlayer.abilitys.owned[availableAbility]]?.description">{{
-                    detailsAbilitys[savedPlayer.abilitys.owned[availableAbility]]?.name }}</option>
+                :title="detailsAbilitys[availableAbility]?.description">{{
+                    detailsAbilitys[availableAbility]?.name }}</option>
             <option :value="-1" v-if="savedPlayer.abilitys.selected[ability] != -1">none</option>
         </select>
     </div>

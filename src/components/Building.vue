@@ -1,6 +1,6 @@
 <template>
     <Currency></Currency>
-    <button v-for="building of Object.entries(detailsBuilding)" class="btn btn-primary me-1" @click="buy(+building[0])"
+    <button v-for="building of Object.entries(detailsBuilding)" class="btn btn-primary mb-1 me-1" @click="buy(+building[0])"
         :title="building[1].description">
         <p>{{ building[1].name }}</p>
         <p class="m-0">cost: {{ getCost(+building[0]) }}</p>

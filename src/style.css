@@ -18,6 +18,7 @@ body.touched [title]:hover:after {
     content: attr(title);
     border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: white;
+    color: var(--bs-body-color);
     box-shadow: 1px 1px 3px;
     padding: 0.3em;
     z-index: 1;
