@@ -1,11 +1,26 @@
 html,
 body {
     overscroll-behavior-y: contain;
-}
-
-body {
     user-select: none;
     text-transform: uppercase !important;
+}
+
+[title] {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    position: relative;
+}
+
+body.touched [title]:hover:after {
+    position: absolute;
+    top: 100%;
+    right: -10%;
+    content: attr(title);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: white;
+    box-shadow: 1px 1px 3px;
+    padding: 0.3em;
+    z-index: 1;
 }
 
 button {

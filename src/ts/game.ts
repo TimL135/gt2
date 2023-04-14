@@ -39,6 +39,10 @@ function changeDisplaySize() {
     handy.value = field.value.size.x < 650
 }
 
+document.body.addEventListener('touchstart', function () {
+    document.body.classList.add('touched');
+});
+
 export const gameloopTicks = ref(0)
 
 export const pressedKeys = {} as Record<string, boolean>
