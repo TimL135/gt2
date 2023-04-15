@@ -35,3 +35,7 @@ export function getLvlMultiplier() {
     Object.keys(detailsSkill).forEach(e => updateMultiplier(`tree${e}`, 'playerLvl', percent(savedPlayer.value.lvl.lvl, "in")))
 
 }
+export function resetInfo() {
+    xpInfo = ""
+    lvlInfo = ""
+}

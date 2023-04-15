@@ -18,6 +18,7 @@ import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems, itemMult
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier } from "./multiplier";
 import { getXp } from "./lvl";
+import { resetInfo as resetInfoLvl } from "./lvl"
 
 
 export const field = ref({
@@ -108,6 +109,7 @@ export function increaseEnemySpeed() {
 
 export function resetInfoDisplay() {
     resetInfoSkill()
+    resetInfoLvl()
     currencyInfo.value = ""
 }
 export const currencyInfo = ref("")
