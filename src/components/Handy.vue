@@ -1,20 +1,15 @@
 <template>
-    <div>
-        <div style="position: fixed; bottom: 10% ;left:10%; z-index: 1;" class="moveButtons">
-            <button
-                v-for="key of ['moveUp', 'moveUp_moveLeft', 'moveUp_moveRight', 'moveDown', 'moveDown_moveLeft', 'moveDown_moveRight', 'moveLeft', 'moveRight']"
-                :style="`grid-area: ${key}`" class="button" @onmouseover="pressButton(key, true)"
-                @onmouseout="pressButton(key, false)">
-            </button>
-        </div>
+    <div style=" position: fixed; bottom: 10%;left:5%; z-index: 1;">
+        <Joystick :size="100" base-color="lightgrey" stick-color="grey" :throttle="100" @stop="stop" @move="move" />
+
     </div>
     <button class="space" style="position: fixed; bottom: 10%;left:35vw; z-index: 1;"
-        @onmouseover="pressButton('shot', true)" @onmouseout="pressButton('shot', false)">
+        @touchstart="pressButton('shot', true)" @touchend="pressButton('shot', false)">
     </button>
     <div>
-        <div style=" position: fixed; bottom: 10%;right:10%; z-index: 1;" class="abilityButtons">
+        <div style=" position: fixed; bottom: 10%;right:5%; z-index: 1;" class="abilityButtons">
             <button v-for="key of ['ability0', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
-                class="button" @onmouseover="pressButton(key, true)" @onmouseout="pressButton(key, false)">
+                class="button" @touchstart="pressButton(key, true)" @touchend="pressButton(key, false)">
             </button>
         </div>
     </div>
@@ -22,22 +17,32 @@
 <script setup lang = 'ts' >
 import { keys } from '../ts/config';
 import { pressedKeys } from '../ts/game';
-function pressButton(buttons: string, touch: boolean) {
-    buttons.split("_").forEach(e => pressedKeys[keys[e]] = touch)
+
+import Joystick from 'vue-joystick-component'
+
+const stop = () => ['moveUp', 'moveDown', 'moveLeft', 'moveRight'].forEach(e => pressedKeys[keys[e]] = false)
+const move = ({ x, y }) => {
+    pressedKeys[keys.moveUp] = false
+    pressedKeys[keys.moveDown] = false
+    pressedKeys[keys.moveLeft] = false
+    pressedKeys[keys.moveRight] = false
+    if (y > 0.5) {
+        pressedKeys[keys.moveUp] = true
+    } else if (y < -0.5) {
+        pressedKeys[keys.moveDown] = true
+    }
+    if (x < -0.5) {
+        pressedKeys[keys.moveLeft] = true
+    } else if (x > 0.5) {
+        pressedKeys[keys.moveRight] = true
+    }
+}
+
+function pressButton(button: string, touch: boolean) {
+    pressedKeys[keys[button]] = touch
 }
 </script>
 <style scoped>
-.moveButtons {
-    display: grid;
-    gap: 2px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas:
-        'moveUp_moveLeft moveUp moveUp_moveRight'
-        'moveLeft . moveRight '
-        'moveDown_moveLeft moveDown moveDown_moveRight'
-    ;
-}
-
 .abilityButtons {
     display: grid;
     gap: 2px;
