@@ -1,9 +1,20 @@
 <template>
+    <div class="text-center">
+        {{ savedPlayer.lvl.lvl + 1 }}
+    </div>
+    <div class="d-flex justify-content-center mb-2">
+        <div class="progress w-50">
+            <div class="progress-bar bg-info" style="--bs-progress-bar-transition: width 0.0s ease;"
+                :style="{ width: (savedPlayer.lvl.xp / ((savedPlayer.lvl.lvl + 1) * xpNeed)) * 100 + '%' }">
+            </div>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-center px-2">
         <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
             :class="+spaceShip[0] == savedPlayer.spaceShip.selected ? 'border-dark' : ''" @click="selected(+spaceShip[0])">
             <div :class="typeof spaceShip[1].img == 'string' ? spaceShip[1].img : imgs[spaceShip[1].img]" class="img"></div>
-            <div v-for="stat of Object.entries(detailsSpaceShip[spaceShip[1].stats]) ">
+            <div v-for="stat of Object.entries(getStats(spaceShip[1])) ">
                 {{ stat[0] }}: {{ stat[1] }}
             </div>
             <button class="btn btn-danger" @click="sell(+spaceShip[0])">sell</button>
@@ -42,12 +53,13 @@
 </template>
 <script setup lang='ts'>
 import { savedPlayer } from '../ts/player';
-import { details as detailsSpaceShip } from '../ts/spaceShip';
+import { details as detailsSpaceShip, getStats } from '../ts/spaceShip';
 import { details as detailsAbilitys } from '../ts/abilitys';
 import { details as detailsWeapons } from '../ts/weapon';
 import { details as detailsPassivs } from '../ts/passivs';
 import { imgs } from '../ts/spaceShip';
 import { computed } from 'vue';
+import { xpNeed } from '../ts/config';
 
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))

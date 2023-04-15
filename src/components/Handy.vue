@@ -1,7 +1,7 @@
 <template>
     <div style=" position: fixed; bottom: 10%;left:5%; z-index: 1;">
-        <Joystick :size="100" base-color="lightgrey" stick-color="grey" :throttle="100" @stop="stop" @move="move" />
-
+        <Joystick :size="150" base-color="rgba(211, 211, 211, 0.5)" stick-color="rgba(128, 128, 128, 0.5)" :throttle="100"
+            @stop="stop" @move="move" />
     </div>
     <button class="space" style="position: fixed; bottom: 10%;left:35vw; z-index: 1;"
         @touchstart="pressButton('shot', true)" @touchend="pressButton('shot', false)">

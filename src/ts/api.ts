@@ -28,6 +28,10 @@ export function getSavedPlayer(): SavedPlayer {
         passivs: {
             owned: [0],
             selected: 0
+        },
+        lvl: {
+            lvl: 0,
+            xp: 0
         }
     }
     return {

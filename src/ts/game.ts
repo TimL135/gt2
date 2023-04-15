@@ -17,6 +17,7 @@ import { secondsToTicks } from "./helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems, itemMultiplier } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier } from "./multiplier";
+import { getXp } from "./lvl";
 
 
 export const field = ref({
@@ -72,6 +73,7 @@ export function start() {
 export function stop() {
     if (!gameloopInterval) return
     actionsPlayer.value["time"] = gameloopTicks.value
+    getXp()
     getPoints()
     getCurrency()
     actionsPlayer.value = {}

@@ -1,9 +1,11 @@
 import { ref } from "vue";
-import { increaseEffectDuration, player, savedPlayer } from "./player";
+import { increaseEffectDuration, isCharging, player, reload, savedPlayer, stopReload } from "./player";
 import { AbilityDetails } from "../types";
-import { secondsToTicks } from "./helpers";
+import { getRandomInt, secondsToTicks } from "./helpers";
 import { updateMultiplier } from "./multiplier";
 import { details as detailsWeapon } from "./weapon";
+import { items } from "./items";
+import { collectItem } from "./items";
 
 export const details = ref({
     0: {
@@ -102,13 +104,34 @@ export const details = ref({
     },
     8: {
         name: "mushroom",
-        description: "if you would not be hit for a while you will become bigger and get an extra life",
+        description: "if you would not be hit for a while you will become bigger and get an extra life.",
         cooldown: secondsToTicks(15),
         effect: () => {
             player.value.big = true
             updateMultiplier("playerSize", "ability8", 1.2)
         },
         condition: () => player.value.hp < player.value.hpMax,
+        energyCost: 1
+    },
+    9: {
+        name: "reload",
+        description: "you can control your reload.",
+        cooldown: secondsToTicks(1),
+        effect: () => {
+            if (isCharging.value) stopReload()
+            else reload()
+        },
+        condition: () => player.value.energy < player.value.energyMax,
+        energyCost: 0
+    },
+    10: {
+        name: "magnet",
+        description: "collects a random item.",
+        cooldown: secondsToTicks(10),
+        effect: () => {
+            collectItem(items.value[getRandomInt(items.value.length)])
+        },
+        condition: () => items.value.length > 0,
         energyCost: 1
     }
 } as AbilityDetails)

@@ -18,7 +18,8 @@ function buy() {
         savedPlayer.value.currency -= Math.round(spaceShipCost * getMultiplier("discount"))
         savedPlayer.value.spaceShip.owned[getRandomInt(100000)] = {
             stats: +Object.keys(details.value)[getRandomInt(Object.keys(details.value).length)],
-            img: getRandomInt(imgs.length)
+            img: getRandomInt(imgs.length),
+            statsMultiplier: savedPlayer.value.lvl.lvl + getRandomInt(savedPlayer.value.lvl.lvl)
         }
     }
 }

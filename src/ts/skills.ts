@@ -4,6 +4,7 @@ import { actions as actionsPlayer, player, savedPlayer } from './player';
 import { percent, secondsToTicks } from "./helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
 import { generalSize } from "./config";
+import { getLvlMultiplier } from "./lvl";
 
 export const skillTrees = ref([
     {
@@ -227,6 +228,7 @@ export function resetInfo() {
     newPointsInfo.value = []
 }
 export function getPoints() {
+    getLvlMultiplier()
     for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", secondsToTicks(10), 3]] as const)
         if (Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1]) > (savedPlayer.value.points[e[2]] || 0)) {
             const points = Math.round(actionsPlayer.value[e[0]] / e[1]) - (savedPlayer.value.points[e[2]] || 0)

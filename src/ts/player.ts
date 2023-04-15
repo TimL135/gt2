@@ -10,7 +10,7 @@ import { setSavedPlayer } from "./api";
 import { getSavedPlayer } from "./api";
 import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
-import { details as detailsSpaceShip } from "./spaceShip";
+import { details as detailsSpaceShip, getStats } from "./spaceShip";
 import { getMultiplier, updateMultiplier } from "./multiplier";
 import { keys } from "./config";
 import { details as detailsPassiv } from "./passivs";
@@ -18,7 +18,7 @@ import { details as detailsPassiv } from "./passivs";
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
     ...defaultGameObject(),
-    ...detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats],
+    ...getStats(savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected]),
     img: savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].img,
     hp: 0,
     energy: 0,
@@ -39,7 +39,7 @@ watch(
 
 export const actions = ref({} as { [key: string]: number })
 export function reset() {
-    const stats = detailsSpaceShip.value[savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected].stats]
+    const stats = getStats(savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected])
     skillMultiplier()
     player.value.size = stats.size * getMultiplier("playerSize")
     player.value.cords = {
@@ -116,12 +116,15 @@ export function reload() {
         player.value.energy++
         if (player.value.energy >= player.value.energyMax) {
             player.value.energy = player.value.energyMax
-            isCharging.value = false
             if (savedPlayer.value.passivs.selected == 3) detailsPassiv.value[3].effect()
-            clearInterval(reloadInterval)
+            stopReload()
         }
     }, (5000 / player.value.energyMax) * getMultiplier("chargeSpeed"));
+}
 
+export function stopReload() {
+    isCharging.value = false
+    clearInterval(reloadInterval)
 }
 
 export function increaseEffectDuration(effect: number, sec: number) {

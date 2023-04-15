@@ -8,14 +8,16 @@ export interface Player extends GameObject {
     invincible: boolean
     big: boolean
 }
+export interface OwnedSpaceShip {
+    img: number
+    stats: number
+    statsMultiplier: number
+}
 export interface SavedPlayer {
     spaceShip: {
         selected: number
         owned: {
-            [key: number]: {
-                img: number
-                stats: number
-            }
+            [key: number]: OwnedSpaceShip
         }
     }
     abilitys: {
@@ -34,6 +36,16 @@ export interface SavedPlayer {
         selected: number
         owned: number[]
     }
+    lvl: {
+        lvl: number
+        xp: number
+    }
+}
+export interface SpaceShipStats {
+    speed: number,
+    hpMax: number,
+    energyMax: number,
+    size: number
 }
 export interface SpaceShipDetails {
     [key: number]: {
@@ -41,6 +53,12 @@ export interface SpaceShipDetails {
         hpMax: number,
         energyMax: number,
         size: number
+        statsMultiplier: {
+            speed: "in" | "de" | "const",
+            hpMax: "in" | "de" | "const",
+            energyMax: "in" | "de" | "const",
+            size: "in" | "de" | "const",
+        }
     }
 }
 export interface AbilityDetails {
@@ -122,7 +140,7 @@ export interface GameObject {
     id: number
     cords: Vector
     moveVector: Vector
-    img: string
+    img: string | number
     size: number
     speed: number
     direction: number
