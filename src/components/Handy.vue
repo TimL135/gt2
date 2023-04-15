@@ -3,18 +3,18 @@
         <div style="position: fixed; bottom: 10% ;left:10%; z-index: 1;" class="moveButtons">
             <button
                 v-for="key of ['moveUp', 'moveUp_moveLeft', 'moveUp_moveRight', 'moveDown', 'moveDown_moveLeft', 'moveDown_moveRight', 'moveLeft', 'moveRight']"
-                :style="`grid-area: ${key}`" class="button" @touchmove="pressButton(key, true)"
-                @touchcancel="pressButton(key, false)">
+                :style="`grid-area: ${key}`" class="button" @onmouseover="pressButton(key, true)"
+                @onmouseout="pressButton(key, false)">
             </button>
         </div>
     </div>
-    <button class="space" style="position: fixed; bottom: 10%;left:35vw; z-index: 1;" @touchmove="pressButton('shot', true)"
-        @touchcancel="pressButton('shot', false)">
+    <button class="space" style="position: fixed; bottom: 10%;left:35vw; z-index: 1;"
+        @onmouseover="pressButton('shot', true)" @onmouseout="pressButton('shot', false)">
     </button>
     <div>
         <div style=" position: fixed; bottom: 10%;right:10%; z-index: 1;" class="abilityButtons">
             <button v-for="key of ['ability0', 'ability1', 'ability2', 'ability3']" :style="`grid-area: ${key}`"
-                class="button" @touchmove="pressButton(key, true)" @touchcancel="pressButton(key, false)">
+                class="button" @onmouseover="pressButton(key, true)" @onmouseout="pressButton(key, false)">
             </button>
         </div>
     </div>
