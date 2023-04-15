@@ -1,5 +1,5 @@
 <template>
-    <div class="object" :class="object.img" :style="{
+    <div class="object" :class="typeof object.img == 'string' ? object.img : imgs[object.img]" :style="{
         width: object.size + 'px',
         height: object.size + 'px',
         left: object.cords.x + 'px',
@@ -8,6 +8,7 @@
     }"></div>
 </template>
 <script setup lang="ts">
+import { imgs } from '../ts/spaceShip';
 import { GameObject } from '../types';
 
 const props = withDefaults(

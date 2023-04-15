@@ -13,7 +13,7 @@ export interface SavedPlayer {
         selected: number
         owned: {
             [key: number]: {
-                img: string
+                img: number
                 stats: number
             }
         }

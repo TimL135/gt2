@@ -18,7 +18,7 @@ const passivs = computed(() =>
 function buy(id: number) {
     if (savedPlayer.value.currency >= Math.round(passivsCost * getMultiplier("discount"))) {
         savedPlayer.value.currency -= Math.round(passivsCost * getMultiplier("discount"))
-        savedPlayer.value.abilitys.owned.push(id)
+        savedPlayer.value.passivs.owned.push(id)
     }
 }
 </script>
