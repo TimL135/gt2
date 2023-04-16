@@ -116,6 +116,6 @@ export const currencyInfo = ref("")
 function getCurrency() {
     if (actionsPlayer.value["currency"]) {
         currencyInfo.value = `you got ${actionsPlayer.value["currency"]} scrap`
-        savedPlayer.value.currency = (savedPlayer.value.currency || 0) + actionsPlayer.value["currency"]
+        savedPlayer.value.currency = Math.round((savedPlayer.value.currency || 0) + actionsPlayer.value["currency"])
     }
 }
