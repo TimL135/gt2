@@ -21,7 +21,7 @@ import { details as detailsSkill } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys } from '../ts/game';
-import { keys } from '../ts/config';
+import { keys } from '../ts/generel/config';
 
 const props = withDefaults(
     defineProps<{

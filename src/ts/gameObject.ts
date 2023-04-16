@@ -1,9 +1,9 @@
 import { Enemie, Plasma } from "../types";
-import { getRandomInt } from "./helpers";
+import { getRandomInt } from "./generel/helpers";
 
 export function move(array: Enemie[] | Plasma[]) {
     for (const e of array) {
-        e.move(e)
+        e.move(e as Enemie & Plasma);
         e.direction = Math.atan2(e.moveVector.x, e.moveVector.y * -1) * 180 / Math.PI;
     }
 }

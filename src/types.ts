@@ -121,7 +121,7 @@ export interface EnemieDetails {
     }
 }
 export interface Enemie extends GameObject {
-    move: (array: Enemie | Plasma) => void
+    move: (enemie: Enemie) => void
     damage: number
     getMoveVector: (enemie: Enemie) => void
 }

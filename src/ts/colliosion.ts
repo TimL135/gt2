@@ -1,5 +1,5 @@
 import { Player, Enemie, Item, Plasma } from "../types";
-import { lenVecSqrt, subVec, addVec } from "./vector"
+import { lenVecSqrt, subVec, addVec } from "./generel/vector"
 import { enemies, hitPlasma as hitPlasmaEnemie } from "./enemies";
 import { player, enemieHit as enemieHitPlayer, savedPlayer } from "./player";
 import { collectItem, items } from "./items";

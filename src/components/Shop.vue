@@ -2,19 +2,6 @@
     <Currency></Currency>
     <div class="accordion px-2" id="accordionExample">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne">
-                    weapons
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <Weapon></Weapon>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo">
@@ -27,40 +14,28 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTree">
+
+        <div class="accordion-item" v-for="item of ['abilitys', 'passivs', 'weapons']">
+            <h2 class="accordion-header" :id="`heading${item}`">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTree">
-                    abilitys
+                    :data-bs-target="`#collapse${item}`">
+                    {{ item }}
                 </button>
             </h2>
-            <div id="collapseTree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div :id="`collapse${item}`" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <Abilitys></Abilitys>
+                    <Items :item="item"></Items>
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFour">
-                    passivs
-                </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <Passivs></Passivs>
-                </div>
-            </div>
-        </div>
+
     </div>
 </template>
 <script setup lang='ts'>
 import Currency from './Currency.vue';
-import Weapon from "./shop/Weapons.vue"
 import SpaceShip from "./shop/SpaceShips.vue"
-import Abilitys from "./shop/Abilitys.vue"
-import Passivs from "./shop/Passivs.vue"
+import Items from "./shop/Items.vue"
+
 import { skillMultiplier } from '../ts/skills';
 skillMultiplier()
 </script>

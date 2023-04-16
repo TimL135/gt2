@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { updateMultiplier } from "./multiplier";
-import { percent } from "./helpers";
+import { percent } from "./generel/helpers";
 import { savedPlayer } from "./player";
 import { skillTrees } from "./skills";
 

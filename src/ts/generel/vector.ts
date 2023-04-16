@@ -1,4 +1,4 @@
-import { Vector } from "../types";
+import { Vector } from "../../types";
 
 export function addVec(vec1: Vector, vec2: Vector | number) {
     if (typeof vec2 == "number")

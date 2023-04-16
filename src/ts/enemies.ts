@@ -1,9 +1,9 @@
 import { ref } from "vue";
 import { Enemie, EnemieDetails } from "../types";
-import { speedConstant } from "./config";
+import { speedConstant } from "./generel/config";
 import { field, gameloopInterval } from "./game";
-import { getRandomInt } from './helpers';
-import { dirVec, norVec } from "./vector";
+import { getRandomInt } from './generel/helpers';
+import { dirVec, norVec } from "./generel/vector";
 import { defaultGameObject } from "./gameObject";
 import { player, actions as actionsPlayer } from "./player";
 import { getMultiplier, multiplier } from "./multiplier";

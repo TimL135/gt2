@@ -1,4 +1,4 @@
-import { SavedPlayer } from "../types"
+import { SavedPlayer } from "../../types"
 
 export function setSavedPlayer(savedPlayer: SavedPlayer) {
     localStorage.setItem('savedPlayer', JSON.stringify(savedPlayer))

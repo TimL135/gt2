@@ -1,18 +1,18 @@
 import { ref, watch } from "vue";
 import { Enemie, Player, SavedPlayer } from "../types";
 import { field, stop as stopGame, gameloopTicks } from "./game";
-import { norVec } from "./vector";
+import { norVec } from "./generel/vector";
 import { remove as removeEnemie } from "./enemies";
-import { secondsToTicks } from "./helpers";
+import { secondsToTicks } from "./generel/helpers";
 import { defaultGameObject } from "./gameObject";
 import { details as detailsSkill, skillMultiplier } from "./skills";
-import { setSavedPlayer } from "./api";
-import { getSavedPlayer } from "./api";
+import { setSavedPlayer } from "./generel/api";
+import { getSavedPlayer } from "./generel/api";
 import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
-import { details as detailsSpaceShip, getStats } from "./spaceShip";
+import { getStats } from "./spaceShip";
 import { getMultiplier, updateMultiplier } from "./multiplier";
-import { keys } from "./config";
+import { keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
@@ -28,12 +28,9 @@ export const player = ref<Player>({
     big: false
 })
 
-
 watch(
     () => savedPlayer.value,
-    (newValue, oldValue) => {
-        setSavedPlayer(savedPlayer.value);
-    },
+    () => setSavedPlayer(savedPlayer.value),
     { deep: true }
 );
 
@@ -51,15 +48,14 @@ export function reset() {
     player.value.hp = player.value.hpMax
     player.value.energyMax = stats.energyMax + detailsSkill.value[101].multiplier(savedPlayer.value.skills[101])
     player.value.energy = player.value.energyMax
-
 }
 let charge = 0
 export function move(pressedKeys: Record<string, boolean>) {
     player.value.moveVector = { x: 0, y: 0 }
-    if (pressedKeys[keys.moveUp]) player.value.moveVector.y = -1;
-    if (pressedKeys[keys.moveDown]) player.value.moveVector.y = 1;
-    if (pressedKeys[keys.moveLeft]) player.value.moveVector.x = -1;
-    if (pressedKeys[keys.moveRight]) player.value.moveVector.x = 1;
+    if (pressedKeys[keys.moveUp]) player.value.moveVector.y -= 1;
+    if (pressedKeys[keys.moveDown]) player.value.moveVector.y += 1;
+    if (pressedKeys[keys.moveLeft]) player.value.moveVector.x -= 1;
+    if (pressedKeys[keys.moveRight]) player.value.moveVector.x += 1;
     player.value.moveVector = norVec(player.value.moveVector)
     for (const e of ["x", "y"] as const) {
         player.value.cords[e] += player.value.moveVector[e] * player.value.speed * getMultiplier("playerSpeed")
@@ -67,7 +63,7 @@ export function move(pressedKeys: Record<string, boolean>) {
         if (player.value.cords[e] > field.value.size[e] - player.value.size) player.value.cords[e] = field.value.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
-        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed
+        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * getMultiplier("playerSpeed")
         if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
     }
@@ -84,7 +80,6 @@ export function enemieHit(enemie: Enemie) {
         player.value.hp -= enemie.damage
         checkHp()
     }
-
 }
 
 export function abilities(pressedKeys: Record<string, boolean>) {
@@ -127,9 +122,7 @@ export function stopReload() {
     clearInterval(reloadInterval)
 }
 
-export function increaseEffectDuration(effect: number, sec: number) {
-    player.value.effects[effect] = (player.value.effects[effect] || 0) + secondsToTicks(sec)
-}
+
 
 export function reduceCooldowns() {
     Object.keys(player.value.cooldowns).forEach(e => {
@@ -137,11 +130,14 @@ export function reduceCooldowns() {
         if (player.value.cooldowns[e] < 0) player.value.cooldowns[e] = 0
     })
 }
+
+export function increaseEffectDuration(effect: number, sec: number) {
+    player.value.effects[effect] = (player.value.effects[effect] || 0) + secondsToTicks(sec)
+}
 export function decreaseEffectDuration() {
     Object.keys(player.value.effects).forEach(e => player.value.effects[e] -= +!!player.value.effects[e])
 }
 
 export function checkHp() {
-
     if (player.value.hp <= 0) stopGame()
 }

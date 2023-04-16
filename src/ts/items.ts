@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { Item, ItemdDetails } from "../types";
-import { getRandomInt } from './helpers';
+import { getRandomInt } from './generel/helpers';
 import { field } from "./game";
-import { secondsToTicks } from "./helpers";
+import { secondsToTicks } from "./generel/helpers";
 import { increaseEffectDuration, player, actions as actionsPlayer } from "./player";
 import { defaultGameObject } from "./gameObject";
 import { getMultiplier, updateMultiplier } from "./multiplier";

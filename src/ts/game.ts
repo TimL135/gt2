@@ -8,12 +8,12 @@ import {
     clear as clearEnemies,
     enemies
 } from "./enemies";
-import { gameTicks } from "./config";
+import { gameTicks } from "./generel/config";
 import { collisions } from "./colliosion";
 import { move } from "./gameObject";
 import { ref } from "vue";
 import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
-import { secondsToTicks } from "./helpers";
+import { secondsToTicks } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems, itemMultiplier } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier } from "./multiplier";
@@ -27,7 +27,7 @@ export const field = ref({
         y: window.innerHeight * 0.95
     }
 })
-export const handy = ref(field.value.size.x < 650)
+export const touchscreen = ref((('ontouchstart' in window) || (navigator.maxTouchPoints > 0)))
 window.onresize = () => {
     changeDisplaySize()
 };
@@ -38,7 +38,7 @@ function changeDisplaySize() {
             y: window.innerHeight * 0.95
         }
     }
-    handy.value = field.value.size.x < 650
+
 }
 
 document.body.addEventListener('touchstart', function () {

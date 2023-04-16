@@ -5,11 +5,13 @@ export const generalSize = (window.innerWidth / 2560 + window.innerHeight / 1360
 export const xpNeed = 100
 export const maxLvl = 49//is displayed with +1
 
-export const abilityCost = 500
-export const passivsCost = 500
-export const spaceShipCost = 250
-export const weaponCost = 500
-export const buildingCost = 500
+export const cost = {
+    abilitys: 500,
+    passivs: 500,
+    spaceShip: 250,
+    weapons: 500,
+    buildings: 500,
+}
 
 export const keys = {
     buy10: "Control",

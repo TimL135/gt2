@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { speedConstant, generalSize } from "./config";
+import { speedConstant, generalSize } from "./generel/config";
 
 export const multiplier = ref<{ [key: string]: { [key: string]: number } }>({
     playerSize: {

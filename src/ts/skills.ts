@@ -1,9 +1,9 @@
 import { ref } from "vue";
 import { SkillDetail, SkillDetails } from "../types";
 import { actions as actionsPlayer, player, savedPlayer } from './player';
-import { percent, secondsToTicks } from "./helpers";
+import { percent, secondsToTicks } from "./generel/helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
-import { generalSize } from "./config";
+import { generalSize } from "./generel/config";
 import { getLvlMultiplier } from "./lvl";
 
 export const skillTrees = ref([

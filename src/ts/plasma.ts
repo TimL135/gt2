@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { Plasma, Vector, WeaponDetail } from "../types";
-import { getRandomInt } from "./helpers";
+import { getRandomInt } from "./generel/helpers";
 import { player } from "./player";
 import { field } from "./game";
 import { getMultiplier } from "./multiplier";

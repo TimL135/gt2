@@ -15,7 +15,7 @@
     </div>
 </template >
 <script setup lang = 'ts' >
-import { keys } from '../ts/config';
+import { keys } from '../ts/generel/config';
 import { pressedKeys } from '../ts/game';
 
 import Joystick from 'vue-joystick-component'

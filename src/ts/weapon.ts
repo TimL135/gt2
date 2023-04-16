@@ -1,10 +1,10 @@
 import { ref } from "vue";
 import { Plasma, WeaponDetail, WeaponDetails } from "../types";
-import { speedConstant } from "./config";
-import { angleToDirectionVector, rotVec } from "./vector";
+import { speedConstant } from "./generel/config";
+import { angleToDirectionVector, rotVec } from "./generel/vector";
 import { player } from "./player";
 import { spawn } from "./plasma";
-import { secondsToTicks } from "./helpers";
+import { secondsToTicks } from "./generel/helpers";
 function defaultMove(plasma: Plasma) {
     for (const e of ["x", "y"] as const) {
         plasma.cords[e] += plasma.moveVector[e] * plasma.speed * speedConstant;

@@ -1,8 +1,8 @@
-import { maxLvl, xpNeed } from "./config";
-import { percent } from "./helpers";
+import { maxLvl, xpNeed } from "./generel/config";
+import { percent } from "./generel/helpers";
 import { updateMultiplier } from "./multiplier";
-import { actions, player, savedPlayer } from "./player";
-import { details as detailsSkill } from "./skills";
+import { actions, savedPlayer } from "./player";
+import { skillTrees } from "./skills";
 
 export let xpInfo = ""
 export function getXp() {
@@ -32,8 +32,7 @@ export function increaseLvl() {
     if (savedPlayer.value.lvl.lvl == maxLvl) savedPlayer.value.lvl.xp = 0
 }
 export function getLvlMultiplier() {
-    Object.keys(detailsSkill).forEach(e => updateMultiplier(`tree${e}`, 'playerLvl', percent(savedPlayer.value.lvl.lvl, "in")))
-
+    skillTrees.value.forEach(e => updateMultiplier(`tree${e.id}`, 'playerLvl', percent(savedPlayer.value.lvl.lvl, "in")))
 }
 export function resetInfo() {
     xpInfo = ""

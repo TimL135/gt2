@@ -1,9 +1,7 @@
-import { effect, ref } from "vue";
-import { speedConstant } from "./config";
-import { angleToDirectionVector, rotVec } from "./vector";
+import { ref } from "vue";
 import { increaseEffectDuration, player } from "./player";
-import { plasmas, spawn } from "./plasma";
-import { percent, secondsToTicks } from "./helpers";
+import { plasmas } from "./plasma";
+import { percent } from "./generel/helpers";
 import { collisionsCheck } from "./colliosion";
 import { collectItem, items } from "./items";
 import { updateMultiplier } from "./multiplier";

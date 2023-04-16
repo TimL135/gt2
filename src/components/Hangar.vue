@@ -59,7 +59,7 @@ import { details as detailsWeapons } from '../ts/weapon';
 import { details as detailsPassivs } from '../ts/passivs';
 import { imgs } from '../ts/spaceShip';
 import { computed } from 'vue';
-import { xpNeed } from '../ts/config';
+import { xpNeed } from '../ts/generel/config';
 
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))

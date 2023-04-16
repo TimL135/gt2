@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { increaseEffectDuration, isCharging, player, reload, savedPlayer, stopReload } from "./player";
 import { AbilityDetails } from "../types";
-import { getRandomInt, secondsToTicks } from "./helpers";
+import { getRandomInt, secondsToTicks } from "./generel/helpers";
 import { updateMultiplier } from "./multiplier";
 import { details as detailsWeapon } from "./weapon";
 import { items } from "./items";
