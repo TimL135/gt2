@@ -11,8 +11,9 @@ import { details as detailsBuilding } from '../ts/building';
 import { cost } from '../ts/generel/config';
 import { savedPlayer } from '../ts/player';
 import Currency from './Currency.vue';
+import { getMultiplier } from '../ts/multiplier';
 function getCost(id: number) {
-    return cost.buildings * ((savedPlayer.value.buildings[id] || 0) + 1)
+    return cost.buildings * ((savedPlayer.value.buildings[id] || 0) + 1) * getMultiplier("discount")
 }
 function buy(id: number) {
     const cost = getCost(id)
