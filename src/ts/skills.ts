@@ -229,10 +229,12 @@ export function resetInfo() {
 }
 export function getPoints() {
     getLvlMultiplier()
-    for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", secondsToTicks(10), 3]] as const)
-        if (Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1]) > (savedPlayer.value.points[e[2]] || 0)) {
-            const points = Math.round(actionsPlayer.value[e[0]] / e[1]) - (savedPlayer.value.points[e[2]] || 0)
+    for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", secondsToTicks(10), 3]] as const) {
+        const actionValue = Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1])
+        if (actionValue > (savedPlayer.value.points[e[2]] || 0)) {
+            const points = actionValue - (savedPlayer.value.points[e[2]] || 0)
             newPointsInfo.value.push(`you got ${points} point${points > 1 ? 's' : ''} for the "${skillTrees.value[e[2]].name}" tree.`)
-            savedPlayer.value.points[e[2]] = Math.round(actionsPlayer.value[e[0]] / e[1])
+            savedPlayer.value.points[e[2]] = actionValue
         }
+    }
 }

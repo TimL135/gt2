@@ -12,7 +12,7 @@ import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
 import { getStats } from "./spaceShip";
 import { getMultiplier, updateMultiplier } from "./multiplier";
-import { keys } from "./generel/config";
+import { generalSize, keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
@@ -63,7 +63,7 @@ export function move(pressedKeys: Record<string, boolean>) {
         if (player.value.cords[e] > field.value.size[e] - player.value.size) player.value.cords[e] = field.value.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
-        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * getMultiplier("playerSpeed")
+        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize)
         if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
     }

@@ -7,11 +7,12 @@
     </button>
 </template>
 <script setup lang='ts'>
-import { details as detailsBuilding } from '../ts/building';
+import { buildingMultiplier, details as detailsBuilding } from '../ts/building';
 import { cost } from '../ts/generel/config';
 import { savedPlayer } from '../ts/player';
 import Currency from './Currency.vue';
 import { getMultiplier } from '../ts/multiplier';
+import { skillMultiplier } from '../ts/skills';
 function getCost(id: number) {
     return Math.round(cost.buildings * ((savedPlayer.value.buildings[id] || 0) + 1) * getMultiplier("discount"))
 }
@@ -20,6 +21,8 @@ function buy(id: number) {
     if (savedPlayer.value.currency >= cost) {
         savedPlayer.value.currency -= cost
         savedPlayer.value.buildings[id] = (savedPlayer.value.buildings[id] || 0) + 1
+        buildingMultiplier()
+        skillMultiplier()
     }
 }
 </script>
