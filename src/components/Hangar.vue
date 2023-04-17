@@ -9,51 +9,91 @@
             </div>
         </div>
     </div>
-
-    <div class="d-flex justify-content-center px-2">
-        <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
-            :class="+spaceShip[0] == savedPlayer.spaceShip.selected ? 'border-dark' : ''" @click="selected(+spaceShip[0])">
-            <div :class="typeof spaceShip[1].img == 'string' ? spaceShip[1].img : imgs[spaceShip[1].img]" class="img"></div>
-            <div v-for="stat of Object.entries(getStats(spaceShip[1])) ">
-                {{ stat[0] }}: {{ stat[1] }}
+    <div class="accordion px-2" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSpaceShips">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseSpaceShips">
+                    SpaceShips
+                </button>
+            </h2>
+            <div id="collapseSpaceShips" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-center">
+                        <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
+                            :class="+spaceShip[0] == savedPlayer.spaceShip.selected ? 'border-dark' : ''"
+                            @click="selected(+spaceShip[0])">
+                            <div :class="typeof spaceShip[1].img == 'string' ? spaceShip[1].img : imgs[spaceShip[1].img]"
+                                class="img"></div>
+                            <div v-for="stat of Object.entries(getStats(spaceShip[1])) ">
+                                {{ stat[0] }}: {{ stat[1] }}
+                            </div>
+                            <button class="btn btn-danger" @click="sell(+spaceShip[0])">sell</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-danger" @click="sell(+spaceShip[0])">sell</button>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingAbiliys">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbiliys">
+                    Abiliys
+                </button>
+            </h2>
+            <div id="collapseAbiliys" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
+                        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]"
+                            :title="detailsAbilitys[ability].description">
+                            <option :value="savedPlayer.abilitys.selected[ability]"
+                                :title="detailsAbilitys[ability].description">{{
+                                    detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
+                            <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
+                                :title="detailsAbilitys[availableAbility]?.description">{{
+                                    detailsAbilitys[availableAbility]?.name }}</option>
+                            <option :value="-1" v-if="savedPlayer.abilitys.selected[ability] != -1">none</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingWeapons">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeapons">
+                    Weapons
+                </button>
+            </h2>
+            <div id="collapseWeapons" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <button v-for="weapon of savedPlayer.weapons.owned" class="btn mb-1 me-1"
+                        :class="savedPlayer.weapons.selected == weapon ? 'btn-success' : 'btn-primary'"
+                        :title="detailsWeapons[weapon].description" @click="savedPlayer.weapons.selected = weapon">
+                        {{ detailsWeapons[weapon].name }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPassivs">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePassivs">
+                    Passivs
+                </button>
+            </h2>
+            <div id="collapsePassivs" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <button v-for="passiv of savedPlayer.passivs.owned" class="btn mb-1 me-1"
+                        :class="savedPlayer.passivs.selected == passiv ? 'btn-success' : 'btn-primary'"
+                        :title="detailsPassivs[passiv].description" @click="savedPlayer.passivs.selected = passiv">
+                        {{ detailsPassivs[passiv].name }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="text-center mt-2">
-        abilitys
-    </div>
-    <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
-        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]"
-            :title="detailsAbilitys[ability].description">
-            <option :value="savedPlayer.abilitys.selected[ability]" :title="detailsAbilitys[ability].description">{{
-                detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
-            <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
-                :title="detailsAbilitys[availableAbility]?.description">{{
-                    detailsAbilitys[availableAbility]?.name }}</option>
-            <option :value="-1" v-if="savedPlayer.abilitys.selected[ability] != -1">none</option>
-        </select>
-    </div>
-    <div class="text-center mt-2">
-        Weapons
-    </div>
-    <button v-for="weapon of savedPlayer.weapons.owned" class="btn mb-1 me-1"
-        :class="savedPlayer.weapons.selected == weapon ? 'btn-success' : 'btn-primary'"
-        :title="detailsWeapons[weapon].description" @click="savedPlayer.weapons.selected = weapon">
-        {{ detailsWeapons[weapon].name }}
-    </button>
-    <div class="text-center mt-2">
-        Passivs
-    </div>
-    <button v-for="passiv of savedPlayer.passivs.owned" class="btn mb-1 me-1"
-        :class="savedPlayer.passivs.selected == passiv ? 'btn-success' : 'btn-primary'"
-        :title="detailsPassivs[passiv].description" @click="savedPlayer.passivs.selected = passiv">
-        {{ detailsPassivs[passiv].name }}
-    </button>
 </template>
 <script setup lang='ts'>
 import { savedPlayer } from '../ts/player';
-import { details as detailsSpaceShip, getStats } from '../ts/spaceShip';
+import { getStats } from '../ts/spaceShip';
 import { details as detailsAbilitys } from '../ts/abilitys';
 import { details as detailsWeapons } from '../ts/weapon';
 import { details as detailsPassivs } from '../ts/passivs';

@@ -31,7 +31,7 @@ function colliosionPlasmaEnemies() {
     for (const enemie of enemies.value) {
         for (const plasma of plasmas.value) {
             if (collisionsCheck(plasma, enemie)) {
-                hitPlasmaEnemie(enemie)
+                hitPlasmaEnemie(enemie, plasma)
                 break
             }
         }

@@ -15,6 +15,7 @@ import { getMultiplier, updateMultiplier } from "./multiplier";
 import { generalSize, keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 import { lvlMultiplier } from "./lvl";
+import { itemMultiplier } from "./items";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -38,6 +39,7 @@ export function getAllMultiplier() {
     lvlMultiplier()
     buildingMultiplier()
     skillMultiplier()
+    itemMultiplier()
 }
 export const actions = ref({} as { [key: string]: number })
 export function reset() {

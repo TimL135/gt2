@@ -121,8 +121,10 @@ export interface EnemieDetails {
     }
 }
 export interface Enemie extends GameObject {
-    move: (enemie: Enemie) => void
+    hp: number
+    hpMax: number
     damage: number
+    move: (enemie: Enemie) => void
     getMoveVector: (enemie: Enemie) => void
 }
 export interface Plasma extends GameObject {

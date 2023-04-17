@@ -58,7 +58,12 @@ export const gameloopInterval = ref(0)
 
 export function start() {
     if (gameloopInterval.value) return
+
     multiplier.value.enemieSpeed.speed = 1
+    multiplier.value.enemieSpeed.hpMax = 1
+    multiplier.value.enemieSpeed.special = 1
+    multiplier.value.enemieSpeed.damage = 1
+
     clearEnemies()
     clearItems()
     clearPlasma()
@@ -95,7 +100,10 @@ function gameloop() {
     decreaseLifeDuration()
     itemMultiplier()
     gameloopTicks.value++
-    executeActionEverySec(7.5, increaseEnemySpeed)
+    executeActionEverySec(10, increaseEnemySpeed)
+    executeActionEverySec(10, increaceEnemyHp)
+    executeActionEverySec(10, increaceEnemyDamage)
+    executeActionEverySec(10, increaceEnemySpecial)
     executeActionEverySec(15, spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
 }
@@ -105,6 +113,15 @@ export function executeActionEverySec(sec: number, action: Function) {
 }
 export function increaseEnemySpeed() {
     multiplier.value.enemieSpeed.speed += 0.25
+}
+export function increaceEnemyHp() {
+    multiplier.value.enemieHp.hp += 0.25
+}
+export function increaceEnemySpecial() {
+    multiplier.value.enemieDamage.special += 0.25
+}
+export function increaceEnemyDamage() {
+    multiplier.value.enemieDamage.damage += 0.25
 }
 
 export function resetInfoDisplay() {
