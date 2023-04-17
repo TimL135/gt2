@@ -24,7 +24,11 @@ export const multiplier = ref<{ [key: string]: { [key: string]: number } }>({
     },
     plasmaSpeed: {
         generalSize
-    }
+    },
+    enemieDamage: {},
+    enemieSpecial: {},
+    enemieHp: {},
+
 })
 export function getMultiplier(type: string) {
     return Object.values(multiplier.value[type] || {}).reduce((a, b) => a *= b, 1)

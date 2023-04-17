@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { Enemie, EnemieDetails, Plasma } from "../types";
-import { speedConstant } from "./generel/config";
 import { field, gameloopInterval } from "./game";
 import { getRandomInt } from './generel/helpers';
 import { dirVec, norVec } from "./generel/vector";
@@ -73,10 +72,10 @@ function getSpawnPosition(enemie: Enemie) {
 }
 function getSpecial(enemie: Enemie) {
     const specials = {
-        0: () => enemie.size *= 1.2 * getMultiplier("enemieSpecial"),
-        1: () => enemie.speed *= 1.2 * getMultiplier("enemieSpecial"),
-        2: () => enemie.hpMax *= 1.2 * getMultiplier("enemieSpecial"),
-        3: () => enemie.damage *= 1.2 * getMultiplier("enemieSpecial"),
+        0: () => enemie.size *= 1.15 * getMultiplier("enemieSpecial"),
+        1: () => enemie.speed *= 1.15 * getMultiplier("enemieSpecial"),
+        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemieSpecial"),
+        3: () => enemie.damage *= 1.15 * getMultiplier("enemieSpecial"),
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }

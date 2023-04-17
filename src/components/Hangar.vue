@@ -12,12 +12,12 @@
     <div class="accordion px-2" id="accordionExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingSpaceShips">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseSpaceShips">
                     SpaceShips
                 </button>
             </h2>
-            <div id="collapseSpaceShips" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="collapseSpaceShips" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <div class="d-flex justify-content-center">
                         <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
@@ -36,11 +36,12 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingAbiliys">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAbiliys">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseAbiliys">
                     Abiliys
                 </button>
             </h2>
-            <div id="collapseAbiliys" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="collapseAbiliys" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
                         <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]"
@@ -59,11 +60,12 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingWeapons">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeapons">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseWeapons">
                     Weapons
                 </button>
             </h2>
-            <div id="collapseWeapons" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="collapseWeapons" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <button v-for="weapon of savedPlayer.weapons.owned" class="btn mb-1 me-1"
                         :class="savedPlayer.weapons.selected == weapon ? 'btn-success' : 'btn-primary'"
@@ -75,11 +77,12 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingPassivs">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePassivs">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsePassivs">
                     Passivs
                 </button>
             </h2>
-            <div id="collapsePassivs" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="collapsePassivs" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <button v-for="passiv of savedPlayer.passivs.owned" class="btn mb-1 me-1"
                         :class="savedPlayer.passivs.selected == passiv ? 'btn-success' : 'btn-primary'"

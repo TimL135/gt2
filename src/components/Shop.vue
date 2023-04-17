@@ -22,7 +22,7 @@
                     {{ item }}
                 </button>
             </h2>
-            <div :id="`collapse${item}`" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+            <div :id="`collapse${item}`" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <Items :item="item"></Items>
                 </div>

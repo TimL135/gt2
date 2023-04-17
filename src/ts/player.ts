@@ -16,6 +16,7 @@ import { generalSize, keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 import { lvlMultiplier } from "./lvl";
 import { itemMultiplier } from "./items";
+import { buildingMultiplier } from "./building";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -149,6 +150,3 @@ export function checkHp() {
     if (player.value.hp <= 0) stopGame()
 }
 
-function buildingMultiplier() {
-    throw new Error("Function not implemented.");
-}
