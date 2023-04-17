@@ -31,7 +31,7 @@ export function increaseLvl() {
     else lvlInfo = ""
     if (savedPlayer.value.lvl.lvl == maxLvl) savedPlayer.value.lvl.xp = 0
 }
-export function getLvlMultiplier() {
+export function lvlMultiplier() {
     skillTrees.value.forEach(e => updateMultiplier(`tree${e.id}`, 'playerLvl', percent(savedPlayer.value.lvl.lvl, "in")))
 }
 export function resetInfo() {

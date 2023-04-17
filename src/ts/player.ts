@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 import { Enemie, Player, SavedPlayer } from "../types";
-import { field, stop as stopGame, gameloopTicks } from "./game";
+import { field, stop as stopGame } from "./game";
 import { norVec } from "./generel/vector";
 import { remove as removeEnemie } from "./enemies";
 import { secondsToTicks } from "./generel/helpers";
@@ -14,6 +14,7 @@ import { getStats } from "./spaceShip";
 import { getMultiplier, updateMultiplier } from "./multiplier";
 import { generalSize, keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
+import { lvlMultiplier } from "./lvl";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -33,11 +34,15 @@ watch(
     () => setSavedPlayer(savedPlayer.value),
     { deep: true }
 );
-
+export function getAllMultiplier() {
+    lvlMultiplier()
+    buildingMultiplier()
+    skillMultiplier()
+}
 export const actions = ref({} as { [key: string]: number })
 export function reset() {
     const stats = getStats(savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected])
-    skillMultiplier()
+    getAllMultiplier()
     player.value.size = stats.size * getMultiplier("playerSize")
     player.value.cords = {
         x: field.value.size.x / 2 - player.value.size / 2,
@@ -140,4 +145,8 @@ export function decreaseEffectDuration() {
 
 export function checkHp() {
     if (player.value.hp <= 0) stopGame()
+}
+
+function buildingMultiplier() {
+    throw new Error("Function not implemented.");
 }
