@@ -32,6 +32,10 @@ export function getSavedPlayer(): SavedPlayer {
         lvl: {
             lvl: 0,
             xp: 0
+        },
+        artefacts: {
+            selected: 0,
+            owned: {}
         }
     }
     return {

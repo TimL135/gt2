@@ -19,7 +19,7 @@ function buy() {
         savedPlayer.value.spaceShip.owned[getRandomInt(100000)] = {
             stats: +Object.keys(details.value)[getRandomInt(Object.keys(details.value).length)],
             img: getRandomInt(imgs.length),
-            statsMultiplier: savedPlayer.value.lvl.lvl + getRandomInt(savedPlayer.value.lvl.lvl)
+            statsMultiplier: (savedPlayer.value.lvl.lvl + 1) + getRandomInt(savedPlayer.value.lvl.lvl + 1)
         }
     }
 }

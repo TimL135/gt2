@@ -1,3 +1,10 @@
+export interface Artefact {
+    enemySpawnTime: number
+    enemySpeedTime: number
+    enemyHpTime: number
+    enemySpecialTime: number
+    enemyDamageTime: number
+}
 export interface Player extends GameObject {
     hp: number
     hpMax: number
@@ -39,6 +46,10 @@ export interface SavedPlayer {
     lvl: {
         lvl: number
         xp: number
+    }
+    artefacts: {
+        selected: number
+        owned: { [key: number]: Artefact }
     }
 }
 export interface SpaceShipStats {

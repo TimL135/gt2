@@ -19,6 +19,7 @@ import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier } from "./multiplier";
 import { getXp } from "./lvl";
 import { resetInfo as resetInfoLvl } from "./lvl"
+import { getArtefact, resetArtefactInfo } from "./artefact";
 
 
 export const field = ref({
@@ -79,6 +80,7 @@ export function start() {
 export function stop() {
     if (!gameloopInterval) return
     actionsPlayer.value["time"] = gameloopTicks.value
+    getArtefact()
     getXp()
     getPoints()
     getCurrency()
@@ -100,11 +102,11 @@ function gameloop() {
     decreaseLifeDuration()
     itemMultiplier()
     gameloopTicks.value++
-    executeActionEverySec(10, increaseEnemySpeed)
-    executeActionEverySec(10, increaceEnemyHpMax)
-    executeActionEverySec(10, increaceEnemyDamage)
-    executeActionEverySec(10, increaceEnemySpecial)
-    executeActionEverySec(15, spawnEnemie)
+    executeActionEverySec(10 * getMultiplier("enemySpeedTime"), increaseEnemySpeed)
+    executeActionEverySec(10 * getMultiplier("enemyHpTime"), increaceEnemyHpMax)
+    executeActionEverySec(10 * getMultiplier("enemyDamageTime"), increaceEnemyDamage)
+    executeActionEverySec(10 * getMultiplier("enemySpecialTime"), increaceEnemySpecial)
+    executeActionEverySec(15 * getMultiplier("enemySpawnTime"), spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
 }
 
@@ -125,6 +127,7 @@ export function increaceEnemyDamage() {
 }
 
 export function resetInfoDisplay() {
+    resetArtefactInfo()
     resetInfoSkill()
     resetInfoLvl()
     currencyInfo.value = ""

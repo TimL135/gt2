@@ -17,6 +17,7 @@ import { details as detailsPassiv } from "./passivs";
 import { lvlMultiplier } from "./lvl";
 import { itemMultiplier } from "./items";
 import { buildingMultiplier } from "./building";
+import { getArtefactMultiplier } from "./artefact";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -37,6 +38,7 @@ watch(
     { deep: true }
 );
 export function getAllMultiplier() {
+    getArtefactMultiplier()
     lvlMultiplier()
     buildingMultiplier()
     skillMultiplier()

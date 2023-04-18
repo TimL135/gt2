@@ -22,13 +22,13 @@
                     <div class="d-flex justify-content-center">
                         <div v-for="spaceShip of Object.entries(savedPlayer.spaceShip.owned)" class="border mb-1 p-1 me-1"
                             :class="+spaceShip[0] == savedPlayer.spaceShip.selected ? 'border-dark' : ''"
-                            @click="selected(+spaceShip[0])">
+                            @click="selectedSpaceShip(+spaceShip[0])">
                             <div :class="typeof spaceShip[1].img == 'string' ? spaceShip[1].img : imgs[spaceShip[1].img]"
                                 class="img"></div>
                             <div v-for="stat of Object.entries(getStats(spaceShip[1])) ">
                                 {{ stat[0] }}: {{ stat[1] }}
                             </div>
-                            <button class="btn btn-danger" @click="sell(+spaceShip[0])">sell</button>
+                            <button class="btn btn-danger" @click="sellSpaceShip(+spaceShip[0])">sell</button>
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,28 @@
                 </div>
             </div>
         </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingArtefacts">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseArtefacts">
+                    artefacts
+                </button>
+            </h2>
+            <div id="collapseArtefacts" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-center">
+                        <div v-for="artefact of Object.entries(savedPlayer.artefacts.owned)" class="border mb-1 p-1 me-1"
+                            :class="+artefact[0] == savedPlayer.artefacts.selected ? 'border-dark' : ''"
+                            @click="selectedArtefact(+artefact[0])">
+                            <div v-for="stat of Object.keys(artefact[1])" class="mb-1">
+                                {{ showStat(+artefact[0], stat) }}
+                            </div>
+                            <button class="btn btn-danger" @click="sellArtefact(+artefact[0])">sell</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang='ts'>
@@ -103,16 +125,26 @@ import { details as detailsPassivs } from '../ts/passivs';
 import { imgs } from '../ts/spaceShip';
 import { computed } from 'vue';
 import { xpNeed } from '../ts/generel/config';
+import { showStat } from "../ts/artefact"
 
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))
 })
-function selected(id: number) {
+function selectedSpaceShip(id: number) {
     savedPlayer.value.spaceShip.selected = id
 }
-function sell(id: number) {
+function selectedArtefact(id: number) {
+    savedPlayer.value.artefacts.selected = id
+}
+function sellSpaceShip(id: number) {
     if (id == savedPlayer.value.spaceShip.selected) return
+    savedPlayer.value.currency += 20
     delete savedPlayer.value.spaceShip.owned[id]
+}
+function sellArtefact(id: number) {
+    if (id == savedPlayer.value.artefacts.selected) return
+    savedPlayer.value.currency += 20 * Object.keys(savedPlayer.value.artefacts.owned[id]).length
+    delete savedPlayer.value.artefacts.owned[id]
 }
 </script>
 <style scoped>
