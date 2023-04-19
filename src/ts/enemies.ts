@@ -100,7 +100,7 @@ export function spawn() {
 export function checkPosition() {
     for (const e of enemies.value) {
         for (const c of ["x", "y"] as const) {
-            if (e.cords[c] < - e.size || e.cords[c] > field.value.size[c]) kill(e)
+            if (e.cords[c] < - e.size || e.cords[c] > field.value.size[c]) death(e)
         }
     }
 }
@@ -114,7 +114,7 @@ export function hitPlasma(enemie: Enemie, plasma: Plasma) {
 
 }
 
-export function kill(enemie: Enemie) {
+export function death(enemie: Enemie) {
     remove(enemie)
 }
 

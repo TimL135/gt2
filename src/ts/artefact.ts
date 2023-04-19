@@ -5,6 +5,13 @@ import { createId, getRandomInt, percent, secondsToTicks } from "./generel/helpe
 import { multiplier, updateMultiplier } from "./multiplier";
 import { savedPlayer } from "./player";
 export const artefactInfo = ref("")
+const statText = {
+    enemySpawnTime: "new enemies spawn",
+    enemySpeedTime: "enemies become faster",
+    enemyHpTime: "enemies get more hp",
+    enemySpecialTime: " enemies have more powerful special effects",
+    enemyDamageTime: "enemies do more damage"
+}
 export function getArtefact() {
     if (Object.keys(savedPlayer.value.artefacts.owned).length >= 5) return
     let amountBuffs = 1
@@ -16,7 +23,7 @@ export function getArtefact() {
                 else break
             } else break
         }
-        let buffs = ["enemySpawnTime", "enemySpeedTime", "enemyHpTime", "enemySpecialTime", "enemyDamageTime"] as unknown as [keyof Artefact]
+        let buffs = Object.keys(statText) as [keyof Artefact]
         const artefact = {} as Artefact
         for (let i = 0; i < amountBuffs; i++) {
             artefact[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
@@ -28,15 +35,9 @@ export function getArtefact() {
 export function resetArtefactInfo() {
     artefactInfo.value = ""
 }
-const statText = {
-    enemySpawnTime: "new enemies spawn",
-    enemySpeedTime: "enemies become faster",
-    enemyHpTime: "enemies get more hp",
-    enemySpecialTime: " enemies have more powerful special effects",
-    enemyDamageTime: "enemies do more damage"
-}
+
 export function getArtefactMultiplier() {
-    for (let e of Object.keys(statText)) multiplier.value[e].artefact = 1
+    for (let e of Object.keys(statText)) delete multiplier.value[e]?.artefact
     if (savedPlayer.value.artefacts.selected == 0) return
     for (let e of Object.entries(savedPlayer.value.artefacts.owned[savedPlayer.value.artefacts.selected]))
         updateMultiplier(e[0], "artefact", percent(e[1], "in"))

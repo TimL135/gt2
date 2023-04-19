@@ -114,7 +114,7 @@ export function shot() {
 }
 
 export const isCharging = ref(false)
-let reloadInterval = 0
+let reloadInterval = 0 as number | NodeJS.Timer
 export function reload() {
     isCharging.value = true
     reloadInterval = setInterval(() => {

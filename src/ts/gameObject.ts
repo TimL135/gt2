@@ -1,5 +1,5 @@
 import { Enemie, Plasma } from "../types";
-import { getRandomInt } from "./generel/helpers";
+import { createId } from "./generel/helpers";
 
 export function move(array: Enemie[] | Plasma[]) {
     for (const e of array) {
@@ -21,6 +21,6 @@ export function defaultGameObject() {
         size: 50,
         speed: 0,
         direction: 0,
-        id: getRandomInt(100000)
+        id: createId()
     }
 }

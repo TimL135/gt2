@@ -11,7 +11,7 @@ body {
     position: relative;
 }
 
-body.touched [title]:hover:after {
+body.touchscreen [title]:hover:after {
     position: absolute;
     top: 100%;
     right: -10%;

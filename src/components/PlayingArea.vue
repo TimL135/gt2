@@ -20,9 +20,9 @@ import { gameloopInterval } from "../ts/game";
 .playingArea {
     overflow: hidden;
     position: relative;
-    background-color: blue;
     height: 100%;
     width: 100%;
     background-image: url("/public/img/background/background.png");
+    background-size: cover;
 }
 </style>

@@ -29,6 +29,7 @@ export const field = ref({
     }
 })
 export const touchscreen = ref((('ontouchstart' in window) || (navigator.maxTouchPoints > 0)))
+if (touchscreen.value) document.body.classList.add("touchscreen")
 window.onresize = () => {
     changeDisplaySize()
 };
@@ -42,10 +43,6 @@ function changeDisplaySize() {
 
 }
 
-document.body.addEventListener('touchstart', function () {
-    document.body.classList.add('touched');
-});
-
 export const gameloopTicks = ref(0)
 
 export const pressedKeys = {} as Record<string, boolean>
@@ -55,7 +52,7 @@ window.onkeyup = (e: any) => {
 window.onkeydown = (e: any) => {
     pressedKeys[e.key] = true;
 };
-export const gameloopInterval = ref(0)
+export const gameloopInterval = ref<number | NodeJS.Timer>(0)
 
 export function start() {
     if (gameloopInterval.value) return

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { Plasma, Vector, WeaponDetail } from "../types";
-import { getRandomInt } from "./generel/helpers";
+import { createId } from "./generel/helpers";
 import { player } from "./player";
 import { field } from "./game";
 import { getMultiplier } from "./multiplier";
@@ -19,7 +19,7 @@ export function spawn(details: WeaponDetail, index = 0) {
         img: 'plasma',
         moveVector: {} as Vector,
         direction: 0,
-        id: getRandomInt(100000)
+        id: createId()
     } as Plasma
     plasma.size *= getMultiplier("plasmaSize")
     plasma.speed *= getMultiplier("plasmaSpeed")
