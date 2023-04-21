@@ -7,7 +7,7 @@ import { spawn } from "./plasma";
 import { secondsToTicks } from "./generel/helpers";
 function defaultMove(plasma: Plasma) {
     for (const e of ["x", "y"] as const) {
-        plasma.cords[e] += plasma.moveVector[e] * plasma.speed * speedConstant;
+        plasma.cords[e] += plasma.moveVector[e] * plasma.speed * speedConstant.value;
     }
 }
 export const details = ref<WeaponDetails>({

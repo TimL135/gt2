@@ -1,7 +1,7 @@
-import { ref } from "vue";
+import { ComputedRef } from "vue";
 import { speedConstant, generalSize } from "./generel/config";
 
-export const multiplier = ref<{ [key: string]: { [key: string]: number } }>({
+export const multiplier = {
     playerSize: {
         generalSize
     },
@@ -25,18 +25,14 @@ export const multiplier = ref<{ [key: string]: { [key: string]: number } }>({
     plasmaSpeed: {
         generalSize
     },
-    enemieDamage: {},
-    enemieSpecial: {},
-    enemieHp: {},
-
-})
+} as { [key: string]: { [key: string]: ComputedRef<number> } }
 export function getMultiplier(type: string) {
-    return Object.values(multiplier.value[type] || {}).reduce((a, b) => a *= b, 1)
+    return Object.values(multiplier[type] || {}).reduce((a, b) => a *= b.value, 1)
 }
-// export function getAddition(type: string) {
-//     return Object.values(multiplier.value[type] || {}).reduce((a, b) => a += b, 0)
-// }
-export function updateMultiplier(product: string, category: string, value: number) {
-    if (multiplier.value[product]) multiplier.value[product][category] = value;
-    else multiplier.value[product] = { [category]: value };
+export function getAddition(type: string) {
+    return Object.values(multiplier[type] || {}).reduce((a, b) => a += b.value, 0)
+}
+export function updateMultiplier(product: string, category: string, value: ComputedRef<number>) {
+    if (multiplier[product]) multiplier[product][category] = value;
+    else multiplier[product] = { [category]: value };
 }

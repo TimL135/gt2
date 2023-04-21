@@ -36,7 +36,5 @@ import Currency from './Currency.vue';
 import SpaceShip from "./shop/SpaceShips.vue"
 import Items from "./shop/Items.vue"
 
-import { getAllMultiplier } from '../ts/player';
-getAllMultiplier()
 </script>
 <style scoped></style>

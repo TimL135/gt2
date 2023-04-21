@@ -11,12 +11,12 @@ import {
 import { gameTicks } from "./generel/config";
 import { collisions } from "./colliosion";
 import { move } from "./gameObject";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
 import { secondsToTicks } from "./generel/helpers";
-import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems, itemMultiplier } from "./items";
+import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
-import { getMultiplier, multiplier } from "./multiplier";
+import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
 import { getXp } from "./lvl";
 import { resetInfo as resetInfoLvl } from "./lvl"
 import { getArtefact, resetArtefactInfo } from "./artefact";
@@ -34,13 +34,13 @@ window.onresize = () => {
     changeDisplaySize()
 };
 function changeDisplaySize() {
+    console.log("resize")
     field.value = {
         size: {
             x: window.innerWidth / 12 * 8,
             y: window.innerHeight * 0.95
         }
     }
-
 }
 
 export const gameloopTicks = ref(0)
@@ -54,13 +54,17 @@ window.onkeydown = (e: any) => {
 };
 export const gameloopInterval = ref<number | NodeJS.Timer>(0)
 
+let enemieSpeedTime = ref(1)
+let enemieHpTime = ref(1)
+let enemieDamageTime = ref(1)
+let enemieSpecialTime = ref(1)
+
 export function start() {
     if (gameloopInterval.value) return
-
-    multiplier.value.enemieSpeed.speed = 1
-    multiplier.value.enemieHp.hpMax = 1
-    multiplier.value.enemieSpecial.special = 1
-    multiplier.value.enemieDamage.damage = 1
+    updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => enemieSpeedTime.value * 0.2 + 1))
+    updateMultiplier("enemieHp", "enemieHpTime", computed(() => enemieHpTime.value * 0.2 + 1))
+    updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => enemieDamageTime.value * 0.2 + 1))
+    updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => enemieSpecialTime.value * 0.2 + 1))
 
     clearEnemies()
     clearItems()
@@ -97,30 +101,30 @@ function gameloop() {
     reduceCooldowns()
     decreaseEffectDuration()
     decreaseLifeDuration()
-    itemMultiplier()
     gameloopTicks.value++
-    executeActionEverySec(10 * getMultiplier("enemySpeedTime"), increaseEnemySpeed)
-    executeActionEverySec(10 * getMultiplier("enemyHpTime"), increaceEnemyHpMax)
-    executeActionEverySec(10 * getMultiplier("enemyDamageTime"), increaceEnemyDamage)
-    executeActionEverySec(10 * getMultiplier("enemySpecialTime"), increaceEnemySpecial)
-    executeActionEverySec(15 * getMultiplier("enemySpawnTime"), spawnEnemie)
+    executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemySpeed)
+    executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemyHpMax)
+    executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemyDamage)
+    executeActionEverySec(10 * getMultiplier("enemieSpecialTime"), increaceEnemySpecial)
+    executeActionEverySec(15 * getMultiplier("enemieSpawnTime"), spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {
     if (gameloopTicks.value % secondsToTicks(sec) == 0) action()
 }
+
 export function increaseEnemySpeed() {
-    multiplier.value.enemieSpeed.speed += 0.2
+    enemieSpeedTime.value++
 }
 export function increaceEnemyHpMax() {
-    multiplier.value.enemieHp.hpMax += 0.2
+    enemieHpTime.value++
 }
 export function increaceEnemySpecial() {
-    multiplier.value.enemieSpecial.special += 0.2
+    enemieSpecialTime.value++
 }
 export function increaceEnemyDamage() {
-    multiplier.value.enemieDamage.damage += 0.2
+    enemieDamageTime.value++
 }
 
 export function resetInfoDisplay() {

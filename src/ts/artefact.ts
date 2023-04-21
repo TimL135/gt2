@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Artefact } from "../types";
 import { gameloopTicks } from "./game";
 import { createId, getRandomInt, percent, secondsToTicks } from "./generel/helpers";
@@ -37,10 +37,10 @@ export function resetArtefactInfo() {
 }
 
 export function getArtefactMultiplier() {
-    for (let e of Object.keys(statText)) delete multiplier.value[e]?.artefact
+    for (let e of Object.keys(statText)) delete multiplier[e]?.artefact
     if (savedPlayer.value.artefacts.selected == 0) return
     for (let e of Object.entries(savedPlayer.value.artefacts.owned[savedPlayer.value.artefacts.selected]))
-        updateMultiplier(e[0], "artefact", percent(e[1], "in"))
+        updateMultiplier(e[0], "artefact", computed(() => percent(e[1], "in")))
 }
 function getProbability(minute: number) {
     return gameloopTicks.value / secondsToTicks(minute * 60)

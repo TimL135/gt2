@@ -1,6 +1,11 @@
+import { computed } from "vue"
+
 export const gameTicks = 30
-export const speedConstant = 30 / gameTicks
-export const generalSize = (window.innerWidth / 2560 + window.innerHeight / 1360) / 2
+export const speedConstant = computed(() => 30 / gameTicks)
+
+
+export const generalSize = computed(() => (window.innerWidth / 2560 + window.innerHeight / 1360) / 2)
+
 
 export const xpNeed = 150
 export const maxLvl = 49//is displayed with +1

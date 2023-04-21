@@ -1,3 +1,4 @@
+import { computed } from "vue";
 import { maxLvl, xpNeed } from "./generel/config";
 import { percent } from "./generel/helpers";
 import { updateMultiplier } from "./multiplier";
@@ -32,7 +33,7 @@ export function increaseLvl() {
     if (savedPlayer.value.lvl.lvl == maxLvl) savedPlayer.value.lvl.xp = 0
 }
 export function lvlMultiplier() {
-    skillTrees.value.forEach(e => updateMultiplier(`tree${e.id}`, 'playerLvl', percent(savedPlayer.value.lvl.lvl, "in")))
+    skillTrees.value.forEach(e => updateMultiplier(`tree${e.id}`, 'playerLvl', computed(() => percent(savedPlayer.value.lvl.lvl, "in"))))
 }
 export function resetInfo() {
     xpInfo = ""

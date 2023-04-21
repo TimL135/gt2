@@ -50,7 +50,7 @@ export const details = ref<EnemieDetails>({
         move: (enemie: Enemie) => {
             enemie.getMoveVector(enemie)
             for (const e of ["x", "y"] as const) {
-                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * (getMultiplier("enemieSpeed") / multiplier.value.enemieSpeed.speed) * (enemie.hp / enemie.hpMax);
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * (getMultiplier("enemieSpeed") / multiplier.enemieSpeed.enemieSpeedTime.value) * (enemie.hp / enemie.hpMax);
             }
         },
         img: 'chase',
@@ -72,10 +72,10 @@ function getSpawnPosition(enemie: Enemie) {
 }
 function getSpecial(enemie: Enemie) {
     const specials = {
-        0: () => enemie.size *= 1.15 * getMultiplier("enemieSpecial"),
-        1: () => enemie.speed *= 1.15 * getMultiplier("enemieSpecial"),
-        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemieSpecial"),
-        3: () => enemie.damage *= 1.15 * getMultiplier("enemieSpecial"),
+        0: () => enemie.size *= 1.15 * getMultiplier("enemySpeedTime"),
+        1: () => enemie.speed *= 1.15 * getMultiplier("enemySpeedTime"),
+        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemySpeedTime"),
+        3: () => enemie.damage *= 1.15 * getMultiplier("enemySpeedTime"),
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
@@ -83,12 +83,12 @@ export function spawn() {
     const enemie = {
         ...defaultGameObject(),
         speed: 2,
-        damage: 1 * getMultiplier("enemieDamage"),
+        damage: 1 * getMultiplier("enemieDamageTime"),
         hp: 1,
-        hpMax: 1 * getMultiplier("enemieHp"),
+        hpMax: 1 * getMultiplier("enemieHpTime"),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     } as Enemie
-    enemie.size *= getMultiplier("enemieSize")
+    enemie.size *= getMultiplier("enemieSizeTime")
     getSpecial(enemie)
     enemie.hp = enemie.hpMax
     getSpawnPosition(enemie)

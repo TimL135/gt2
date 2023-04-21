@@ -9,7 +9,7 @@
 <script setup lang='ts'>
 import { details as detailsBuilding } from '../ts/building';
 import { cost } from '../ts/generel/config';
-import { getAllMultiplier, savedPlayer } from '../ts/player';
+import { savedPlayer } from '../ts/player';
 import Currency from './Currency.vue';
 import { getMultiplier } from '../ts/multiplier';
 function getCost(id: number) {
@@ -20,7 +20,7 @@ function buy(id: number) {
     if (savedPlayer.value.currency >= cost) {
         savedPlayer.value.currency -= cost
         savedPlayer.value.buildings[id] = (savedPlayer.value.buildings[id] || 0) + 1
-        getAllMultiplier()
+
     }
 }
 </script>

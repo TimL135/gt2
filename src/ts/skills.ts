@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { SkillDetail, SkillDetails } from "../types";
 import { actions as actionsPlayer, player, savedPlayer } from './player';
 import { percent, secondsToTicks } from "./generel/helpers";
@@ -32,7 +32,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("chargeSpeed", "skill0", percent(lvl * getMultiplier("skills0"), "in"))
+        multiplier: () => updateMultiplier("chargeSpeed", "skill0", computed(() => percent((savedPlayer.value.skills[0] || 0) * getMultiplier("skills0"), "in")))
     } as SkillDetail,
     1: {
         name: "reload automatic",
@@ -40,7 +40,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("reloadSpeed", "skill1", percent(lvl * getMultiplier("skills0"), "de"))
+        multiplier: () => updateMultiplier("reloadSpeed", "skill1", computed(() => percent((savedPlayer.value.skills[1] || 0) * getMultiplier("skills0"), "de")))
     } as SkillDetail,
     3: {
         name: "slow enemies",
@@ -48,7 +48,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 40,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("enemieSpeed", "skill3", percent(lvl * getMultiplier("skills0"), "de"))
+        multiplier: () => updateMultiplier("enemieSpeed", "skill3", computed(() => percent((savedPlayer.value.skills[2] || 0) * getMultiplier("skills0"), "de")))
     } as SkillDetail,
     4: {
         name: "smaller enemies",
@@ -56,7 +56,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 40,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("enemieSize", "skill4", percent(lvl * getMultiplier("skills5"), "de"))
+        multiplier: () => updateMultiplier("enemieSize", "skill4", computed(() => percent((savedPlayer.value.skills[3] || 0) * getMultiplier("skills5"), "de")))
     } as SkillDetail,
     5: {
         name: "big plasma",
@@ -64,7 +64,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("plasmaSize", "skill5", percent(lvl * getMultiplier("skills5"), "in"))
+        multiplier: () => updateMultiplier("plasmaSize", "skill5", computed(() => percent((savedPlayer.value.skills[5] || 0) * getMultiplier("skills5"), "in")))
     } as SkillDetail,
     6: {
         name: "fast plasma",
@@ -72,7 +72,7 @@ export const details = ref({
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("plasmaSpeed", "skill6", percent(lvl * getMultiplier("skills5"), "in"))
+        multiplier: () => updateMultiplier("plasmaSpeed", "skill6", computed(() => percent((savedPlayer.value.skills[6] || 0) * getMultiplier("skills5"), "in")))
     } as SkillDetail,
     100: {
         name: "plaid",
@@ -80,7 +80,7 @@ export const details = ref({
         skillTreeId: 1,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("playerSpeed", "skill100", percent(lvl * getMultiplier("skills100"), "in"))
+        multiplier: () => updateMultiplier("playerSpeed", "skill100", computed(() => percent((savedPlayer.value.skills[100] || 0) * getMultiplier("skills100"), "in")))
     } as SkillDetail,
     101: {
         name: "4680 battery",
@@ -88,7 +88,7 @@ export const details = ref({
         skillTreeId: 1,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => Math.round(lvl * getMultiplier("skills100"))
+        multiplier: () => updateMultiplier("playerEnergyMax", "skill101", computed(() => Math.round((savedPlayer.value.skills[101] || 0) * getMultiplier("skills100"))))
     } as SkillDetail,
     102: {
         name: "shrink ray",
@@ -96,7 +96,7 @@ export const details = ref({
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill102", percent(lvl * getMultiplier("skills100"), "de"))
+        multiplier: () => updateMultiplier("playerSize", "skill102", computed(() => percent((savedPlayer.value.skills[102] || 0) * getMultiplier("skills100"), "de")))
     } as SkillDetail,
     103: {
         name: "growth ray",
@@ -104,7 +104,7 @@ export const details = ref({
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("playerSize", "skill103", percent(lvl * getMultiplier("skills100"), "in"))
+        multiplier: () => updateMultiplier("playerSize", "skill103", computed(() => percent((savedPlayer.value.skills[103] || 0) * getMultiplier("skills100"), "in")))
     } as SkillDetail,
     104: {
         name: "armor",
@@ -112,7 +112,7 @@ export const details = ref({
         skillTreeId: 1,
         usedPointsNeed: 40,
         maxLvl: 20,
-        multiplier: (lvl = 0) => Math.round(((player.value.size / generalSize) / 100) * lvl * getMultiplier("skills100"))
+        multiplier: () => updateMultiplier("playerHpMax", "skill104", computed(() => Math.round(((player.value.size / generalSize.value) / 100) * (savedPlayer.value.skills[104] || 0) * getMultiplier("skills100"))))
     } as SkillDetail,
     200: {
         name: "more items",
@@ -120,7 +120,7 @@ export const details = ref({
         skillTreeId: 2,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("itemSpawn", "skill200", percent(lvl * getMultiplier("skills200"), "de"))
+        multiplier: () => updateMultiplier("itemSpawn", "skill200", computed(() => percent((savedPlayer.value.skills[200] || 0) * getMultiplier("skills200"), "de")))
     } as SkillDetail,
     201: {
         name: "longer items",
@@ -128,7 +128,7 @@ export const details = ref({
         skillTreeId: 2,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("itemDespawn", "skill201", percent(lvl * getMultiplier("skills200"), "in"))
+        multiplier: () => updateMultiplier("itemDespawn", "skill201", computed(() => percent((savedPlayer.value.skills[201] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     202: {
         name: "longer slow",
@@ -136,7 +136,7 @@ export const details = ref({
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("slowDuration", "skill202", percent(lvl * getMultiplier("skills200"), "in"))
+        multiplier: () => updateMultiplier("slowDuration", "skill202", computed(() => percent((savedPlayer.value.skills[202] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     203: {
         name: "longer speed",
@@ -144,7 +144,7 @@ export const details = ref({
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("speedDuration", "skill203", percent(lvl * getMultiplier("skills200"), "in"))
+        multiplier: () => updateMultiplier("speedDuration", "skill203", computed(() => percent((savedPlayer.value.skills[203] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     204: {
         name: "longer stun",
@@ -152,7 +152,7 @@ export const details = ref({
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("stunDuration", "skill204", percent(lvl * getMultiplier("skills200"), "in"))
+        multiplier: () => updateMultiplier("stunDuration", "skill204", computed(() => percent((savedPlayer.value.skills[204] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     205: {
         name: "stronger slow",
@@ -164,7 +164,7 @@ export const details = ref({
             skillLvl: 20
         },
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("slowStrength", "skill205", percent(lvl * getMultiplier("skills200"), "de"))
+        multiplier: () => updateMultiplier("slowStrength", "skill205", computed(() => percent((savedPlayer.value.skills[205] || 0) * getMultiplier("skills200"), "de")))
     } as SkillDetail,
     206: {
         name: "stronger speed",
@@ -176,7 +176,7 @@ export const details = ref({
             skillLvl: 20
         },
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("speedStrength", "skill206", percent(lvl * getMultiplier("skills200"), "in"))
+        multiplier: () => updateMultiplier("speedStrength", "skill206", computed(() => percent((savedPlayer.value.skills[206] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     300: {
         name: "discount",
@@ -184,7 +184,7 @@ export const details = ref({
         skillTreeId: 3,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("discount", "300", percent(lvl * getMultiplier("skills300"), "de"))
+        multiplier: () => updateMultiplier("discount", "300", computed(() => percent((savedPlayer.value.skills[300] || 0) * getMultiplier("skills300"), "de")))
     } as SkillDetail,
     301: {
         name: "more points",
@@ -192,7 +192,7 @@ export const details = ref({
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("tree0", "301", percent(lvl * getMultiplier("skills300"), "in"))
+        multiplier: () => updateMultiplier("tree0", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     302: {
         name: "more points",
@@ -200,7 +200,7 @@ export const details = ref({
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("tree1", "302", percent(lvl * getMultiplier("skills300"), "in"))
+        multiplier: () => updateMultiplier("tree1", "302", computed(() => percent((savedPlayer.value.skills[302] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     303: {
         name: "more points",
@@ -208,7 +208,7 @@ export const details = ref({
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("tree2", "303", percent(lvl * getMultiplier("skills300"), "in"))
+        multiplier: () => updateMultiplier("tree2", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     304: {
         name: "more points",
@@ -216,12 +216,12 @@ export const details = ref({
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: (lvl = 0) => updateMultiplier("tree3", "304", percent(lvl * getMultiplier("skills300"), "in"))
+        multiplier: () => updateMultiplier("tree3", "304", computed(() => percent((savedPlayer.value.skills[304] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
 
 } as SkillDetails)
 export function skillMultiplier() {
-    Object.entries(details.value).forEach(e => e[1].multiplier(savedPlayer.value.skills[+e[0]]))
+    Object.values(details.value).forEach(e => e.multiplier())
 }
 export const newPointsInfo = ref<string[]>([])
 export function resetInfo() {

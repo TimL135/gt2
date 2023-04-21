@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { increaseEffectDuration, isCharging, player, reload, savedPlayer, stopReload } from "./player";
 import { AbilityDetails } from "../types";
 import { getRandomInt, secondsToTicks } from "./generel/helpers";
@@ -46,10 +46,10 @@ export const details = ref({
         cooldown: secondsToTicks(10),
         effect: () => {
             player.value.invincible = true
-            updateMultiplier("playerSpeed", "ability4", 2)
+            updateMultiplier("playerSpeed", "ability4", computed(() => 2))
             setTimeout(() => {
                 player.value.invincible = false
-                updateMultiplier("playerSpeed", "ability4", 1)
+                updateMultiplier("playerSpeed", "ability4", computed(() => 1))
             }, 1000)
         },
         condition: () => true,
@@ -108,7 +108,7 @@ export const details = ref({
         cooldown: secondsToTicks(15),
         effect: () => {
             player.value.big = true
-            updateMultiplier("playerSize", "ability8", 1.2)
+            updateMultiplier("playerSize", "ability8", computed(() => player.value.big ? 1.2 : 1))
         },
         condition: () => player.value.hp < player.value.hpMax,
         energyCost: 1

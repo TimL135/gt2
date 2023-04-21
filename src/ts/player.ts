@@ -5,13 +5,13 @@ import { norVec } from "./generel/vector";
 import { remove as removeEnemie } from "./enemies";
 import { secondsToTicks } from "./generel/helpers";
 import { defaultGameObject } from "./gameObject";
-import { details as detailsSkill, skillMultiplier } from "./skills";
+import { skillMultiplier } from "./skills";
 import { setSavedPlayer } from "./generel/api";
 import { getSavedPlayer } from "./generel/api";
 import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
 import { getStats } from "./spaceShip";
-import { getMultiplier, updateMultiplier } from "./multiplier";
+import { getAddition, getMultiplier } from "./multiplier";
 import { generalSize, keys } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 import { lvlMultiplier } from "./lvl";
@@ -44,19 +44,19 @@ export function getAllMultiplier() {
     skillMultiplier()
     itemMultiplier()
 }
+setTimeout(() => getAllMultiplier(), 0)
 export const actions = ref({} as { [key: string]: number })
 export function reset() {
     const stats = getStats(savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected])
-    getAllMultiplier()
     player.value.size = stats.size * getMultiplier("playerSize")
     player.value.cords = {
         x: field.value.size.x / 2 - player.value.size / 2,
         y: field.value.size.y / 2 - player.value.size / 2
     }
     player.value.cooldowns = {}
-    player.value.hpMax = stats.hpMax + detailsSkill.value[104].multiplier(savedPlayer.value.skills[104])
+    player.value.hpMax = stats.hpMax + getAddition("playerHpMax")
     player.value.hp = player.value.hpMax
-    player.value.energyMax = stats.energyMax + detailsSkill.value[101].multiplier(savedPlayer.value.skills[101])
+    player.value.energyMax = stats.energyMax + getAddition("playerEnergyMax")
     player.value.energy = player.value.energyMax
 }
 let charge = 0
@@ -73,7 +73,7 @@ export function move(pressedKeys: Record<string, boolean>) {
         if (player.value.cords[e] > field.value.size[e] - player.value.size) player.value.cords[e] = field.value.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
-        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize)
+        actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize.value)
         if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
     }
@@ -85,7 +85,6 @@ export function enemieHit(enemie: Enemie) {
     if (savedPlayer.value.passivs.selected == 5) detailsPassiv.value[5].effect()
     if (player.value.big) {
         player.value.big = false
-        updateMultiplier("playerSize", "ability8", 1)
     } else {
         player.value.hp -= enemie.damage
         checkHp()
@@ -131,8 +130,6 @@ export function stopReload() {
     isCharging.value = false
     clearInterval(reloadInterval)
 }
-
-
 
 export function reduceCooldowns() {
     Object.keys(player.value.cooldowns).forEach(e => {

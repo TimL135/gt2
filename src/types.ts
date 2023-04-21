@@ -1,3 +1,5 @@
+import { ComputedRef } from "vue"
+
 export interface Artefact {
     enemySpawnTime: number
     enemySpeedTime: number
@@ -95,7 +97,7 @@ export interface SkillDetail {
         skillLvl: number
     }
     maxLvl: number
-    multiplier: (lvl: number) => number
+    multiplier: () => ComputedRef<number>
 }
 export interface WeaponDetails {
     [key: number]: WeaponDetail

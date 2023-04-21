@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { increaseEffectDuration, player } from "./player";
 import { plasmas } from "./plasma";
 import { percent } from "./generel/helpers";
@@ -56,8 +56,8 @@ export const details = ref<{ [key: number]: { name: string; description: string;
         name: "fear rabbit",
         description: "you become smaller and faster with low life",
         effect: () => {
-            updateMultiplier("playerSize", "passiv5", (percent((100 - (player.value.hp / player.value.hpMax) * 100), "de")))
-            updateMultiplier("playerSpeed", "passiv5", (percent((100 - (player.value.hp / player.value.hpMax) * 100), "in")))
+            updateMultiplier("playerSize", "passiv5", computed(() => (percent((100 - (player.value.hp / player.value.hpMax) * 100), "de"))))
+            updateMultiplier("playerSpeed", "passiv5", computed(() => (percent((100 - (player.value.hp / player.value.hpMax) * 100), "in"))))
         }
     },
 })

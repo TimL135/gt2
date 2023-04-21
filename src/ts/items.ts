@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Item, ItemdDetails } from "../types";
 import { getRandomInt } from './generel/helpers';
 import { field } from "./game";
@@ -13,19 +13,19 @@ export const details = ref<ItemdDetails>({
         name: "slow",
         img: 'slow',
         effect: () => increaseEffectDuration(0, 2 * getMultiplier("slowDuration")),
-        multiplier: () => updateMultiplier("enemieSpeed", "item0", player.value.effects[0] ? 0.5 * getMultiplier("slowStrength") : 1)
+        multiplier: () => updateMultiplier("enemieSpeed", "item0", computed(() => player.value.effects[0] ? 0.5 * getMultiplier("slowStrength") : 1))
     },
     1: {
         name: "speed",
         img: "speed",
         effect: () => increaseEffectDuration(1, 2 * getMultiplier("speedDuration")),
-        multiplier: () => updateMultiplier("playerSpeed", "item1", player.value.effects[1] ? 2 * getMultiplier("speedStrength") : 1)
+        multiplier: () => updateMultiplier("playerSpeed", "item1", computed(() => player.value.effects[1] ? 2 * getMultiplier("speedStrength") : 1))
     },
     2: {
         name: "stun",
         img: "stun",
         effect: () => increaseEffectDuration(2, 0.5 * getMultiplier("stunDuration")),
-        multiplier: () => updateMultiplier("enemieSpeed", "item2", player.value.effects[2] ? 0 : 1)
+        multiplier: () => updateMultiplier("enemieSpeed", "item2", computed(() => player.value.effects[2] ? 0 : 1))
     },
     3: {
         name: "heal",
