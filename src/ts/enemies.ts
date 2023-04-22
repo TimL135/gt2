@@ -71,7 +71,6 @@ function getSpawnPosition(enemie: Enemie) {
     if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.value.size.y);
 }
 function getSpecial(enemie: Enemie) {
-    console.log(getMultiplier("enemieSpecial"))
     const specials = {
         0: () => enemie.size *= 1.15 * getMultiplier("enemieSpecial"),
         1: () => enemie.speed *= 1.15 * getMultiplier("enemieSpecial"),

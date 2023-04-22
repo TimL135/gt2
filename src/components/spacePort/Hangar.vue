@@ -43,12 +43,13 @@
             </h2>
             <div id="collapseAbiliys" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <div v-for="(_, ability) of savedPlayer.abilitys.selected" class="px-2 d-flex justify-content-center">
-                        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[ability]"
-                            :title="detailsAbilitys[ability].description">
-                            <option :value="savedPlayer.abilitys.selected[ability]"
-                                :title="detailsAbilitys[ability].description">{{
-                                    detailsAbilitys[savedPlayer.abilitys.selected[ability]]?.name || "none" }}</option>
+                    <div v-for="(ability, index) of savedPlayer.abilitys.selected"
+                        class="px-2 d-flex justify-content-center">
+                        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[index]"
+                            :title="detailsAbilitys[ability]?.description">
+                            <option :value="savedPlayer.abilitys.selected[index]"
+                                :title="detailsAbilitys[ability]?.description">{{
+                                    detailsAbilitys[savedPlayer.abilitys.selected[index]]?.name || "none" }}</option>
                             <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
                                 :title="detailsAbilitys[availableAbility]?.description">{{
                                     detailsAbilitys[availableAbility]?.name }}</option>
