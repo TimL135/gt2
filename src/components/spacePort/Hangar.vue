@@ -117,15 +117,15 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { savedPlayer } from '../ts/player';
-import { getStats } from '../ts/spaceShip';
-import { details as detailsAbilitys } from '../ts/abilitys';
-import { details as detailsWeapons } from '../ts/weapon';
-import { details as detailsPassivs } from '../ts/passivs';
-import { imgs } from '../ts/spaceShip';
+import { savedPlayer } from '../../ts/player';
+import { getStats } from '../../ts/spaceShip';
+import { details as detailsAbilitys } from '../../ts/abilitys';
+import { details as detailsWeapons } from '../../ts/weapon';
+import { details as detailsPassivs } from '../../ts/passivs';
+import { imgs } from '../../ts/spaceShip';
 import { computed } from 'vue';
-import { xpNeed } from '../ts/generel/config';
-import { showStat } from "../ts/artefact"
+import { xpNeed } from '../../ts/generel/config';
+import { showStat } from "../../ts/artefact"
 
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))

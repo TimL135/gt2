@@ -37,7 +37,7 @@ export const details = ref<WeaponDetails>({
     2: {
         name: 'bazooka',
         description: 'fires a huge powerful plasma ball.',
-        damage: 1,
+        damage: 5,
         size: 60,
         speed: 4,
         cooldown: secondsToTicks(4),
@@ -48,7 +48,7 @@ export const details = ref<WeaponDetails>({
     3: {
         name: 'shotgun',
         description: 'shot 3 plasmas.',
-        damage: 1,
+        damage: 0.5,
         size: 20,
         speed: 6,
         cooldown: secondsToTicks(2),

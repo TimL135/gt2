@@ -36,6 +36,9 @@ export function getSavedPlayer(): SavedPlayer {
         artefacts: {
             selected: 0,
             owned: {}
+        },
+        score: {
+            highScore: 0,
         }
     }
     return {

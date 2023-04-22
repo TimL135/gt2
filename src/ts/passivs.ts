@@ -60,4 +60,10 @@ export const details = ref<{ [key: number]: { name: string; description: string;
             updateMultiplier("playerSpeed", "passiv5", computed(() => (percent((100 - (player.value.hp / player.value.hpMax) * 100), "in"))))
         }
     },
+    6: {
+        name: "energy shield",
+        description: "the more energy you have the less damage you get.",
+        effect: () =>
+            percent((player.value.energy / player.value.energyMax) * 100, "de")
+    }
 })

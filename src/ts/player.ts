@@ -86,7 +86,11 @@ export function enemieHit(enemie: Enemie) {
     if (player.value.big) {
         player.value.big = false
     } else {
-        player.value.hp -= enemie.damage
+        if (savedPlayer.value.passivs.selected == 6) {
+            player.value.hp -= enemie.damage * detailsPassiv.value[6].effect()
+        } else {
+            player.value.hp -= enemie.damage
+        }
         checkHp()
     }
 }

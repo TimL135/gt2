@@ -53,6 +53,9 @@ export interface SavedPlayer {
         selected: number
         owned: { [key: number]: Artefact }
     }
+    score: {
+        highScore: number
+    }
 }
 export interface SpaceShipStats {
     speed: number,

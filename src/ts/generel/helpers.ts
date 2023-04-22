@@ -7,6 +7,9 @@ export function getRandomInt(max: number) {
 export function secondsToTicks(sec: number) {
     return Math.round(gameTicks * sec)
 }
+export function ticksToSeconds(ticks: number) {
+    return Math.round(ticks / gameTicks)
+}
 export function percent(number: number, change: "in" | "de" | "const") {
     if (change == "in") return (number + 100) / 100;
     if (change == "de") return Math.exp(-0.015 * number);

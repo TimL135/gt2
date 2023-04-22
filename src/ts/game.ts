@@ -13,7 +13,7 @@ import { collisions } from "./colliosion";
 import { move } from "./gameObject";
 import { computed, ref } from "vue";
 import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
-import { secondsToTicks } from "./generel/helpers";
+import { secondsToTicks, ticksToSeconds } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, resetInfo as resetInfoSkill } from "./skills";
 import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
@@ -34,7 +34,6 @@ window.onresize = () => {
     changeDisplaySize()
 };
 function changeDisplaySize() {
-    console.log("resize")
     field.value = {
         size: {
             x: window.innerWidth / 12 * 8,
@@ -80,7 +79,8 @@ export function start() {
 
 export function stop() {
     if (!gameloopInterval) return
-    actionsPlayer.value["time"] = gameloopTicks.value
+    actionsPlayer.value["time"] = ticksToSeconds(gameloopTicks.value)
+    getScore()
     getArtefact()
     getXp()
     getPoints()
@@ -132,11 +132,27 @@ export function resetInfoDisplay() {
     resetInfoSkill()
     resetInfoLvl()
     currencyInfo.value = ""
+    scoreInfo.value = ""
 }
 export const currencyInfo = ref("")
 function getCurrency() {
     if (actionsPlayer.value["currency"]) {
         currencyInfo.value = `you got ${actionsPlayer.value["currency"]} scrap`
         savedPlayer.value.currency = Math.round((savedPlayer.value.currency || 0) + actionsPlayer.value["currency"])
+    }
+}
+export const scoreInfo = ref("")
+function getScore() {
+    let score = Object.entries(actionsPlayer.value).reduce((a, b) => {
+        if (b[0] == "time") return a + b[1] * 1
+        if (b[0] == 'deathEnemies') return a + b[1] * 3
+        if (b[0] == 'kills') return a + b[1] * 7
+        if (b[0] == 'collect') return a + b[1] * 10
+        return a
+    }, 0)
+    if (score > savedPlayer.value.score.highScore) {
+        let newHighScore = Math.round(score)
+        scoreInfo.value = `you got a new highscore: ${newHighScore}`
+        savedPlayer.value.score.highScore = newHighScore
     }
 }
