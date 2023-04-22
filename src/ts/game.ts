@@ -53,18 +53,20 @@ window.onkeydown = (e: any) => {
 };
 export const gameloopInterval = ref<number | NodeJS.Timer>(0)
 
-let enemieSpeedTime = ref(1)
-let enemieHpTime = ref(1)
-let enemieDamageTime = ref(1)
-let enemieSpecialTime = ref(1)
-
+const enemieSpeedTime = ref(1)
+const enemieHpTime = ref(1)
+const enemieDamageTime = ref(1)
+const enemieSpecialTime = ref(1)
+updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => enemieSpeedTime.value * 0.2 + 1))
+updateMultiplier("enemieHp", "enemieHpTime", computed(() => enemieHpTime.value * 0.2 + 1))
+updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => enemieDamageTime.value * 0.2 + 1))
+updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => enemieSpecialTime.value * 0.2 + 1))
 export function start() {
     if (gameloopInterval.value) return
-    updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => enemieSpeedTime.value * 0.2 + 1))
-    updateMultiplier("enemieHp", "enemieHpTime", computed(() => enemieHpTime.value * 0.2 + 1))
-    updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => enemieDamageTime.value * 0.2 + 1))
-    updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => enemieSpecialTime.value * 0.2 + 1))
-
+    enemieSpeedTime.value = 1
+    enemieHpTime.value = 1
+    enemieDamageTime.value = 1
+    enemieSpecialTime.value = 1
     clearEnemies()
     clearItems()
     clearPlasma()

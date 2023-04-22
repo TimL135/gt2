@@ -29,9 +29,10 @@ function collisionPlayerEnemies() {
 }
 function colliosionPlasmaEnemies() {
     for (const enemie of enemies.value) {
-        for (const plasma of plasmas.value) {
+        for (const plasma of [...plasmas.value]) {
             if (collisionsCheck(plasma, enemie)) {
                 hitPlasmaEnemie(enemie, plasma)
+                plasmas.value.splice(plasmas.value.indexOf(plasma), 1)
                 break
             }
         }
