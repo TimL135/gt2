@@ -101,7 +101,7 @@ export function abilities(pressedKeys: Record<string, boolean>) {
     for (let i in savedPlayer.value.abilitys.selected) {
         let ability = savedPlayer.value.abilitys.selected[+i]
         if (pressedKeys[keys[`ability${i}` as 'ability0']] && ability != -1 && detailsAbilitys.value[ability]?.condition() && !player.value.cooldowns[+i] && player.value.energy >= detailsAbilitys.value[ability].energyCost) {
-            player.value.cooldowns[+i] = detailsAbilitys.value[ability].cooldown
+            player.value.cooldowns[+i] = detailsAbilitys.value[ability].cooldown * getMultiplier("abilityCooldown")
             player.value.energy -= detailsAbilitys.value[ability].energyCost
             detailsAbilitys.value[ability].effect()
         }

@@ -99,20 +99,20 @@ export const details = ref({
         multiplier: () => updateMultiplier("playerSize", "skill102", computed(() => percent((savedPlayer.value.skills[102] || 0) * getMultiplier("skills100"), "de")))
     } as SkillDetail,
     103: {
-        name: "growth ray",
-        description: "makes you bigger.",
+        name: "overclocking",
+        description: "reduces the cooldown of the ability.",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("playerSize", "skill103", computed(() => percent((savedPlayer.value.skills[103] || 0) * getMultiplier("skills100"), "in")))
+        multiplier: () => updateMultiplier("abilityCooldown", "skill103", computed(() => percent((savedPlayer.value.skills[103] || 0) * getMultiplier("skills100"), "de")))
     } as SkillDetail,
     104: {
         name: "armor",
-        description: "gives you more life especially effective when your spaceship is big.",
+        description: "gives you more life.",
         skillTreeId: 1,
         usedPointsNeed: 40,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("playerHpMax", "skill104", computed(() => Math.round(((player.value.size / generalSize.value) / 100) * (savedPlayer.value.skills[104] || 0) * getMultiplier("skills100"))))
+        multiplier: () => updateMultiplier("playerHpMax", "skill104", computed(() => Math.round((savedPlayer.value.skills[104] || 0) * getMultiplier("skills100"))))
     } as SkillDetail,
     200: {
         name: "more items",
@@ -218,7 +218,6 @@ export const details = ref({
         maxLvl: 20,
         multiplier: () => updateMultiplier("tree3", "304", computed(() => percent((savedPlayer.value.skills[304] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
-
 } as SkillDetails)
 export function skillMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())

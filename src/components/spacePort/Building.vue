@@ -17,7 +17,9 @@ function getCost(id: number) {
     return Math.round(cost.buildings * ((savedPlayer.value.buildings[id] || 0) + 1) * getMultiplier("discount"))
 }
 function getMaxLvl(id: number) {
-    return detailsBuilding.value[id].maxLvl + Math.floor(savedPlayer.value.score.highScore / 1000)
+    let increase = Math.floor(savedPlayer.value.score.highScore / 1000)
+    if (increase > 15) increase = 15
+    return detailsBuilding.value[id].maxLvl + increase
 }
 function buy(id: number) {
     const cost = getCost(id)
