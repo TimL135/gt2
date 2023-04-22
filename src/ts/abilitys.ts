@@ -36,7 +36,7 @@ export const details = ref({
         name: "heal",
         description: "heals you.",
         cooldown: secondsToTicks(5),
-        effect: () => { player.value.hp += 1 },
+        effect: () => { player.value.hp += 1; if (player.value.hp > player.value.hpMax) player.value.hp = player.value.hpMax },
         condition: () => player.value.hp < player.value.hpMax,
         energyCost: 1
     },
