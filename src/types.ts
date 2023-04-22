@@ -1,11 +1,11 @@
 import { ComputedRef } from "vue"
 
 export interface Artefact {
-    enemySpawnTime: number
-    enemySpeedTime: number
-    enemyHpTime: number
-    enemySpecialTime: number
-    enemyDamageTime: number
+    enemieSpawnTime: number
+    enemieSpeedTime: number
+    enemieHpTime: number
+    enemieSpecialTime: number
+    enemieDamageTime: number
 }
 export interface Player extends GameObject {
     hp: number

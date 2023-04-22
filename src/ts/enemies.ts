@@ -72,10 +72,10 @@ function getSpawnPosition(enemie: Enemie) {
 }
 function getSpecial(enemie: Enemie) {
     const specials = {
-        0: () => enemie.size *= 1.15 * getMultiplier("enemySpeedTime"),
-        1: () => enemie.speed *= 1.15 * getMultiplier("enemySpeedTime"),
-        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemySpeedTime"),
-        3: () => enemie.damage *= 1.15 * getMultiplier("enemySpeedTime"),
+        0: () => enemie.size *= 1.15 * getMultiplier("enemieSpeedTime"),
+        1: () => enemie.speed *= 1.15 * getMultiplier("enemieSpeedTime"),
+        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemieSpeedTime"),
+        3: () => enemie.damage *= 1.15 * getMultiplier("enemieSpeedTime"),
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
@@ -88,7 +88,7 @@ export function spawn() {
         hpMax: 1 * getMultiplier("enemieHpTime"),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     } as Enemie
-    enemie.size *= getMultiplier("enemieSizeTime")
+    enemie.size *= getMultiplier("enemieSize")
     getSpecial(enemie)
     enemie.hp = enemie.hpMax
     getSpawnPosition(enemie)

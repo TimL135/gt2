@@ -6,11 +6,11 @@ import { multiplier, updateMultiplier } from "./multiplier";
 import { savedPlayer } from "./player";
 export const artefactInfo = ref("")
 const statText = {
-    enemySpawnTime: "new enemies spawn",
-    enemySpeedTime: "enemies become faster",
-    enemyHpTime: "enemies get more hp",
-    enemySpecialTime: " enemies have more powerful special effects",
-    enemyDamageTime: "enemies do more damage"
+    enemieSpawnTime: "new enemies spawn",
+    enemieSpeedTime: "enemies become faster",
+    enemieHpTime: "enemies get more hp",
+    enemieSpecialTime: " enemies have more powerful special effects",
+    enemieDamageTime: "enemies do more damage"
 }
 export function getArtefact() {
     if (Object.keys(savedPlayer.value.artefacts.owned).length >= 5) return

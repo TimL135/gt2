@@ -102,10 +102,10 @@ function gameloop() {
     decreaseEffectDuration()
     decreaseLifeDuration()
     gameloopTicks.value++
-    executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemySpeed)
-    executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemyHpMax)
-    executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemyDamage)
-    executeActionEverySec(10 * getMultiplier("enemieSpecialTime"), increaceEnemySpecial)
+    executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemieSpeed)
+    executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemieHpMax)
+    executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemieDamage)
+    executeActionEverySec(10 * getMultiplier("enemieSpecialTime"), increaceEnemieSpecial)
     executeActionEverySec(15 * getMultiplier("enemieSpawnTime"), spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
 }
@@ -114,16 +114,16 @@ export function executeActionEverySec(sec: number, action: Function) {
     if (gameloopTicks.value % secondsToTicks(sec) == 0) action()
 }
 
-export function increaseEnemySpeed() {
+export function increaseEnemieSpeed() {
     enemieSpeedTime.value++
 }
-export function increaceEnemyHpMax() {
+export function increaceEnemieHpMax() {
     enemieHpTime.value++
 }
-export function increaceEnemySpecial() {
+export function increaceEnemieSpecial() {
     enemieSpecialTime.value++
 }
-export function increaceEnemyDamage() {
+export function increaceEnemieDamage() {
     enemieDamageTime.value++
 }
 
