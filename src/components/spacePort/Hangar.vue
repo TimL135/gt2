@@ -28,7 +28,7 @@
                             <div v-for="stat of Object.entries(getStats(spaceShip[1])) ">
                                 {{ stat[0] }}: {{ stat[1] }}
                             </div>
-                            <button class="btn btn-danger" @click="sellSpaceShip(+spaceShip[0])">sell</button>
+                            <button class="btn btn-danger" @click.stop="sellSpaceShip(+spaceShip[0])">sell</button>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                             <div v-for="stat of Object.keys(artefact[1])" class="mb-1">
                                 {{ showStat(+artefact[0], stat) }}
                             </div>
-                            <button class="btn btn-danger" @click="sellArtefact(+artefact[0])">sell</button>
+                            <button class="btn btn-danger" @click.stop="sellArtefact(+artefact[0])">sell</button>
                         </div>
                     </div>
                 </div>

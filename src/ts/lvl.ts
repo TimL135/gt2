@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { maxLvl, xpNeed } from "./generel/config";
 import { percent } from "./generel/helpers";
-import { updateMultiplier } from "./multiplier";
+import { getMultiplier, updateMultiplier } from "./multiplier";
 import { actions, savedPlayer } from "./player";
 import { skillTrees } from "./skills";
 
@@ -11,10 +11,10 @@ export function getXp() {
 
     const xp = Object.entries(actions.value).reduce((a, b) => {
         if (b[0] == 'deathEnemies') return a + b[1] * 1
-        if (b[0] == 'kills') return a + b[1] * 5
-        if (b[0] == 'collect') return a + b[1] * 10
+        if (b[0] == 'collect') return a + b[1] * 5
+        if (b[0] == 'kills') return a + b[1] * 10
         return a
-    }, 0)
+    }, 0) * getMultiplier("xp")
     if (xp > 0) xpInfo = `you got ${xp} xp`
     else xpInfo = ""
     savedPlayer.value.lvl.xp += xp

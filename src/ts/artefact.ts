@@ -2,7 +2,7 @@ import { computed, ref } from "vue";
 import { Artefact } from "../types";
 import { gameloopTicks } from "./game";
 import { createId, getRandomInt, percent, secondsToTicks } from "./generel/helpers";
-import { multiplier, updateMultiplier } from "./multiplier";
+import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
 import { savedPlayer } from "./player";
 export const artefactInfo = ref("")
 const statText = {
@@ -15,10 +15,10 @@ const statText = {
 export function getArtefact() {
     if (Object.keys(savedPlayer.value.artefacts.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(3) > Math.random()) {
+    if (getProbability(4) > Math.random()) {
         for (let i = 1; i < 5; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(3 + i) > Math.random())
+                if (getProbability(4 + (i * 2)) > Math.random())
                     amountBuffs++
                 else break
             } else break
@@ -43,7 +43,7 @@ export function getArtefactMultiplier() {
         updateMultiplier(e[0], "artefact", computed(() => percent(e[1], "in")))
 }
 function getProbability(minute: number) {
-    return gameloopTicks.value / secondsToTicks(minute * 60)
+    return (gameloopTicks.value / secondsToTicks(minute * 60)) * getMultiplier("artefactChance")
 }
 export function showStat(id: number, stat: keyof Artefact) {
     return `increase the time until ${statText[stat]} by ${savedPlayer.value.artefacts.owned[id][stat]}%`

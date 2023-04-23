@@ -186,39 +186,32 @@ export const details = ref({
         maxLvl: 20,
         multiplier: () => updateMultiplier("discount", "300", computed(() => percent((savedPlayer.value.skills[300] || 0) * getMultiplier("skills300"), "de")))
     } as SkillDetail,
+
     301: {
-        name: "more points",
-        description: `you get more points for the ${skillTrees.value[0].name} tree.`,
+        name: "more xp",
+        description: "you get more xp.",
         skillTreeId: 3,
-        usedPointsNeed: 20,
+        usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("tree0", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("xp", "302", computed(() => percent((savedPlayer.value.skills[302] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     302: {
-        name: "more points",
-        description: `you get more points for the ${skillTrees.value[1].name} tree.`,
+        name: "more scrap",
+        description: "you get more scrap.",
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("tree1", "302", computed(() => percent((savedPlayer.value.skills[302] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("currency", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     303: {
-        name: "more points",
-        description: `you get more points for the ${skillTrees.value[2].name} tree.`,
+        name: "four-leaf clover",
+        description: "you get more and better artefacts",
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("tree2", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("artefactChance", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
-    304: {
-        name: "more points",
-        description: `you get more points for the ${skillTrees.value[3].name} tree.`,
-        skillTreeId: 3,
-        usedPointsNeed: 20,
-        maxLvl: 20,
-        multiplier: () => updateMultiplier("tree3", "304", computed(() => percent((savedPlayer.value.skills[304] || 0) * getMultiplier("skills300"), "in")))
-    } as SkillDetail,
-} as SkillDetails)
+})
 export function skillMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())
 }
@@ -228,7 +221,7 @@ export function resetInfo() {
 }
 export function getPoints() {
     lvlMultiplier()
-    for (const e of [["kills", 10, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", secondsToTicks(10), 3]] as const) {
+    for (const e of [["kills", 2, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", 10, 3]] as const) {
         const actionValue = Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1])
         if (actionValue > (savedPlayer.value.points[e[2]] || 0)) {
             const points = actionValue - (savedPlayer.value.points[e[2]] || 0)
