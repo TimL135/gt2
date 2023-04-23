@@ -15,11 +15,11 @@ import { computed, ref } from "vue";
 import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
 import { secondsToTicks, ticksToSeconds } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
-import { getPoints, resetInfo as resetInfoSkill } from "./skills";
-import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
+import { getPoints, } from "./skills";
+import { getMultiplier, updateMultiplier } from "./multiplier";
 import { getXp } from "./lvl";
-import { resetInfo as resetInfoLvl } from "./lvl"
-import { getArtefact, resetArtefactInfo } from "./artefact";
+import { getArtefact, getPowerCrystal } from "./artefact";
+import { resetInfo, updateInfo } from "./info";
 
 
 export const field = ref({
@@ -57,10 +57,10 @@ const enemieSpeedTime = ref(1)
 const enemieHpTime = ref(1)
 const enemieDamageTime = ref(1)
 const enemieSpecialTime = ref(1)
-updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => enemieSpeedTime.value * 0.2 + 1))
-updateMultiplier("enemieHp", "enemieHpTime", computed(() => enemieHpTime.value * 0.2 + 1))
-updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => enemieDamageTime.value * 0.2 + 1))
-updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => enemieSpecialTime.value * 0.2 + 1))
+updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => (enemieSpeedTime.value * 0.2 * getMultiplier("enemieSpeedPower")) + 1))
+updateMultiplier("enemieHp", "enemieHpTime", computed(() => (enemieHpTime.value * 0.2 * getMultiplier("enemieHpPower")) + 1))
+updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamageTime.value * 0.2 * getMultiplier("enemieDamagePower")) + 1))
+updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.2 * getMultiplier("enemieSpecialPower")) + 1))
 export function start() {
     if (gameloopInterval.value) return
     enemieSpeedTime.value = 1
@@ -71,7 +71,7 @@ export function start() {
     clearItems()
     clearPlasma()
     resetPlayer()
-    resetInfoDisplay()
+    resetInfo()
     gameloopTicks.value = 0
     for (let i = 0; i < 5; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
@@ -84,6 +84,7 @@ export function stop() {
     actionsPlayer.value["time"] = ticksToSeconds(gameloopTicks.value)
     getScore()
     getArtefact()
+    getPowerCrystal()
     getXp()
     getPoints()
     getCurrency()
@@ -129,22 +130,13 @@ export function increaceEnemieDamage() {
     enemieDamageTime.value++
 }
 
-export function resetInfoDisplay() {
-    resetArtefactInfo()
-    resetInfoSkill()
-    resetInfoLvl()
-    currencyInfo.value = ""
-    scoreInfo.value = ""
-}
-export const currencyInfo = ref("")
 function getCurrency() {
     if (actionsPlayer.value["currency"]) {
         let currency = Math.round(actionsPlayer.value["currency"] * getMultiplier("currency"))
-        currencyInfo.value = `you got ${currency} scrap`
+        updateInfo("currency", `you got ${currency} scrap`)
         savedPlayer.value.currency = Math.round((savedPlayer.value.currency || 0) + currency)
     }
 }
-export const scoreInfo = ref("")
 function getScore() {
     let score = Object.entries(actionsPlayer.value).reduce((a, b) => {
         if (b[0] == "time") return a + b[1] * 1
@@ -155,7 +147,7 @@ function getScore() {
     }, 0)
     if (score > savedPlayer.value.score.highScore) {
         let newHighScore = Math.round(score)
-        scoreInfo.value = `you got a new highscore: ${newHighScore}`
+        updateInfo("highScore", `you got a new highscore: ${newHighScore}`)
         savedPlayer.value.score.highScore = newHighScore
     }
 }

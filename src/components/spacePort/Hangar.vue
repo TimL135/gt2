@@ -97,7 +97,7 @@
             <h2 class="accordion-header" id="headingArtefacts">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseArtefacts">
-                    artefacts
+                    time crystal
                 </button>
             </h2>
             <div id="collapseArtefacts" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -115,6 +115,29 @@
                 </div>
             </div>
         </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPowerCrystal">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsePowerCrystal">
+                    power crystal
+                </button>
+            </h2>
+            <div id="collapsePowerCrystal" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="d-flex justify-content-center">
+                        <div v-for="powerCrystal of Object.entries(savedPlayer.powerCrystal.owned)"
+                            class="border mb-1 p-1 me-1"
+                            :class="+powerCrystal[0] == savedPlayer.powerCrystal.selected ? 'border-dark' : ''"
+                            @click="selectedPowerCrystal(+powerCrystal[0])">
+                            <div v-for="stat of Object.keys(powerCrystal[1])" class="mb-1">
+                                {{ showStatTimeCrystal(+powerCrystal[0], stat) }}
+                            </div>
+                            <button class="btn btn-danger" @click.stop="sellPowerCrystal(+powerCrystal[0])">sell</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang='ts'>
@@ -126,7 +149,7 @@ import { details as detailsPassivs } from '../../ts/passivs';
 import { imgs } from '../../ts/spaceShip';
 import { computed } from 'vue';
 import { xpNeed } from '../../ts/generel/config';
-import { showStat } from "../../ts/artefact"
+import { showStat, showStatTimeCrystal } from "../../ts/artefact"
 
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))
@@ -137,6 +160,9 @@ function selectedSpaceShip(id: number) {
 function selectedArtefact(id: number) {
     savedPlayer.value.artefacts.selected = id
 }
+function selectedPowerCrystal(id: number) {
+    savedPlayer.value.powerCrystal.selected = id
+}
 function sellSpaceShip(id: number) {
     if (id == savedPlayer.value.spaceShip.selected) return
     savedPlayer.value.currency += 20
@@ -146,6 +172,11 @@ function sellArtefact(id: number) {
     if (id == savedPlayer.value.artefacts.selected) return
     savedPlayer.value.currency += 20 * Object.keys(savedPlayer.value.artefacts.owned[id]).length
     delete savedPlayer.value.artefacts.owned[id]
+}
+function sellPowerCrystal(id: number) {
+    if (id == savedPlayer.value.powerCrystal.selected) return
+    savedPlayer.value.currency += 20 * Object.keys(savedPlayer.value.powerCrystal.owned[id]).length
+    delete savedPlayer.value.powerCrystal.owned[id]
 }
 </script>
 <style scoped>

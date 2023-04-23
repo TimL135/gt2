@@ -5,6 +5,7 @@ import { percent, secondsToTicks } from "./generel/helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
 import { generalSize } from "./generel/config";
 import { lvlMultiplier } from "./lvl";
+import { updateInfo } from "./info";
 
 export const skillTrees = ref([
     {
@@ -73,6 +74,14 @@ export const details = ref({
         usedPointsNeed: 20,
         maxLvl: 20,
         multiplier: () => updateMultiplier("plasmaSpeed", "skill6", computed(() => percent((savedPlayer.value.skills[6] || 0) * getMultiplier("skills5"), "in")))
+    } as SkillDetail,
+    7: {
+        name: "strong plasma",
+        description: "plasma makes more damage.",
+        skillTreeId: 0,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: () => updateMultiplier("plasmaDamage", "skill7", computed(() => percent((savedPlayer.value.skills[7] || 0) * getMultiplier("skills5"), "in")))
     } as SkillDetail,
     100: {
         name: "plaid",
@@ -215,17 +224,15 @@ export const details = ref({
 export function skillMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())
 }
-export const newPointsInfo = ref<string[]>([])
-export function resetInfo() {
-    newPointsInfo.value = []
-}
+
+
 export function getPoints() {
     lvlMultiplier()
     for (const e of [["kills", 2, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", 10, 3]] as const) {
         const actionValue = Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1])
         if (actionValue > (savedPlayer.value.points[e[2]] || 0)) {
             const points = actionValue - (savedPlayer.value.points[e[2]] || 0)
-            newPointsInfo.value.push(`you got ${points} point${points > 1 ? 's' : ''} for the "${skillTrees.value[e[2]].name}" tree.`)
+            updateInfo(`tree${e[2]}`, `you got ${points} point${points > 1 ? 's' : ''} for the "${skillTrees.value[e[2]].name}" tree.`)
             savedPlayer.value.points[e[2]] = actionValue
         }
     }

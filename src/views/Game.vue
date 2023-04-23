@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
 import { player, isCharging, savedPlayer } from "../ts/player"
-import { gameloopInterval, resetInfoDisplay } from "../ts/game"
+import { gameloopInterval } from "../ts/game"
 import { details as detailsItem } from "../ts/items";
 import { buildingMultiplier } from "../ts/building";
 import { secondsToTicks } from '../ts/generel/helpers';
@@ -78,7 +78,9 @@ import { details as detailsWeapon } from "../ts/weapon";
 import { details as detailsAbilitys } from "../ts/abilitys";
 import Touchscreen from '../components/Touchscreen.vue';
 import { touchscreen } from '../ts/game';
-resetInfoDisplay()
+import { resetInfo } from '../ts/info';
+resetInfo()
+
 
 buildingMultiplier()
 </script>

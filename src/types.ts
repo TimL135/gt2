@@ -7,6 +7,12 @@ export interface Artefact {
     enemieSpecialTime: number
     enemieDamageTime: number
 }
+export interface PowerCrystal {
+    enemieSpeedPower: number
+    enemieHpPower: number
+    enemieSpecialPower: number
+    enemieDamagePower: number
+}
 export interface Player extends GameObject {
     hp: number
     hpMax: number
@@ -52,6 +58,10 @@ export interface SavedPlayer {
     artefacts: {
         selected: number
         owned: { [key: number]: Artefact }
+    }
+    powerCrystal: {
+        selected: number
+        owned: { [key: number]: PowerCrystal }
     }
     score: {
         highScore: number

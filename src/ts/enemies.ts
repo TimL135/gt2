@@ -109,19 +109,20 @@ export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     enemie.hp -= plasma.damage
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
+        actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 3
         remove(enemie)
     }
 
 }
 
 export function death(enemie: Enemie) {
+    actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 1
     remove(enemie)
 }
 
 export function remove(enemie: Enemie) {
     if (gameloopInterval.value) {
         actionsPlayer.value["deathEnemies"] = (actionsPlayer.value["deathEnemies"] || 0) + 1
-        actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 1
         enemies.value = enemies.value.filter(e => e.id != enemie.id)
         spawn()
     }

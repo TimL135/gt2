@@ -37,6 +37,10 @@ export function getSavedPlayer(): SavedPlayer {
             selected: 0,
             owned: {}
         },
+        powerCrystal: {
+            selected: 0,
+            owned: {}
+        },
         score: {
             highScore: 0,
         }

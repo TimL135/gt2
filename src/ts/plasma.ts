@@ -23,6 +23,7 @@ export function spawn(details: WeaponDetail, index = 0) {
     } as Plasma
     plasma.size *= getMultiplier("plasmaSize")
     plasma.speed *= getMultiplier("plasmaSpeed")
+    plasma.damage *= getMultiplier("plasmaDamage")
     plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
 }
