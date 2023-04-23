@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :title="skillTrees[treeId].getPointsInfo">
         used points: {{ points[0] }}/{{ points[1] }}
     </div>
     <div v-for="tier of tiers">
@@ -17,7 +17,7 @@
 </template>
 <script setup lang='ts'>
 import { computed, toRefs } from 'vue';
-import { details as detailsSkill } from '../ts/skills';
+import { details as detailsSkill, skillTrees } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys } from '../ts/game';

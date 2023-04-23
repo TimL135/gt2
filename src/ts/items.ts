@@ -41,7 +41,7 @@ export function itemMultiplier() {
 export function spawn() {
     const item = {
         ...defaultGameObject(),
-        lifeDuration: secondsToTicks(3 * getMultiplier("itemDespawn")),
+        lifeDuration: secondsToTicks(3.5 * getMultiplier("itemDespawn")),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
     item.size *= getMultiplier("itemSize")

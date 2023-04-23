@@ -4,7 +4,7 @@ import { percent } from "./generel/helpers";
 
 export const details = ref({
     0: {
-        speed: 4,
+        speed: 5,
         hpMax: 5,
         energyMax: 5,
         size: 50,
@@ -28,7 +28,7 @@ export const details = ref({
         }
     },
     2: {
-        speed: 3,
+        speed: 4,
         hpMax: 8,
         energyMax: 8,
         size: 60,

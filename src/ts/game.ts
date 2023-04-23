@@ -21,7 +21,6 @@ import { getXp } from "./lvl";
 import { getArtefact, getPowerCrystal } from "./artefact";
 import { resetInfo, updateInfo } from "./info";
 
-
 export const field = ref({
     size: {
         x: window.innerWidth / 12 * 8,

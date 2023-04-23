@@ -35,17 +35,17 @@ export function getArtefact() {
             if (buffs.length)
                 artefact[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
         }
-        updateInfo("artefact", `you got a ${Object.keys(artefact).length} star time crystal`)
+        updateInfo("artefact", `you got a ${Object.keys(artefact).length} star "time crystal"`)
         savedPlayer.value.artefacts.owned[createId()] = artefact
     }
 }
 export function getPowerCrystal() {
     if (Object.keys(savedPlayer.value.powerCrystal.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(4, "powerCrystal") > Math.random()) {
+    if (getProbability(3, "powerCrystal") > Math.random()) {
         for (let i = 1; i < 4; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(4 + (i * 2), "powerCrystal") > Math.random())
+                if (getProbability(3 + (i * 2), "powerCrystal") > Math.random())
                     amountBuffs++
                 else break
             } else break
@@ -56,7 +56,7 @@ export function getPowerCrystal() {
             if (buffs.length)
                 powerCrystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
         }
-        updateInfo("powerCrystal", `you got a ${Object.keys(powerCrystal).length} star power crystal`)
+        updateInfo("powerCrystal", `you got a ${Object.keys(powerCrystal).length} star "power crystal"`)
         savedPlayer.value.powerCrystal.owned[createId()] = powerCrystal
     }
 }

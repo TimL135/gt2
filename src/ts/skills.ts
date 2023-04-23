@@ -1,28 +1,31 @@
 import { computed, ref } from "vue";
-import { SkillDetail, SkillDetails } from "../types";
-import { actions as actionsPlayer, player, savedPlayer } from './player';
-import { percent, secondsToTicks } from "./generel/helpers";
+import { SkillDetail } from "../types";
+import { actions as actionsPlayer, savedPlayer } from './player';
+import { percent } from "./generel/helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
-import { generalSize } from "./generel/config";
 import { lvlMultiplier } from "./lvl";
 import { updateInfo } from "./info";
 
 export const skillTrees = ref([
     {
         name: "fight",
-        id: 0
+        id: 0,
+        getPointsInfo: "get points by killing enemies."
     },
     {
         name: "space ship",
-        id: 1
+        id: 1,
+        getPointsInfo: "get points by move."
     },
     {
         name: "collect",
-        id: 2
+        id: 2,
+        getPointsInfo: "get points by collecting items."
     },
     {
         name: "generell",
-        id: 3
+        id: 3,
+        getPointsInfo: "get points by living long."
     }
 ])
 export const details = ref({

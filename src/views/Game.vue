@@ -81,7 +81,6 @@ import { touchscreen } from '../ts/game';
 import { resetInfo } from '../ts/info';
 resetInfo()
 
-
 buildingMultiplier()
 </script>
 <style scoped lang="scss">

@@ -5,12 +5,6 @@ body {
     text-transform: uppercase !important;
 }
 
-[title] {
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
-    border-radius: 2px;
-    position: relative;
-}
-
 body.touchscreen [title]:hover:after {
     position: absolute;
     top: 100%;
