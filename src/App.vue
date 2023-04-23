@@ -1,5 +1,5 @@
 <template>
-    <div @click="test">
+    <div @click="musicStart">
         <div style="height: 5vh;" id="navbar" v-if="!gameloopInterval" class="d-flex justify-content-center">
             <span class="link " :class="view == 'game' ? 'active' : 'notActive'" @click="view = 'game'">game</span>
             <span class="mx-1">|</span>
@@ -25,8 +25,8 @@ import { gameloopInterval } from './ts/game';
 import * as music from '../src/ts/generel/music';
 
 const view = ref("game")
-music.start()
-function test() {
+
+function musicStart() {
     music.start()
 }
 </script>

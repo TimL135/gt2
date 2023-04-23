@@ -1,8 +1,9 @@
 import { ref } from 'vue';
+import backgroundMusic from '/public/music/Space.mp3';
 const audioElement = document.createElement('audio');
 export const musicStarts = ref(false);
 audioElement.setAttribute('id', 'music');
-audioElement.setAttribute('src', '../../public/music/Space.mp3');
+audioElement.setAttribute('src', backgroundMusic);
 audioElement.setAttribute('autoplay', 'autoplay');
 audioElement.loop = true;
 changeVolume(50);
@@ -13,11 +14,12 @@ export function start() {
     if (!musicStarts.value) {
         try {
             audioElement.play();
+            musicStarts.value = true;
         } catch {
             return;
         }
     }
-    musicStarts.value = true;
+
 }
 // export function itemSound(volume = 50, item: type.Item) {
 //   const ItemSound = document.createElement('audio');
