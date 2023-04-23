@@ -44,6 +44,6 @@ export const imgs = ["player", "player2", "player3", "player4", "player5"]
 
 export function getStats(spaceShip: OwnedSpaceShip) {
     const stats = {} as SpaceShipStats
-    (Object.keys(details.value[0]).filter(e => e != 'statsMultiplier') as ["speed", "hpMax", "energyMax", "size"]).forEach(e => stats[e] = details.value[spaceShip.stats][e] * percent(spaceShip.statsMultiplier || 0, details.value[spaceShip.stats].statsMultiplier[e]))
+    (Object.keys(details.value[0]).filter(e => e != 'statsMultiplier') as ["speed", "hpMax", "energyMax", "size"]).forEach(e => stats[e] = +(details.value[spaceShip.stats][e] * percent(spaceShip.statsMultiplier || 0, details.value[spaceShip.stats].statsMultiplier[e])).toFixed(1))
     return stats
 }
