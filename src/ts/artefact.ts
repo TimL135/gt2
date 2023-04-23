@@ -3,7 +3,7 @@ import { Artefact, PowerCrystal } from "../types";
 import { gameloopTicks } from "./game";
 import { createId, getRandomInt, percent, secondsToTicks } from "./generel/helpers";
 import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
-import { savedPlayer } from "./player";
+import { actions, savedPlayer } from "./player";
 import { updateInfo } from "./info";
 const statTextArtefact = {
     enemieSpawnTime: "new enemies spawn",
@@ -21,10 +21,10 @@ const statTextPowerCrystal = {
 export function getArtefact() {
     if (Object.keys(savedPlayer.value.artefacts.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(4) > Math.random()) {
+    if (getProbability(4, "artefact") > Math.random()) {
         for (let i = 1; i < 5; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(4 + (i * 2)) > Math.random())
+                if (getProbability(4 + (i * 2), "artefact") > Math.random())
                     amountBuffs++
                 else break
             } else break
@@ -42,10 +42,10 @@ export function getArtefact() {
 export function getPowerCrystal() {
     if (Object.keys(savedPlayer.value.powerCrystal.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(4) > Math.random()) {
+    if (getProbability(4, "powerCrystal") > Math.random()) {
         for (let i = 1; i < 4; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(4 + (i * 2)) > Math.random())
+                if (getProbability(4 + (i * 2), "powerCrystal") > Math.random())
                     amountBuffs++
                 else break
             } else break
@@ -71,8 +71,12 @@ export function getArtefactMultiplier() {
     for (let e of Object.entries(savedPlayer.value.powerCrystal.owned[savedPlayer.value.powerCrystal.selected]))
         updateMultiplier(e[0], "powerCrystal", computed(() => percent(e[1], "de")))
 }
-function getProbability(minute: number) {
-    return (gameloopTicks.value / secondsToTicks(minute * 60)) * getMultiplier("artefactChance")
+function getProbability(minute: number, type: "artefact" | "powerCrystal") {
+    if (type == "artefact")
+        return (gameloopTicks.value / secondsToTicks(minute * 60)) * getMultiplier("artefactChance")
+    if (type == "powerCrystal")
+        return (actions.value.xp / (minute * 50)) * getMultiplier("powerCrystalChance")
+    return 0
 }
 export function showStat(id: number, stat: keyof Artefact) {
     return `increase the time until ${statTextArtefact[stat]} by ${savedPlayer.value.artefacts.owned[id][stat]}%`

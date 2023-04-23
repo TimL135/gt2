@@ -220,6 +220,14 @@ export const details = ref({
         maxLvl: 20,
         multiplier: () => updateMultiplier("artefactChance", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
+    304: {
+        name: "more power crystals",
+        description: "you get more and better power crystals.",
+        skillTreeId: 3,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: () => updateMultiplier("powerCrystalChance", "304", computed(() => percent((savedPlayer.value.skills[304] || 0) * getMultiplier("skills300"), "in")))
+    } as SkillDetail,
 })
 export function skillMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())

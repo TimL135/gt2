@@ -9,12 +9,14 @@ import { updateInfo } from "./info";
 export function getXp() {
     if (savedPlayer.value.lvl.lvl == maxLvl) return
 
-    const xp = Object.entries(actions.value).reduce((a, b) => {
+    let xp = Object.entries(actions.value).reduce((a, b) => {
         if (b[0] == 'deathEnemies') return a + b[1] * 1
         if (b[0] == 'collect') return a + b[1] * 5
         if (b[0] == 'kills') return a + b[1] * 10
         return a
-    }, 0) * getMultiplier("xp")
+    }, 0)
+    actions.value.xp = xp
+    xp *= getMultiplier("xp")
     if (xp > 0) updateInfo("xp", `you got ${xp} xp`)
     savedPlayer.value.lvl.xp += xp
     increaseLvl()

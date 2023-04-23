@@ -83,9 +83,9 @@ export function stop() {
     if (!gameloopInterval) return
     actionsPlayer.value["time"] = ticksToSeconds(gameloopTicks.value)
     getScore()
+    getXp()
     getArtefact()
     getPowerCrystal()
-    getXp()
     getPoints()
     getCurrency()
     actionsPlayer.value = {}
