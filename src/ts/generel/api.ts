@@ -4,7 +4,7 @@ export function setSavedPlayer(savedPlayer: SavedPlayer) {
     localStorage.setItem('savedPlayer', JSON.stringify(savedPlayer))
 }
 export function getSavedPlayer(): SavedPlayer {
-    const savePlayer = {
+    const newPlayer = {
         skills: {},
         points: {},
         buildings: {},
@@ -33,7 +33,7 @@ export function getSavedPlayer(): SavedPlayer {
             lvl: 0,
             xp: 0
         },
-        artefacts: {
+        timeCrystal: {
             selected: 0,
             owned: {}
         },
@@ -45,8 +45,13 @@ export function getSavedPlayer(): SavedPlayer {
             highScore: 0,
         }
     }
+    let savedPlayer = JSON.parse(localStorage.getItem('savedPlayer') || '{}')
+    if (savedPlayer.artefacts) {
+        newPlayer.timeCrystal = savedPlayer.artefacts
+        delete savedPlayer.artefacts
+    }
     return {
-        ...savePlayer,
-        ...JSON.parse(localStorage.getItem('savedPlayer') || '{}')
+        ...newPlayer,
+        ...savedPlayer
     }
 }

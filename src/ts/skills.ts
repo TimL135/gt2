@@ -217,11 +217,11 @@ export const details = ref({
     } as SkillDetail,
     303: {
         name: "four-leaf clover",
-        description: "you get more and better artefacts",
+        description: "you get more and better Time Crystals",
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("artefactChance", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("timeCrystalChance", "303", computed(() => percent((savedPlayer.value.skills[303] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     304: {
         name: "more power crystals",

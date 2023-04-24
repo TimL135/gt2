@@ -32,9 +32,9 @@
     </div>
 </template>
 <script setup lang='ts'>
-import Currency from '../Currency.vue';
-import SpaceShip from "../shop/SpaceShips.vue"
-import Items from "../shop/Items.vue"
+import Currency from '../../Currency.vue';
+import SpaceShip from "./SpaceShips.vue"
+import Items from "./Items.vue"
 
 </script>
 <style scoped></style>

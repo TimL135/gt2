@@ -18,7 +18,7 @@ import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from ".
 import { getPoints, } from "./skills";
 import { getMultiplier, updateMultiplier } from "./multiplier";
 import { getXp } from "./lvl";
-import { getArtefact, getPowerCrystal } from "./artefact";
+import { getTimeCrystal, getPowerCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
 
 export const field = ref({
@@ -83,7 +83,7 @@ export function stop() {
     actionsPlayer.value["time"] = ticksToSeconds(gameloopTicks.value)
     getScore()
     getXp()
-    getArtefact()
+    getTimeCrystal()
     getPowerCrystal()
     getPoints()
     getCurrency()

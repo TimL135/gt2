@@ -13,9 +13,9 @@
 </template>
 <script setup lang='ts'>
 import { ref } from 'vue';
-import Shop from '../components/spacePort/Shop.vue';
+import Shop from '../components/spacePort/shop/Shop.vue';
 import Building from '../components/spacePort/Building.vue';
-import Hangar from '../components/spacePort/Hangar.vue';
+import Hangar from '../components/spacePort/hangar/Hangar.vue';
 import Score from '../components/spacePort/Score.vue';
 const view = ref("shop")
 </script>

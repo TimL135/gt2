@@ -7,12 +7,12 @@
 </template>
 <script setup lang='ts'>
 import { computed, toRefs } from 'vue';
-import { details as abilitys } from '../../ts/abilitys';
-import { details as passivs } from '../../ts/passivs';
-import { details as weapons } from '../../ts/weapon';
-import { savedPlayer } from '../../ts/player';
-import { cost } from '../../ts/generel/config';
-import { getMultiplier } from '../../ts/multiplier';
+import { details as abilitys } from '../../../ts/abilitys';
+import { details as passivs } from '../../../ts/passivs';
+import { details as weapons } from '../../../ts/weapon';
+import { savedPlayer } from '../../../ts/player';
+import { cost } from '../../../ts/generel/config';
+import { getMultiplier } from '../../../ts/multiplier';
 
 const props = withDefaults(
     defineProps<{

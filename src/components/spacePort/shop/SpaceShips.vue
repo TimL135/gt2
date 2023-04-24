@@ -7,11 +7,11 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { savedPlayer } from '../../ts/player';
-import { imgs, details } from '../../ts/spaceShip';
-import { createId, getRandomInt } from '../../ts/generel/helpers';
-import { cost } from '../../ts/generel/config';
-import { getMultiplier } from '../../ts/multiplier';
+import { savedPlayer } from '../../../ts/player';
+import { imgs, details } from '../../../ts/spaceShip';
+import { createId, getRandomInt } from '../../../ts/generel/helpers';
+import { cost } from '../../../ts/generel/config';
+import { getMultiplier } from '../../../ts/multiplier';
 
 function buy() {
     if (Object.keys(savedPlayer.value.spaceShip.owned).length < 5 && savedPlayer.value.currency >= Math.round(cost.spaceShip * getMultiplier("discount"))) {

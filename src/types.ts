@@ -1,6 +1,6 @@
 import { ComputedRef } from "vue"
 
-export interface Artefact {
+export interface TimeCrystal {
     enemieSpawnTime: number
     enemieSpeedTime: number
     enemieHpTime: number
@@ -55,9 +55,9 @@ export interface SavedPlayer {
         lvl: number
         xp: number
     }
-    artefacts: {
+    timeCrystal: {
         selected: number
-        owned: { [key: number]: Artefact }
+        owned: { [key: number]: TimeCrystal }
     }
     powerCrystal: {
         selected: number

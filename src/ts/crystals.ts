@@ -1,11 +1,11 @@
 import { computed } from "vue";
-import { Artefact, PowerCrystal } from "../types";
+import { TimeCrystal, PowerCrystal } from "../types";
 import { gameloopTicks } from "./game";
 import { createId, getRandomInt, percent, secondsToTicks } from "./generel/helpers";
 import { getMultiplier, multiplier, updateMultiplier } from "./multiplier";
 import { actions, savedPlayer } from "./player";
 import { updateInfo } from "./info";
-const statTextArtefact = {
+const statTextTimeCrystal = {
     enemieSpawnTime: "new enemies spawn",
     enemieSpeedTime: "enemies become faster",
     enemieHpTime: "enemies get more hp",
@@ -18,25 +18,25 @@ const statTextPowerCrystal = {
     enemieSpecialPower: "special effects",
     enemieDamagePower: "damage"
 }
-export function getArtefact() {
-    if (Object.keys(savedPlayer.value.artefacts.owned).length >= 5) return
+export function getTimeCrystal() {
+    if (Object.keys(savedPlayer.value.timeCrystal.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(4, "artefact") > Math.random()) {
+    if (getProbability(4, "timeCrystal") > Math.random()) {
         for (let i = 1; i < 5; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(4 + (i * 2), "artefact") > Math.random())
+                if (getProbability(4 + (i * 2), "timeCrystal") > Math.random())
                     amountBuffs++
                 else break
             } else break
         }
-        let buffs = Object.keys(statTextArtefact) as [keyof Artefact]
-        const artefact = {} as Artefact
+        let buffs = Object.keys(statTextTimeCrystal) as [keyof TimeCrystal]
+        const timeCrystal = {} as TimeCrystal
         for (let i = 0; i < amountBuffs; i++) {
             if (buffs.length)
-                artefact[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
+                timeCrystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
         }
-        updateInfo("artefact", `you got a ${Object.keys(artefact).length} star "time crystal"`)
-        savedPlayer.value.artefacts.owned[createId()] = artefact
+        updateInfo("timeCrystal", `you got a ${Object.keys(timeCrystal).length} star "time crystal"`)
+        savedPlayer.value.timeCrystal.owned[createId()] = timeCrystal
     }
 }
 export function getPowerCrystal() {
@@ -61,26 +61,26 @@ export function getPowerCrystal() {
     }
 }
 
-export function getArtefactMultiplier() {
-    for (let e of Object.keys(statTextArtefact)) delete multiplier[e]?.artefact
+export function getCrystalMultiplier() {
+    for (let e of Object.keys(statTextTimeCrystal)) delete multiplier[e]?.TimeCrystal
     for (let e of Object.keys(statTextPowerCrystal)) delete multiplier[e]?.powerCrystal
-    if (savedPlayer.value.artefacts.selected == 0) return
-    for (let e of Object.entries(savedPlayer.value.artefacts.owned[savedPlayer.value.artefacts.selected]))
-        updateMultiplier(e[0], "artefact", computed(() => percent(e[1], "in")))
+    if (savedPlayer.value.timeCrystal.selected == 0) return
+    for (let e of Object.entries(savedPlayer.value.timeCrystal.owned[savedPlayer.value.timeCrystal.selected]))
+        updateMultiplier(e[0], "TimeCrystal", computed(() => percent(e[1], "in")))
     if (savedPlayer.value.powerCrystal.selected == 0) return
     for (let e of Object.entries(savedPlayer.value.powerCrystal.owned[savedPlayer.value.powerCrystal.selected]))
         updateMultiplier(e[0], "powerCrystal", computed(() => percent(e[1], "de")))
 }
-function getProbability(minute: number, type: "artefact" | "powerCrystal") {
-    if (type == "artefact")
-        return (gameloopTicks.value / secondsToTicks(minute * 60)) * getMultiplier("artefactChance")
+function getProbability(minute: number, type: "timeCrystal" | "powerCrystal") {
+    if (type == "timeCrystal")
+        return (gameloopTicks.value / secondsToTicks(minute * 60)) * getMultiplier("timeCrystalChance")
     if (type == "powerCrystal")
         return (actions.value.xp / (minute * 50)) * getMultiplier("powerCrystalChance")
     return 0
 }
-export function showStat(id: number, stat: keyof Artefact) {
-    return `increase the time until ${statTextArtefact[stat]} by ${savedPlayer.value.artefacts.owned[id][stat]}%`
+export function showStatTimeCrystal(id: number, stat: keyof TimeCrystal) {
+    return `increase the time until ${statTextTimeCrystal[stat]} by ${savedPlayer.value.timeCrystal.owned[id][stat]}%`
 }
-export function showStatTimeCrystal(id: number, stat: keyof PowerCrystal) {
+export function showStatPowerCrystal(id: number, stat: keyof PowerCrystal) {
     return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat], "de")) * 100)}%`
 }
