@@ -82,5 +82,5 @@ export function showStat(id: number, stat: keyof Artefact) {
     return `increase the time until ${statTextArtefact[stat]} by ${savedPlayer.value.artefacts.owned[id][stat]}%`
 }
 export function showStatTimeCrystal(id: number, stat: keyof PowerCrystal) {
-    return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round(percent(savedPlayer.value.powerCrystal.owned[id][stat], "de"))}%`
+    return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat], "de") * 100))}%`
 }
