@@ -78,9 +78,10 @@ function getProbability(minute: number, type: "timeCrystal" | "powerCrystal") {
         return (actions.value.xp / (minute * 50)) * getMultiplier("powerCrystalChance")
     return 0
 }
-export function showStatTimeCrystal(id: number, stat: keyof TimeCrystal) {
-    return `increase the time until ${statTextTimeCrystal[stat]} by ${savedPlayer.value.timeCrystal.owned[id][stat]}%`
-}
-export function showStatPowerCrystal(id: number, stat: keyof PowerCrystal) {
-    return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat], "de")) * 100)}%`
+
+export function showStatCrystal(id: number, stat: keyof PowerCrystal | keyof TimeCrystal, crystalType: string) {
+    if (crystalType == "powerCrystal")
+        return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat], "de")) * 100)}%`
+    if (crystalType == "timeCrystal")
+        return `increase the time until ${statTextTimeCrystal[stat]} by ${savedPlayer.value.timeCrystal.owned[id][stat]}%`
 }

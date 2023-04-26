@@ -21,7 +21,6 @@ import { details as detailsSkill, skillTrees } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys } from '../ts/game';
-import { keys } from '../ts/generel/config';
 
 const props = withDefaults(
     defineProps<{
@@ -62,6 +61,7 @@ function getTitle(skill: SkillDetail) {
 }
 function buy(skillId: number) {
     let amount = 1
+    const keys = savedPlayer.value.settings.keys
     if (pressedKeys[keys.buy10]) amount = 10
     if (pressedKeys[keys.buy20]) amount = 20
     for (let i = 0; i < amount; i++) {

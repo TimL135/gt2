@@ -15,13 +15,14 @@
     </div>
 </template >
 <script setup lang = 'ts' >
-import { keys } from '../ts/generel/config';
 import { pressedKeys } from '../ts/game';
 
 import Joystick from 'vue-joystick-component'
+import { savedPlayer } from '../ts/player';
 
 const stop = () => ['moveUp', 'moveDown', 'moveLeft', 'moveRight'].forEach(e => pressedKeys[keys[e]] = false)
 const move = ({ x, y }) => {
+    const keys = savedPlayer.value.settings.keys
     pressedKeys[keys.moveUp] = false
     pressedKeys[keys.moveDown] = false
     pressedKeys[keys.moveLeft] = false

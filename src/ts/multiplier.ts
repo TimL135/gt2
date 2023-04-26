@@ -26,6 +26,7 @@ export const multiplier = {
         generalSize
     },
 } as { [key: string]: { [key: string]: ComputedRef<number> } }
+
 export function getMultiplier(type: string) {
     return Object.values(multiplier[type] || {}).reduce((a, b) => a *= b.value, 1)
 }

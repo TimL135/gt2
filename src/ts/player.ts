@@ -12,7 +12,7 @@ import { details as detailsWeapon } from "./weapon";
 import { details as detailsAbilitys } from "./abilitys";
 import { getStats } from "./spaceShip";
 import { getAddition, getMultiplier } from "./multiplier";
-import { generalSize, keys } from "./generel/config";
+import { generalSize } from "./generel/config";
 import { details as detailsPassiv } from "./passivs";
 import { lvlMultiplier } from "./lvl";
 import { itemMultiplier } from "./items";
@@ -61,6 +61,7 @@ export function reset() {
 }
 let charge = 0
 export function move(pressedKeys: Record<string, boolean>) {
+    const keys = savedPlayer.value.settings.keys
     player.value.moveVector = { x: 0, y: 0 }
     if (pressedKeys[keys.moveUp]) player.value.moveVector.y -= 1;
     if (pressedKeys[keys.moveDown]) player.value.moveVector.y += 1;
@@ -97,6 +98,7 @@ export function enemieHit(enemie: Enemie) {
 
 export function abilities(pressedKeys: Record<string, boolean>) {
     if (isCharging.value) return
+    const keys = savedPlayer.value.settings.keys
     if (pressedKeys[keys.shot]) shot()
     for (let i in savedPlayer.value.abilitys.selected) {
         let ability = savedPlayer.value.abilitys.selected[+i]

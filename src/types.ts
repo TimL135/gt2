@@ -29,6 +29,22 @@ export interface OwnedSpaceShip {
     statsMultiplier: number
 }
 export interface SavedPlayer {
+    settings: {
+        musicVolume: number
+        keys: {
+            buy10: string
+            buy20: string
+            moveUp: string
+            moveDown: string
+            moveLeft: string
+            moveRight: string
+            shot: string
+            ability0: string
+            ability1: string
+            ability2: string
+            ability3: string
+        }
+    }
     spaceShip: {
         selected: number
         owned: {

@@ -1,4 +1,5 @@
 import { computed } from "vue"
+import { savedPlayer } from "../player"
 
 export const gameTicks = 30
 export const speedConstant = computed(() => 30 / gameTicks)
@@ -15,22 +16,6 @@ export const cost = {
     spaceShip: 250,
     weapons: 500,
     buildings: 350,
-}
-
-export const keys = {
-    buy10: "Control",
-    buy20: "Shift",
-
-    moveUp: "ArrowUp",
-    moveDown: "ArrowDown",
-    moveLeft: "ArrowLeft",
-    moveRight: "ArrowRight",
-
-    shot: " ",
-    ability0: "1",
-    ability1: "2",
-    ability2: "3",
-    ability3: "4",
 }
 
 export const getCurrencyInfo = "Scrap is a currency used to buy items. You can get scrap by killing enemies. You can also get scrap by selling items."

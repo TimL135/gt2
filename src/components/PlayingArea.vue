@@ -1,5 +1,5 @@
 <template>
-    <div class="playingArea">
+    <div class="playingArea" :class="gameloopInterval ? 'inGame' : ''">
         <GameObject v-for="enemie of enemies" :object="enemie"></GameObject>
         <GameObject v-for="plasma of plasmas" :object="plasma"></GameObject>
         <GameObject v-for="item of items" :object="item"></GameObject>
@@ -24,5 +24,9 @@ import { gameloopInterval } from "../ts/game";
     width: 100%;
     background-image: url("/public/img/background/background.png");
     background-size: cover;
+}
+
+.inGame {
+    cursor: none;
 }
 </style>

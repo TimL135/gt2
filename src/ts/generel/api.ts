@@ -5,6 +5,22 @@ export function setSavedPlayer(savedPlayer: SavedPlayer) {
 }
 export function getSavedPlayer(): SavedPlayer {
     const newPlayer = {
+        settings: {
+            musicVolume: 50,
+            keys: {
+                buy10: "Control",
+                buy20: "Shift",
+                moveUp: "ArrowUp",
+                moveDown: "ArrowDown",
+                moveLeft: "ArrowLeft",
+                moveRight: "ArrowRight",
+                shot: " ",
+                ability0: "1",
+                ability1: "2",
+                ability2: "3",
+                ability3: "4",
+            }
+        },
         skills: {},
         points: {},
         buildings: {},

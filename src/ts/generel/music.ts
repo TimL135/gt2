@@ -1,14 +1,16 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import backgroundMusic from '/public/music/Space.mp3';
+import { savedPlayer } from '../player';
 const audioElement = document.createElement('audio');
 export const musicStarts = ref(false);
 audioElement.setAttribute('id', 'music');
 audioElement.setAttribute('src', backgroundMusic);
 audioElement.setAttribute('autoplay', 'autoplay');
 audioElement.loop = true;
-changeVolume(50);
-export function changeVolume(volume = 50) {
-    if (audioElement) audioElement.volume = volume / 5000;
+changeVolume();
+watch(() => savedPlayer.value.settings.musicVolume, () => changeVolume());
+export function changeVolume() {
+    if (audioElement) audioElement.volume = (savedPlayer.value.settings.musicVolume || 50) / 5000;
 }
 export function start() {
     if (!musicStarts.value) {
