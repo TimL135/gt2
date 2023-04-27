@@ -18,6 +18,7 @@ import { lvlMultiplier } from "./lvl";
 import { itemMultiplier } from "./items";
 import { buildingMultiplier } from "./building";
 import { getCrystalMultiplier } from "./crystals";
+import { getScoreMultiplier } from "./score";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -38,6 +39,7 @@ watch(
     { deep: true }
 );
 export function getAllMultiplier() {
+    getScoreMultiplier()
     getCrystalMultiplier()
     lvlMultiplier()
     buildingMultiplier()

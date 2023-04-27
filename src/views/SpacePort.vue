@@ -7,8 +7,8 @@
         </div>
         <Shop v-if="view == 'shop'"></Shop>
         <Building v-if="view == 'building'"></Building>
-        <Hangar v-if="view == 'hangar'"></Hangar>
         <Score v-if="view == 'score'"></Score>
+        <Hangar v-if="view == 'hangar'"></Hangar>
     </div>
 </template>
 <script setup lang='ts'>
@@ -17,6 +17,6 @@ import Shop from '../components/spacePort/shop/Shop.vue';
 import Building from '../components/spacePort/Building.vue';
 import Hangar from '../components/spacePort/hangar/Hangar.vue';
 import Score from '../components/spacePort/Score.vue';
-const view = ref("shop")
+const view = ref("hangar")
 </script>
 <style scoped></style>

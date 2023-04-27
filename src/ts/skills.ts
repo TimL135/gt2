@@ -191,12 +191,12 @@ export const details = ref({
         multiplier: () => updateMultiplier("speedStrength", "skill206", computed(() => percent((savedPlayer.value.skills[206] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     300: {
-        name: "discount",
-        description: "reduces the scrap costs.",
+        name: "more scrap",
+        description: "you get more scrap.",
         skillTreeId: 3,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("discount", "300", computed(() => percent((savedPlayer.value.skills[300] || 0) * getMultiplier("skills300"), "de")))
+        multiplier: () => updateMultiplier("currency", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
 
     301: {
@@ -206,14 +206,6 @@ export const details = ref({
         usedPointsNeed: 0,
         maxLvl: 20,
         multiplier: () => updateMultiplier("xp", "302", computed(() => percent((savedPlayer.value.skills[302] || 0) * getMultiplier("skills300"), "in")))
-    } as SkillDetail,
-    302: {
-        name: "more scrap",
-        description: "you get more scrap.",
-        skillTreeId: 3,
-        usedPointsNeed: 20,
-        maxLvl: 20,
-        multiplier: () => updateMultiplier("currency", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     303: {
         name: "four-leaf clover",

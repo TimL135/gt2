@@ -13,11 +13,12 @@ import { cost } from '../../ts/generel/config';
 import { savedPlayer } from '../../ts/player';
 import Currency from '../Currency.vue';
 import { getMultiplier } from '../../ts/multiplier';
+import { scoreLvl } from '../../ts/score';
 function getCost(id: number) {
     return Math.round(cost.buildings * ((savedPlayer.value.buildings[id] || 0) + 1) * getMultiplier("discount"))
 }
 function getMaxLvl(id: number) {
-    let increase = Math.floor(savedPlayer.value.score.highScore / 1000)
+    let increase = scoreLvl.value
     if (increase > 15) increase = 15
     return detailsBuilding.value[id].maxLvl + increase
 }
