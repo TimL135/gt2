@@ -40,7 +40,7 @@ const move = ({ x, y }) => {
 }
 
 function pressButton(button: string, touch: boolean) {
-    pressedKeys[keys[button]] = touch
+    pressedKeys[savedPlayer.value.settings.keys[button]] = touch
 }
 </script>
 <style scoped>

@@ -3,7 +3,7 @@
 
         <div>
             <button class="btn btn-primary" @click="startGame">START</button>
-            <button class="btn btn-primary" style="position: absolute; right: 10%;" data-bs-toggle="modal"
+            <button class="btn btn-primary" style="position: absolute; right: 10%;z-index: 2;" data-bs-toggle="modal"
                 data-bs-target="#settingsModal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="grey" class="bi bi-gear-fill"
                     viewBox="0 0 16 16">
