@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import { savedPlayer } from "./player";
 import { updateMultiplier } from "./multiplier";
+import { percent } from "./generel/helpers";
 
 export const scoreLvl = ref(0)
 
@@ -9,5 +10,5 @@ function updateScoreLvl() {
 }
 export function getScoreMultiplier() {
     updateScoreLvl()
-    updateMultiplier("discount", "score", computed(() => scoreLvl.value))
+    updateMultiplier("discount", "score", computed(() => percent(scoreLvl.value, "de")))
 }
