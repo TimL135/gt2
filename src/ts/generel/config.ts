@@ -10,11 +10,11 @@ export const xpNeed = 120
 export const maxLvl = 49//is displayed with +1
 
 export const cost = {
-    abilitys: 300,
-    passivs: 300,
-    spaceShip: 250,
-    weapons: 300,
-    buildings: 250,
+    abilitys: 250,
+    passivs: 250,
+    spaceShip: 200,
+    weapons: 250,
+    buildings: 200,
 }
 
 export const getCurrencyInfo = "Scrap is a currency used to buy items. You can get scrap by killing enemies. You can also get scrap by selling items."

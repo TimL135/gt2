@@ -74,7 +74,7 @@ export function start() {
     resetInfo()
     clearPoints()
     gameloopTicks.value = 0
-    for (let i = 0; i < 5; i++)spawnEnemie()
+    for (let i = 0; i < 6; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
         gameloop();
     }, 1000 / gameTicks);

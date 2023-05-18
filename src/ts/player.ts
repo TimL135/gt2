@@ -142,7 +142,7 @@ export function reload() {
             if (savedPlayer.value.passivs.selected == 3) detailsPassiv.value[3].effect()
             stopReload()
         }
-    }, (5000 / player.value.energyMax) * getMultiplier("chargeSpeed"));
+    }, (4000 / player.value.energyMax) * getMultiplier("chargeSpeed"));
 }
 
 export function stopReload() {
