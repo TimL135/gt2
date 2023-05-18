@@ -22,8 +22,7 @@ export function playSound(sound: string) {
     if (player.value.cooldowns["sound" + sound]) return
     const audioElement = document.createElement('audio');
     audioElement.setAttribute('src', sounds[sound]);
-    audioElement.volume = (savedPlayer.value.settings.soundsVolume || 50) / (sound == 'move' ? 7500 : 5000);
+    audioElement.volume = (savedPlayer.value.settings.soundsVolume || 50) / (sound == 'move' ? 10000 : 5000);
     audioElement.setAttribute('autoplay', 'autoplay');
-    if (sound == 'move') player.value.cooldowns["sound" + sound] = secondsToTicks(0.75)
-    else player.value.cooldowns["sound" + sound] = secondsToTicks(0.1)
+    player.value.cooldowns["sound" + sound] = secondsToTicks(0.1)
 }
