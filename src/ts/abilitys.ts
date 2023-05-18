@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { increaseEffectDuration, isCharging, player, reload, savedPlayer, stopReload } from "./player";
+import { healPlayer, increaseEffectDuration, isCharging, player, reload, savedPlayer, stopReload } from "./player";
 import { AbilityDetails } from "../types";
 import { getRandomInt, secondsToTicks } from "./generel/helpers";
 import { updateMultiplier } from "./multiplier";
@@ -36,7 +36,7 @@ export const details = ref({
         name: "heal",
         description: "heals you.",
         cooldown: secondsToTicks(5),
-        effect: () => { player.value.hp += 1; if (player.value.hp > player.value.hpMax) player.value.hp = player.value.hpMax },
+        effect: () => { healPlayer(1) },
         condition: () => player.value.hp < player.value.hpMax,
         energyCost: 1
     },
@@ -96,7 +96,7 @@ export const details = ref({
                     clearInterval(interval)
                     return
                 }
-                player.value.hp++
+                healPlayer(1)
             }, 500)
         },
         condition: () => player.value.hp < player.value.hpMax,

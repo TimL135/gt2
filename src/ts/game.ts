@@ -20,6 +20,7 @@ import { getMultiplier, updateMultiplier } from "./multiplier";
 import { getXp } from "./lvl";
 import { getTimeCrystal, getPowerCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
+import { clearPoints, decreasePointsLifeDuration } from "./points";
 
 export const field = ref({
     size: {
@@ -71,6 +72,7 @@ export function start() {
     clearPlasma()
     resetPlayer()
     resetInfo()
+    clearPoints()
     gameloopTicks.value = 0
     for (let i = 0; i < 5; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
@@ -103,6 +105,7 @@ function gameloop() {
     reduceCooldowns()
     decreaseEffectDuration()
     decreaseLifeDuration()
+    decreasePointsLifeDuration()
     gameloopTicks.value++
     executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemieSpeed)
     executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemieHpMax)

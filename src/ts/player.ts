@@ -19,6 +19,8 @@ import { itemMultiplier } from "./items";
 import { buildingMultiplier } from "./building";
 import { getCrystalMultiplier } from "./crystals";
 import { getScoreMultiplier } from "./score";
+import { playSound } from "./generel/sounds";
+import { addPoint } from "./points";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -76,6 +78,7 @@ export function move(pressedKeys: Record<string, boolean>) {
         if (player.value.cords[e] > field.value.size[e] - player.value.size) player.value.cords[e] = field.value.size[e] - player.value.size
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
+        playSound("move")
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize.value)
         if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
@@ -94,6 +97,8 @@ export function enemieHit(enemie: Enemie) {
         } else {
             player.value.hp -= enemie.damage
         }
+        addPoint(Math.ceil(enemie.damage), "damagePlayer", { ...enemie.cords })
+        playSound("hitHurt")
         checkHp()
     }
 }
@@ -108,6 +113,7 @@ export function abilities(pressedKeys: Record<string, boolean>) {
             player.value.cooldowns[+i] = detailsAbilitys.value[ability].cooldown * getMultiplier("abilityCooldown")
             player.value.energy -= detailsAbilitys.value[ability].energyCost
             detailsAbilitys.value[ability].effect()
+            playSound("click")
         }
     }
     if (player.value.energy < 1) reload()
@@ -126,6 +132,7 @@ export function reload() {
     isCharging.value = true
     reloadInterval = setInterval(() => {
         player.value.energy++
+        playSound("reload")
         if (player.value.energy >= player.value.energyMax) {
             player.value.energy = player.value.energyMax
             if (savedPlayer.value.passivs.selected == 3) detailsPassiv.value[3].effect()
@@ -152,7 +159,11 @@ export function increaseEffectDuration(effect: number, sec: number) {
 export function decreaseEffectDuration() {
     Object.keys(player.value.effects).forEach(e => player.value.effects[e] -= +!!player.value.effects[e])
 }
-
+export function healPlayer(amount: number) {
+    addPoint(Math.ceil(amount), "healPlayer", { ...player.value.cords })
+    player.value.hp += amount
+    if (player.value.hp > player.value.hpMax) player.value.hp = player.value.hpMax
+}
 export function checkHp() {
     if (player.value.hp <= 0) stopGame()
 }

@@ -4,6 +4,7 @@
         <GameObject v-for="plasma of plasmas" :object="plasma"></GameObject>
         <GameObject v-for="item of items" :object="item"></GameObject>
         <GameObject :object="player"></GameObject>
+        <Point :points="points"></Point>
         <GameMenu v-if="!gameloopInterval"></GameMenu>
     </div>
 </template>
@@ -15,6 +16,8 @@ import { player } from "../ts/player";
 import { enemies } from "../ts/enemies"
 import { items } from "../ts/items";
 import { gameloopInterval } from "../ts/game";
+import Point from "./Point.vue";
+import { points } from "../ts/points";
 </script>
 <style scoped>
 .playingArea {

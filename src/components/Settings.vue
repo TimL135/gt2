@@ -1,6 +1,9 @@
 <template>
-    <label for="customRange1" class="form-label ">music volume</label>
-    <input type="range" class="form-range" id="customRange1" v-model="savedPlayer.settings.musicVolume">
+    <label for="music" class="form-label ">music volume</label>
+    <input type="range" class="form-range" id="music" v-model="savedPlayer.settings.musicVolume">
+
+    <label for="sounds" class="form-label ">sounds volume</label>
+    <input type="range" class="form-range" id="sounds" v-model="savedPlayer.settings.soundsVolume">
     <div v-if="!touchscreen" v-for=" e of Object.entries(savedPlayer.settings.keys)" class="grid mb-1">
         <p>{{ e[0] }}:</p>
         <button class="btn btn-primary" @click="updateKey(e[0])"

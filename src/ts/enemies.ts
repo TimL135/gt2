@@ -6,6 +6,8 @@ import { dirVec, norVec } from "./generel/vector";
 import { defaultGameObject } from "./gameObject";
 import { player, actions as actionsPlayer } from "./player";
 import { getMultiplier, multiplier } from "./multiplier";
+import { playSound } from "./generel/sounds";
+import { addPoint } from "./points";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -107,9 +109,11 @@ export function checkPosition() {
 
 export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     enemie.hp -= plasma.damage
+    addPoint(Math.ceil(plasma.damage), "damageEnemie", { ...enemie.cords })
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
         actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 3
+        playSound("explosion")
         remove(enemie)
     }
 

@@ -4,6 +4,7 @@ import { createId } from "./generel/helpers";
 import { player } from "./player";
 import { field } from "./game";
 import { getMultiplier } from "./multiplier";
+import { playSound } from "./generel/sounds";
 
 export const plasmas = ref<Plasma[]>([])
 export function clear() {
@@ -26,6 +27,7 @@ export function spawn(details: WeaponDetail, index = 0) {
     plasma.damage *= getMultiplier("plasmaDamage")
     plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
+    playSound("laserShoot")
 }
 export function checkPosition() {
     plasmas.value = plasmas.value.filter(e => !(e.cords.x < - e.size || e.cords.x > field.value.size.x || e.cords.y < - e.size || e.cords.y > field.value.size.y))

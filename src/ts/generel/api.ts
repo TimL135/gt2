@@ -7,6 +7,7 @@ export function getSavedPlayer(): SavedPlayer {
     const newPlayer = {
         settings: {
             musicVolume: 50,
+            soundsVolume: 50,
             keys: {
                 buy10: "Control",
                 buy20: "Shift",

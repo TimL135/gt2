@@ -3,9 +3,10 @@ import { Item, ItemdDetails } from "../types";
 import { getRandomInt } from './generel/helpers';
 import { field } from "./game";
 import { secondsToTicks } from "./generel/helpers";
-import { increaseEffectDuration, player, actions as actionsPlayer } from "./player";
+import { increaseEffectDuration, player, actions as actionsPlayer, healPlayer } from "./player";
 import { defaultGameObject } from "./gameObject";
 import { getMultiplier, updateMultiplier } from "./multiplier";
+import { playSound } from "./generel/sounds";
 
 export const items = ref<Item[]>([])
 export const details = ref<ItemdDetails>({
@@ -30,7 +31,7 @@ export const details = ref<ItemdDetails>({
     3: {
         name: "heal",
         img: "heal",
-        effect: () => { if (player.value.hp < player.value.hpMax) player.value.hp += 1 },
+        effect: () => { healPlayer(1) },
         multiplier: () => 1
     },
 
@@ -61,6 +62,7 @@ export function decreaseLifeDuration() {
 export function collectItem(item: Item) {
     actionsPlayer.value["collect"] = (actionsPlayer.value["collect"] || 0) + 1
     item.effect()
+    playSound("powerUp")
     deleteItem(item)
 }
 

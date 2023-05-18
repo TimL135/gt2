@@ -54,7 +54,7 @@
             <div class="text-center mt-2">
                 effects
             </div>
-            <div v-for="index in Object.keys(detailsItem).length" class="mx-2">
+            <div v-for="index in Object.values(detailsItem).filter(e => e.name != 'heal').length" class="mx-2">
                 <div class="text-center">
                     {{ detailsItem[index - 1].name }}
                 </div>

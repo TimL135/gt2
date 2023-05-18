@@ -1,5 +1,10 @@
 import { ComputedRef } from "vue"
-
+export interface Point {
+    amount: number
+    type: string
+    cords: Vector
+    lifeDuration: number
+}
 export interface TimeCrystal {
     enemieSpawnTime: number
     enemieSpeedTime: number
@@ -31,6 +36,7 @@ export interface OwnedSpaceShip {
 export interface SavedPlayer {
     settings: {
         musicVolume: number
+        soundsVolume: number
         keys: {
             buy10: string
             buy20: string
