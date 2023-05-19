@@ -6,13 +6,14 @@ import {
     spawn as spawnEnemie,
     checkPosition as checkPositionEnemies,
     clear as clearEnemies,
-    enemies
+    enemies,
+    doEnemieSpecial
 } from "./enemies";
 import { gameTicks } from "./generel/config";
 import { collisions } from "./colliosion";
 import { move } from "./gameObject";
 import { computed, ref } from "vue";
-import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma } from "./plasma";
+import { clear as clearPlasma, plasmas, checkPosition as checkPositionPlasma, enemiePlasmas } from "./plasma";
 import { secondsToTicks, ticksToSeconds } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, } from "./skills";
@@ -98,6 +99,7 @@ function gameloop() {
     movePlayer(pressedKeys)
     move(enemies.value)
     move(plasmas.value)
+    move(enemiePlasmas.value)
     checkPositionEnemies()
     checkPositionPlasma()
     collisions()
@@ -107,6 +109,7 @@ function gameloop() {
     decreaseLifeDuration()
     decreasePointsLifeDuration()
     gameloopTicks.value++
+    doEnemieSpecial(gameloopTicks.value)
     executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemieSpeed)
     executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemieHpMax)
     executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemieDamage)

@@ -25,6 +25,12 @@ export const multiplier = {
     plasmaSpeed: {
         generalSize
     },
+    plasmaEnemieSpeed: {
+        generalSize
+    },
+    plasmaEnemieSize: {
+        generalSize
+    },
 } as { [key: string]: { [key: string]: ComputedRef<number> } }
 
 export function getMultiplier(type: string) {

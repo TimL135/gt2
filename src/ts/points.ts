@@ -6,7 +6,7 @@ export const points = ref([] as Point[])
 
 export function addPoint(amount: number, type: string, cords: Vector, lifeDuration = secondsToTicks(1)) {
     points.value.push({
-        amount,
+        amount: Math.ceil(amount),
         type,
         cords,
         lifeDuration

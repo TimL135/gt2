@@ -1,13 +1,14 @@
 import { ref } from "vue";
 import { Enemie, EnemieDetails, Plasma } from "../types";
 import { field, gameloopInterval } from "./game";
-import { getRandomInt } from './generel/helpers';
+import { getRandomInt, secondsToTicks } from './generel/helpers';
 import { dirVec, norVec } from "./generel/vector";
 import { defaultGameObject } from "./gameObject";
 import { player, actions as actionsPlayer } from "./player";
 import { getMultiplier, multiplier } from "./multiplier";
 import { playSound } from "./generel/sounds";
 import { addPoint } from "./points";
+import { spawnEnemiePlasma } from "./plasma";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -18,6 +19,7 @@ export const details = ref<EnemieDetails>({
             }
         },
         img: 'normal',
+        special: () => { },
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -44,6 +46,7 @@ export const details = ref<EnemieDetails>({
             }
         },
         img: 'aim',
+        special: () => { },
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -56,8 +59,36 @@ export const details = ref<EnemieDetails>({
             }
         },
         img: 'chase',
+        special: () => { },
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
+        }
+    },
+    3: {
+        move: (enemie: Enemie) => {
+            for (const e of ["x", "y"] as const) {
+                enemie.cords[e] += enemie.moveVector[e] * enemie.speed * getMultiplier("enemieSpeed") * (enemie.hp / enemie.hpMax);
+            }
+        },
+        img: 'shot',
+        special: (gameTick, enemie) => { if (gameTick % secondsToTicks(3) == 0) spawnEnemiePlasma(enemie) },
+        getMoveVector: (enemie: Enemie) => {
+            if (enemie.cords.y == -enemie.size) {
+                enemie.moveVector.y = 1;
+                enemie.moveVector.x = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.x == -enemie.size) {
+                enemie.moveVector.x = 1;
+                enemie.moveVector.y = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.y == field.value.size.y) {
+                enemie.moveVector.y = -1;
+                enemie.moveVector.x = (Math.random() - 0.5) * 2;
+            }
+            if (enemie.cords.x == field.value.size.x) {
+                enemie.moveVector.x = -1;
+                enemie.moveVector.y = (Math.random() - 0.5) * 2;
+            }
         }
     },
 })
@@ -89,6 +120,7 @@ export function spawn() {
         hp: 1,
         hpMax: 1 * getMultiplier("enemieHp"),
         ...details.value[getRandomInt(Object.values(details.value).length)]
+        // ...details.value[3]
     } as Enemie
     enemie.size *= getMultiplier("enemieSize")
     getSpecial(enemie)
@@ -98,7 +130,11 @@ export function spawn() {
     enemie.moveVector = norVec(enemie.moveVector)
     enemies.value.push(enemie)
 }
-
+export function doEnemieSpecial(gameTick: number) {
+    for (const e of enemies.value) {
+        e.special(gameTick, e)
+    }
+}
 export function checkPosition() {
     for (const e of enemies.value) {
         for (const c of ["x", "y"] as const) {
@@ -116,7 +152,6 @@ export function hitPlasma(enemie: Enemie, plasma: Plasma) {
         playSound("explosion")
         remove(enemie)
     }
-
 }
 
 export function death(enemie: Enemie) {

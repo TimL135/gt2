@@ -1,5 +1,5 @@
 import { ref, watch } from "vue";
-import { Enemie, Player, SavedPlayer } from "../types";
+import { Enemie, Plasma, Player, SavedPlayer, Vector } from "../types";
 import { field, stop as stopGame } from "./game";
 import { norVec } from "./generel/vector";
 import { remove as removeEnemie } from "./enemies";
@@ -21,6 +21,7 @@ import { getCrystalMultiplier } from "./crystals";
 import { getScoreMultiplier } from "./score";
 import { playSound } from "./generel/sounds";
 import { addPoint } from "./points";
+import { removeEnemiePlamsa } from "./plasma";
 
 export const savedPlayer = ref<SavedPlayer>(getSavedPlayer())
 export const player = ref<Player>({
@@ -90,21 +91,12 @@ export function move(pressedKeys: Record<string, boolean>) {
 }
 export function enemieHit(enemie: Enemie) {
     removeEnemie(enemie)
-    if (player.value.invincible) return
-    if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
-    if (savedPlayer.value.passivs.selected == 5) detailsPassiv.value[5].effect()
-    if (player.value.big) {
-        player.value.big = false
-    } else {
-        if (savedPlayer.value.passivs.selected == 6) {
-            player.value.hp -= enemie.damage * detailsPassiv.value[6].effect()
-        } else {
-            player.value.hp -= enemie.damage
-        }
-        addPoint(Math.ceil(enemie.damage), "damagePlayer", { ...enemie.cords })
-        playSound("hitHurt")
-        checkHp()
-    }
+    getDamage(enemie.damage, enemie.cords)
+}
+
+export function enemiePlasmaHit(plasma: Plasma) {
+    removeEnemiePlamsa(plasma)
+    getDamage(plasma.damage, plasma.cords)
 }
 
 export function abilities(pressedKeys: Record<string, boolean>) {
@@ -167,6 +159,23 @@ export function healPlayer(amount: number) {
     addPoint(Math.ceil(amount), "healPlayer", { ...player.value.cords })
     player.value.hp += amount
     if (player.value.hp > player.value.hpMax) player.value.hp = player.value.hpMax
+}
+export function getDamage(amount: number, cords: Vector) {
+    if (player.value.invincible) return
+    if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
+    if (savedPlayer.value.passivs.selected == 5) detailsPassiv.value[5].effect()
+    if (player.value.big) {
+        player.value.big = false
+    } else {
+        if (savedPlayer.value.passivs.selected == 6) {
+            player.value.hp -= amount * detailsPassiv.value[6].effect()
+        } else {
+            player.value.hp -= amount
+        }
+        addPoint(Math.ceil(amount), "damagePlayer", { ...cords })
+        playSound("hitHurt")
+        checkHp()
+    }
 }
 export function checkHp() {
     if (player.value.hp <= 0) stopGame()

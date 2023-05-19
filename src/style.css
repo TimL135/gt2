@@ -59,6 +59,10 @@ button {
     background-image: url("/public/img/enemies/aim.png");
 }
 
+.shot {
+    background-image: url("/public/img/enemies/shot.png");
+}
+
 .slow {
     background-image: url("/public/img/items/slow.png");
 }
@@ -77,4 +81,8 @@ button {
 
 .plasma {
     background-image: url("/public/img/player/plasma.png");
+}
+
+.plasmaEnemie {
+    background-image: url("/public/img/enemies/plasmaEnemie.png");
 }
