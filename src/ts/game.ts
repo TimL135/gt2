@@ -108,8 +108,8 @@ function gameloop() {
     decreaseEffectDuration()
     decreaseLifeDuration()
     decreasePointsLifeDuration()
+    doEnemieSpecial()
     gameloopTicks.value++
-    doEnemieSpecial(gameloopTicks.value)
     executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemieSpeed)
     executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemieHpMax)
     executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemieDamage)

@@ -166,14 +166,18 @@ export interface EnemieDetails {
         move: Function
         img: string
         getMoveVector: (enemie: Enemie) => void
-        special: (gameTick: number, enemie: Enemie) => void
+        special: (enemie: Enemie) => void
+        specialCooldown: number
+        specialMaxCooldown: number
     }
 }
 export interface Enemie extends GameObject {
     hp: number
     hpMax: number
     damage: number
-    special: (gameTick: number, enemie: Enemie) => void
+    special: (enemie: Enemie) => void
+    specialCooldown: number
+    specialMaxCooldown: number
     move: (enemie: Enemie) => void
     getMoveVector: (enemie: Enemie) => void
 }

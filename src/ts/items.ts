@@ -20,7 +20,7 @@ export const details = ref<ItemdDetails>({
         name: "speed",
         img: "speed",
         effect: () => increaseEffectDuration(1, 2 * getMultiplier("speedDuration")),
-        multiplier: () => updateMultiplier("playerSpeed", "item1", computed(() => player.value.effects[1] ? 2 * getMultiplier("speedStrength") : 1))
+        multiplier: () => updateMultiplier("playerSpeed", "item1", computed(() => player.value.effects[1] ? 1.5 * getMultiplier("speedStrength") : 1))
     },
     2: {
         name: "stun",
@@ -39,16 +39,15 @@ export const details = ref<ItemdDetails>({
 export function itemMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())
 }
-export function spawn() {
+export function spawn(cords?: { x: number, y: number }) {
     const item = {
         ...defaultGameObject(),
         lifeDuration: secondsToTicks(5 * getMultiplier("itemDespawn")),
         ...details.value[getRandomInt(Object.values(details.value).length)]
     }
     item.size *= getMultiplier("itemSize")
-    for (const e of ["x", "y"] as const) {
-        item.cords[e] = getRandomInt(field.value.size[e] - item.size)
-    }
+    if (cords) item.cords = cords
+    else for (const e of ["x", "y"] as const) item.cords[e] = getRandomInt(field.value.size[e] - item.size)
     items.value.push(item)
 }
 

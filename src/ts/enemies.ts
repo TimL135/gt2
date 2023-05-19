@@ -9,6 +9,7 @@ import { getMultiplier, multiplier } from "./multiplier";
 import { playSound } from "./generel/sounds";
 import { addPoint } from "./points";
 import { spawnEnemiePlasma } from "./plasma";
+import { spawn as spawnItem } from "./items";
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -20,6 +21,8 @@ export const details = ref<EnemieDetails>({
         },
         img: 'normal',
         special: () => { },
+        specialCooldown: 0,
+        specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -47,6 +50,8 @@ export const details = ref<EnemieDetails>({
         },
         img: 'aim',
         special: () => { },
+        specialCooldown: 0,
+        specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -60,6 +65,8 @@ export const details = ref<EnemieDetails>({
         },
         img: 'chase',
         special: () => { },
+        specialCooldown: 0,
+        specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -71,7 +78,9 @@ export const details = ref<EnemieDetails>({
             }
         },
         img: 'shot',
-        special: (gameTick, enemie) => { if (gameTick % secondsToTicks(3) == 0) spawnEnemiePlasma(enemie) },
+        special: (enemie) => { spawnEnemiePlasma(enemie) },
+        specialCooldown: secondsToTicks(3),
+        specialMaxCooldown: secondsToTicks(3),
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -130,9 +139,14 @@ export function spawn() {
     enemie.moveVector = norVec(enemie.moveVector)
     enemies.value.push(enemie)
 }
-export function doEnemieSpecial(gameTick: number) {
+export function doEnemieSpecial() {
     for (const e of enemies.value) {
-        e.special(gameTick, e)
+        e.specialCooldown -= +!!e.specialCooldown
+        if (!e.specialCooldown) {
+            e.special(e)
+            e.specialCooldown = e.specialMaxCooldown
+        }
+
     }
 }
 export function checkPosition() {
@@ -149,6 +163,7 @@ export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
         actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 3
+        spawnItem(enemie.cords)
         playSound("explosion")
         remove(enemie)
     }
