@@ -53,7 +53,7 @@
                             <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
                                 :title="detailsAbilitys[availableAbility]?.description">{{
                                     detailsAbilitys[availableAbility]?.name }}</option>
-                            <option :value="-1" v-if="savedPlayer.abilitys.selected[ability] != -1">none</option>
+                            <option :value="-1" v-if="ability != -1">none</option>
                         </select>
                     </div>
                 </div>

@@ -26,8 +26,8 @@ export function getSavedPlayer(): SavedPlayer {
         points: {},
         buildings: {},
         abilitys: {
-            selected: [-1, -1, -1, -1],
-            owned: []
+            selected: [0, 1, 2, 3],
+            owned: [0, 1, 2, 3]
         },
         weapons: {
             owned: [0],
@@ -66,6 +66,19 @@ export function getSavedPlayer(): SavedPlayer {
     if (savedPlayer.artefacts) {
         newPlayer.timeCrystal = savedPlayer.artefacts
         delete savedPlayer.artefacts
+    }
+    if (savedPlayer.abilitys) {
+        for (let i of [0, 1, 2, 3]) {
+            if (!savedPlayer.abilitys.owned.includes(i)) savedPlayer.abilitys.owned.push(i)
+            if (savedPlayer.abilitys.selected[i] === -1) {
+                for (let j of [0, 1, 2, 3]) {
+                    if (!savedPlayer.abilitys.owned.includes(j)) {
+                        savedPlayer.abilitys.selected[i] = j
+                        break
+                    }
+                }
+            }
+        }
     }
     return {
         ...newPlayer,
