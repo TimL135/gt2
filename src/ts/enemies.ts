@@ -21,6 +21,7 @@ export const details = ref<EnemieDetails>({
         },
         img: 'normal',
         special: () => { },
+        onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: 0,
         specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
@@ -50,6 +51,7 @@ export const details = ref<EnemieDetails>({
         },
         img: 'aim',
         special: () => { },
+        onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: 0,
         specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
@@ -65,6 +67,7 @@ export const details = ref<EnemieDetails>({
         },
         img: 'chase',
         special: () => { },
+        onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: 0,
         specialMaxCooldown: 0,
         getMoveVector: (enemie: Enemie) => {
@@ -79,6 +82,7 @@ export const details = ref<EnemieDetails>({
         },
         img: 'shot',
         special: (enemie) => { spawnEnemiePlasma(enemie) },
+        onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: secondsToTicks(3),
         specialMaxCooldown: secondsToTicks(3),
         getMoveVector: (enemie: Enemie) => {
@@ -163,7 +167,7 @@ export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
         actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 3
-        spawnItem(enemie.cords)
+        enemie.onKill(enemie)
         playSound("explosion")
         remove(enemie)
     }

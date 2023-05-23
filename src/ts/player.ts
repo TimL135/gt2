@@ -65,7 +65,7 @@ export function reset() {
     player.value.energy = player.value.energyMax
 }
 let charge = 0
-let lastDirection = -1
+// let lastDirection = -1
 export function move(pressedKeys: Record<string, boolean>) {
     const keys = savedPlayer.value.settings.keys
     player.value.moveVector = { x: 0, y: 0 }
@@ -83,11 +83,10 @@ export function move(pressedKeys: Record<string, boolean>) {
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize.value)
         if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
-        if (player.value.direction != lastDirection) playSound("move")
-        lastDirection = player.value.direction
-    } else {
-        lastDirection = -1
+        // if (player.value.direction != lastDirection) playSound("move")
+        // lastDirection = player.value.direction
     }
+    // else lastDirection = -1
 }
 export function enemieHit(enemie: Enemie) {
     removeEnemie(enemie)

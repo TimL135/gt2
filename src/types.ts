@@ -167,6 +167,7 @@ export interface EnemieDetails {
         img: string
         getMoveVector: (enemie: Enemie) => void
         special: (enemie: Enemie) => void
+        onKill: (enemie: Enemie) => void
         specialCooldown: number
         specialMaxCooldown: number
     }
@@ -178,6 +179,7 @@ export interface Enemie extends GameObject {
     special: (enemie: Enemie) => void
     specialCooldown: number
     specialMaxCooldown: number
+    onKill: (enemie: Enemie) => void
     move: (enemie: Enemie) => void
     getMoveVector: (enemie: Enemie) => void
 }
