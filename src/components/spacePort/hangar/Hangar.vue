@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item" v-for="standard of ['weapons', 'passivs']">
+        <div class="accordion-item" v-for="standard of (['weapons', 'passivs'] as const)">
             <h2 class="accordion-header" :id="`heading${standard}`">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${standard}`">

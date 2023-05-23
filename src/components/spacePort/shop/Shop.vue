@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="accordion-item" v-for="item of ['abilitys', 'passivs', 'weapons']">
+        <div class="accordion-item" v-for="item of (['abilitys', 'passivs', 'weapons'] as const)">
             <h2 class="accordion-header" :id="`heading${item}`">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${item}`">
