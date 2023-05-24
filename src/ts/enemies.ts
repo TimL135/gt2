@@ -129,7 +129,8 @@ function getSpecial(enemie: Enemie) {
 export function spawn() {
     const enemie = {
         ...defaultGameObject(),
-        speed: 3,
+        size: 35,
+        speed: 4,
         damage: 1 * getMultiplier("enemieDamage"),
         hp: 1,
         hpMax: 1 * getMultiplier("enemieHp"),

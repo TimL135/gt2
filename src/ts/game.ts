@@ -58,10 +58,10 @@ const enemieSpeedTime = ref(1)
 const enemieHpTime = ref(1)
 const enemieDamageTime = ref(1)
 const enemieSpecialTime = ref(1)
-updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => (enemieSpeedTime.value * 0.15 * getMultiplier("enemieSpeedPower")) + 1))
-updateMultiplier("enemieHp", "enemieHpTime", computed(() => (enemieHpTime.value * 0.15 * getMultiplier("enemieHpPower")) + 1))
-updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamageTime.value * 0.15 * getMultiplier("enemieDamagePower")) + 1))
-updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.15 * getMultiplier("enemieSpecialPower")) + 1))
+updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => (enemieSpeedTime.value * 0.1 * getMultiplier("enemieSpeedPower")) + 1))
+updateMultiplier("enemieHp", "enemieHpTime", computed(() => (enemieHpTime.value * 0.1 * getMultiplier("enemieHpPower")) + 1))
+updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamageTime.value * 0.1 * getMultiplier("enemieDamagePower")) + 1))
+updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.1 * getMultiplier("enemieSpecialPower")) + 1))
 export function start() {
     if (gameloopInterval.value) return
     enemieSpeedTime.value = 1
@@ -75,7 +75,7 @@ export function start() {
     resetInfo()
     clearPoints()
     gameloopTicks.value = 0
-    for (let i = 0; i < 6; i++)spawnEnemie()
+    for (let i = 0; i < 7; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
         gameloop();
     }, 1000 / gameTicks);
