@@ -49,7 +49,7 @@ export function spawnEnemiePlasma(enemie: Enemie) {
         damage: enemie.damage,
         move: (plasma: Plasma) => {
             for (const e of ["x", "y"] as const) {
-                plasma.cords[e] += plasma.moveVector[e] * enemie.speed * speedConstant.value * 2;
+                plasma.cords[e] += plasma.moveVector[e] * enemie.speed * getMultiplier("plasmaEnemieSpeed") * 2;
             }
         },
         id: createId(),

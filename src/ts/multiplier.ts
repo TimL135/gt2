@@ -26,6 +26,7 @@ export const multiplier = {
         generalSize
     },
     plasmaEnemieSpeed: {
+        speedConstant,
         generalSize
     },
     plasmaEnemieSize: {
