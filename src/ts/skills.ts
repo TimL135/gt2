@@ -231,7 +231,7 @@ export function skillMultiplier() {
 
 export function getPoints() {
     lvlMultiplier()
-    for (const e of [["kills", 2, 0], ["move", 3000, 1], ["collect", 2, 2], ["time", 10, 3]] as const) {
+    for (const e of [["kills", 1.5, 0], ["move", 2500, 1], ["collect", 1.5, 2], ["time", 10, 3]] as const) {
         const actionValue = Math.round(actionsPlayer.value[e[0]] * getMultiplier(`tree${e[2]}`) / e[1])
         if (actionValue > (savedPlayer.value.points[e[2]] || 0)) {
             const points = actionValue - (savedPlayer.value.points[e[2]] || 0)

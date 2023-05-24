@@ -2,7 +2,7 @@
     <div v-for="point of points" style="position: absolute;" :style="{
         left: point.cords.x + 'px',
         top: point.cords.y + 'px',
-        fontSize: (point.lifeDuration * 3 * generalSize) / secondsToTicks(1) + 'rem',
+        fontSize: (point.lifeDuration * 6 * generalSize) / secondsToTicks(1) + 'rem',
     }" :class="point.type">
         {{ point.amount }}
     </div>

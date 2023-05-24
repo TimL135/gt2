@@ -60,16 +60,17 @@ export const details = ref<EnemieDetails>({
     },
     2: {
         move: (enemie: Enemie) => {
-            enemie.getMoveVector(enemie)
+            if (enemie.specialCooldown)
+                enemie.getMoveVector(enemie)
             for (const e of ["x", "y"] as const) {
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * (getMultiplier("enemieSpeed") / multiplier.enemieSpeed.enemieSpeedTime.value) * (enemie.hp / enemie.hpMax);
             }
         },
         img: 'chase',
-        special: () => { },
+        special: (enemie: Enemie) => { enemie.specialMaxCooldown = 0 },
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
-        specialCooldown: 0,
-        specialMaxCooldown: 0,
+        specialCooldown: secondsToTicks(10),
+        specialMaxCooldown: secondsToTicks(10),
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
@@ -83,8 +84,8 @@ export const details = ref<EnemieDetails>({
         img: 'shot',
         special: (enemie) => { spawnEnemiePlasma(enemie) },
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
-        specialCooldown: secondsToTicks(3),
-        specialMaxCooldown: secondsToTicks(3),
+        specialCooldown: secondsToTicks(4),
+        specialMaxCooldown: secondsToTicks(4),
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -118,17 +119,17 @@ function getSpawnPosition(enemie: Enemie) {
 }
 function getSpecial(enemie: Enemie) {
     const specials = {
-        0: () => enemie.size *= 1.15 * getMultiplier("enemieSpecial"),
-        1: () => enemie.speed *= 1.15 * getMultiplier("enemieSpecial"),
-        2: () => enemie.hpMax *= 1.15 * getMultiplier("enemieSpecial"),
-        3: () => enemie.damage *= 1.15 * getMultiplier("enemieSpecial"),
+        0: () => enemie.size *= 1.1 * getMultiplier("enemieSpecial"),
+        1: () => enemie.speed *= 1.1 * getMultiplier("enemieSpecial"),
+        2: () => enemie.hpMax *= 1.1 * getMultiplier("enemieSpecial"),
+        3: () => enemie.damage *= 1.1 * getMultiplier("enemieSpecial"),
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
 export function spawn() {
     const enemie = {
         ...defaultGameObject(),
-        speed: 2,
+        speed: 3,
         damage: 1 * getMultiplier("enemieDamage"),
         hp: 1,
         hpMax: 1 * getMultiplier("enemieHp"),
@@ -163,7 +164,7 @@ export function checkPosition() {
 
 export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     enemie.hp -= plasma.damage
-    addPoint(Math.ceil(plasma.damage), "damageEnemie", { ...enemie.cords })
+    addPoint(plasma.damage, "damageEnemie", { ...enemie.cords })
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
         actionsPlayer.value["currency"] = (actionsPlayer.value["currency"] || 0) + 3
