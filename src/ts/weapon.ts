@@ -15,7 +15,7 @@ export const details = ref<WeaponDetails>({
     0: {
         name: 'standard',
         description: 'the standard gun.',
-        damage: 1,
+        damage: 3,
         size: 40,
         speed: 3,
         cooldown: secondsToTicks(1.5),
@@ -27,7 +27,7 @@ export const details = ref<WeaponDetails>({
     1: {
         name: 'mg',
         description: 'faster reload.',
-        damage: 1,
+        damage: 2,
         size: 40,
         speed: 3,
         cooldown: secondsToTicks(1),
@@ -38,7 +38,7 @@ export const details = ref<WeaponDetails>({
     2: {
         name: 'bazooka',
         description: 'fires a huge powerful plasma ball.',
-        damage: 5,
+        damage: 10,
         size: 60,
         speed: 1,
         cooldown: secondsToTicks(4),
@@ -49,7 +49,7 @@ export const details = ref<WeaponDetails>({
     3: {
         name: 'shotgun',
         description: 'shot 3 plasmas.',
-        damage: 0.5,
+        damage: 1.5,
         size: 20,
         speed: 2,
         cooldown: secondsToTicks(2),

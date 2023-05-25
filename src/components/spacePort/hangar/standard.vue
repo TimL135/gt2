@@ -1,7 +1,7 @@
 <template>
     <button v-for="standard of savedPlayer[standardProp].owned" class="btn mb-1 me-1"
         :class="savedPlayer[standardProp].selected == standard ? 'btn-success' : 'btn-primary'"
-        :title="details[standardProp][standard]?.description" @click="savedPlayer.weapons.selected = standard">
+        :title="details[standardProp][standard]?.description" @click="savedPlayer[standardProp].selected = standard">
         {{ details[standardProp][standard].name }}
     </button>
 </template>
