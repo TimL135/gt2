@@ -17,7 +17,7 @@ export function getXp() {
     }, 0)
     actions.value.xp = xp
     xp *= getMultiplier("xp")
-    if (xp > 0) updateInfo("xp", `you got ${xp} xp`)
+    if (xp > 0) updateInfo("xp", `you got ${Math.round(xp)} xp`)
     savedPlayer.value.lvl.xp += xp
     increaseLvl()
 }

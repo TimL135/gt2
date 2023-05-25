@@ -143,15 +143,15 @@ function getCurrency() {
     }
 }
 function getScore() {
-    let score = Object.entries(actionsPlayer.value).reduce((a, b) => {
+    let score = Math.round(Object.entries(actionsPlayer.value).reduce((a, b) => {
         if (b[0] == "time") return a + b[1] * 1
         if (b[0] == 'deathEnemies') return a + b[1] * 3
         if (b[0] == 'collect') return a + b[1] * 10
         if (b[0] == 'kills') return a + b[1] * 12
         return a
-    }, 0)
+    }, 0))
     if (score > savedPlayer.value.score.highScore) {
-        let newHighScore = Math.round(score)
+        let newHighScore = score
         updateInfo("highScore", `you got a new highscore: ${newHighScore}`)
         savedPlayer.value.score.highScore = newHighScore
     }
