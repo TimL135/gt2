@@ -27,6 +27,25 @@ button {
     text-transform: uppercase !important;
 }
 
+$colors: (
+    blue,
+    orange,
+    yellow,
+    violet
+);
+
+@for $i from 1 through length($colors) {
+    $color: nth($colors, $i);
+
+    .ability#{$i - 1} {
+        color: $color;
+    }
+
+    button.ability#{$i - 1} {
+        background-color: $color;
+    }
+}
+
 .player {
     background-image: url("/public/img/player/player.png");
 }

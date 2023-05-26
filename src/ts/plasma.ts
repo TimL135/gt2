@@ -6,7 +6,6 @@ import { field } from "./game";
 import { getMultiplier } from "./multiplier";
 import { playSound } from "./generel/sounds";
 import { dirVec, norVec } from "./generel/vector";
-import { speedConstant } from "./generel/config";
 
 export const plasmas = ref<Plasma[]>([])
 export function clear() {
@@ -25,9 +24,9 @@ export function spawn(details: WeaponDetail, index = 0) {
         direction: 0,
         id: createId()
     } as Plasma
-    plasma.size *= getMultiplier("plasmaSize")
-    plasma.speed *= getMultiplier("plasmaSpeed")
-    plasma.damage *= getMultiplier("plasmaDamage")
+    for (let property of ["size", "speed", "damage"] as const) {
+        plasma[property] *= getMultiplier("plasma" + property[0].toUpperCase() + property.slice(1))
+    }
     plasma.getMoveVector(plasma, index)
     plasmas.value.push(plasma)
     playSound("laserShoot")
@@ -39,7 +38,7 @@ const enemiePlasmaDetails = {
     moveVector: {} as Vector,
     img: 'plasmaEnemie',
 }
-export function spawnEnemiePlasma(enemie: Enemie) {
+export function spawnEnemiePlasma(enemie: Enemie, moveVector?: Vector) {
     const plasma = {
         ...enemiePlasmaDetails,
         cords: {
@@ -54,10 +53,10 @@ export function spawnEnemiePlasma(enemie: Enemie) {
         },
         id: createId(),
     } as Plasma
-    plasma.size *= getMultiplier("plasmaEnemieSize")
-    plasma.speed *= getMultiplier("plasmaEnemieSpeed")
-    plasma.damage *= getMultiplier("plasmaEnemieDamage")
-    plasma.moveVector = norVec(dirVec(player.value.cords, plasma.cords))
+    for (let property of ["size", "speed", "damage"] as const) {
+        plasma[property] *= getMultiplier("plasmaEnemie" + property[0].toUpperCase() + property.slice(1))
+    }
+    plasma.moveVector = moveVector || norVec(dirVec(player.value.cords, plasma.cords))
     enemiePlasmas.value.push(plasma)
 }
 export function removeEnemiePlamsa(plasma: Plasma) {

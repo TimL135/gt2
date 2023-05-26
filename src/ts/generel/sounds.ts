@@ -18,7 +18,7 @@ const sounds = {
     move
 }
 
-export function playSound(sound: string) {
+export function playSound(sound: keyof typeof sounds) {
     if (player.value.cooldowns["sound" + sound]) return
     const audioElement = document.createElement('audio');
     audioElement.setAttribute('src', sounds[sound]);

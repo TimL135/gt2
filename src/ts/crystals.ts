@@ -18,46 +18,31 @@ const statTextPowerCrystal = {
     enemieSpecialPower: "special effects",
     enemieDamagePower: "damage"
 }
-export function getTimeCrystal() {
-    if (Object.keys(savedPlayer.value.timeCrystal.owned).length >= 5) return
+export function getCrystal(type: "time" | "power") {
+    type CrystalType = `${typeof type}Crystal`
+    const crystalType = type + "Crystal" as CrystalType
+    const savedCrystal = savedPlayer.value[crystalType]
+    const statText = type === "time" ? statTextTimeCrystal : statTextPowerCrystal
+    const probability = type === "time" ? 4 : 3
+    const maxBuffs = type === "time" ? 5 : 4
+    if (Object.keys(savedCrystal.owned).length >= 5) return
     let amountBuffs = 1
-    if (getProbability(4, "timeCrystal") > Math.random()) {
-        for (let i = 1; i < 5; i++) {
+    if (getProbability(probability, crystalType) > Math.random()) {
+        for (let i = 1; i < maxBuffs; i++) {
             if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(4 + (i * 2), "timeCrystal") > Math.random())
+                if (getProbability(probability + (i * 2), crystalType) > Math.random())
                     amountBuffs++
                 else break
             } else break
         }
-        let buffs = Object.keys(statTextTimeCrystal) as [keyof TimeCrystal]
-        const timeCrystal = {} as TimeCrystal
+        let buffs = Object.keys(statText) as [keyof TimeCrystal | keyof PowerCrystal]
+        const crystal = {} as { [key in keyof TimeCrystal | keyof PowerCrystal]: number }
         for (let i = 0; i < amountBuffs; i++) {
             if (buffs.length)
-                timeCrystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
+                crystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
         }
-        updateInfo("timeCrystal", `you got a ${Object.keys(timeCrystal).length} star "time crystal"`)
-        savedPlayer.value.timeCrystal.owned[createId()] = timeCrystal
-    }
-}
-export function getPowerCrystal() {
-    if (Object.keys(savedPlayer.value.powerCrystal.owned).length >= 5) return
-    let amountBuffs = 1
-    if (getProbability(3, "powerCrystal") > Math.random()) {
-        for (let i = 1; i < 4; i++) {
-            if ((savedPlayer.value.lvl.lvl + 1) / 10 > amountBuffs) {
-                if (getProbability(3 + (i * 2), "powerCrystal") > Math.random())
-                    amountBuffs++
-                else break
-            } else break
-        }
-        let buffs = Object.keys(statTextPowerCrystal) as [keyof PowerCrystal]
-        const powerCrystal = {} as PowerCrystal
-        for (let i = 0; i < amountBuffs; i++) {
-            if (buffs.length)
-                powerCrystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
-        }
-        updateInfo("powerCrystal", `you got a ${Object.keys(powerCrystal).length} star "power crystal"`)
-        savedPlayer.value.powerCrystal.owned[createId()] = powerCrystal
+        updateInfo(type + "Crystal", `you got a ${Object.keys(crystal).length} star "${type} crystal"`)
+        savedCrystal.owned[createId()] = crystal
     }
 }
 
@@ -81,7 +66,7 @@ function getProbability(minute: number, type: "timeCrystal" | "powerCrystal") {
 
 export function showStatCrystal(id: number, stat: keyof PowerCrystal | keyof TimeCrystal, crystalType: string) {
     if (crystalType == "powerCrystal")
-        return `reduces enemies ${statTextPowerCrystal[stat]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat], "de")) * 100)}%`
+        return `reduces enemies ${statTextPowerCrystal[stat as keyof PowerCrystal]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat as keyof PowerCrystal], "de")) * 100)}%`
     if (crystalType == "timeCrystal")
-        return `increase the time until ${statTextTimeCrystal[stat]} by ${savedPlayer.value.timeCrystal.owned[id][stat]}%`
+        return `increase the time until ${statTextTimeCrystal[stat as keyof TimeCrystal]} by ${savedPlayer.value.timeCrystal.owned[id][stat as keyof TimeCrystal]}%`
 }

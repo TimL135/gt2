@@ -19,7 +19,7 @@ import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from ".
 import { getPoints, } from "./skills";
 import { getMultiplier, updateMultiplier } from "./multiplier";
 import { getXp } from "./lvl";
-import { getTimeCrystal, getPowerCrystal } from "./crystals";
+import { getCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
 
@@ -86,8 +86,7 @@ export function stop() {
     actionsPlayer.value["time"] = ticksToSeconds(gameloopTicks.value)
     getScore()
     getXp()
-    getTimeCrystal()
-    getPowerCrystal()
+    for (let e of ["power", "time"] as const) { getCrystal(e) }
     getPoints()
     getCurrency()
     actionsPlayer.value = {}

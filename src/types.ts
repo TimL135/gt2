@@ -33,6 +33,7 @@ export interface OwnedSpaceShip {
     stats: number
     statsMultiplier: number
 }
+
 export interface SavedPlayer {
     settings: {
         musicVolume: number
@@ -89,6 +90,7 @@ export interface SavedPlayer {
         highScore: number
     }
 }
+export type Key = keyof SavedPlayer["settings"]["keys"]
 export interface SpaceShipStats {
     speed: number,
     hpMax: number,

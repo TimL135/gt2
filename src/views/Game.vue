@@ -40,7 +40,7 @@
 
             <div v-for="index in savedPlayer.abilitys.selected.length" class="mx-2">
                 <div v-if="savedPlayer.abilitys.selected[index - 1] != -1">
-                    <div class="text-center">
+                    <div class="text-center" :class="touchscreen ? `ability${index - 1}` : ''">
                         {{ detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].name }}
                     </div>
                     <div class="progress">
