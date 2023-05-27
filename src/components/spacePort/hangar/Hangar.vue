@@ -43,19 +43,7 @@
             </h2>
             <div id="collapseAbiliys" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <div v-for="(ability, index) of savedPlayer.abilitys.selected"
-                        class="px-2 d-flex justify-content-center">
-                        <select class="form-select mb-1 w-50" v-model="savedPlayer.abilitys.selected[index]"
-                            :title="detailsAbilitys[ability]?.description">
-                            <option :value="savedPlayer.abilitys.selected[index]"
-                                :title="detailsAbilitys[ability]?.description">{{
-                                    detailsAbilitys[savedPlayer.abilitys.selected[index]]?.name || "none" }}</option>
-                            <option v-for="availableAbility of availableAbilitys" :value="availableAbility"
-                                :title="detailsAbilitys[availableAbility]?.description">{{
-                                    detailsAbilitys[availableAbility]?.name }}</option>
-                            <option :value="-1" v-if="ability != -1">none</option>
-                        </select>
-                    </div>
+                    <Ability></Ability>
                 </div>
             </div>
         </div>
@@ -90,16 +78,12 @@
 <script setup lang='ts'>
 import { savedPlayer } from '../../../ts/player';
 import { getStats } from '../../../ts/spaceShip';
-import { details as detailsAbilitys } from '../../../ts/abilitys';
 import { imgs } from '../../../ts/spaceShip';
-import { computed } from 'vue';
 import { xpNeed } from '../../../ts/generel/config';
+import Ability from './Ability.vue';
 import Crystal from "./Crystal.vue"
 import Standard from "./standard.vue"
 
-const availableAbilitys = computed(() => {
-    return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))
-})
 function selectedSpaceShip(id: number) {
     savedPlayer.value.spaceShip.selected = id
 }

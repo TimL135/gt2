@@ -2,6 +2,15 @@
     <div :title="skillTrees[treeId].getPointsInfo">
         used points: {{ points[0] }}/{{ points[1] }}
     </div>
+    <div class="d-flex align-items-center mb-2 flex-column">
+        <select class="form-select w-50" aria-label="Default select example" v-model="buyAmount">
+            <option value="1">buy 1</option>
+            <option value="5">buy 5</option>
+            <option value="10">buy 10</option>
+            <option value="15">buy 15</option>
+            <option value="20">buy 20</option>
+        </select>
+    </div>
     <div v-for="tier of tiers">
         <button v-for="skill of tier" @click="buy(+skill[0])" class="shadow-none m-1 btn btn-primary"
             :title="getTitle(skill[1])">
@@ -16,7 +25,7 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { computed, toRefs } from 'vue';
+import { computed, ref, toRefs } from 'vue';
 import { details as detailsSkill, skillTrees } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
@@ -59,12 +68,12 @@ function getTitle(skill: SkillDetail) {
     text += skill.description
     return text
 }
+const buyAmount = ref(20)
 function buy(skillId: number) {
-    let amount = 1
     const keys = savedPlayer.value.settings.keys
-    if (pressedKeys[keys.buy10]) amount = 10
-    if (pressedKeys[keys.buy20]) amount = 20
-    for (let i = 0; i < amount; i++) {
+    if (pressedKeys[keys.buy10]) buyAmount.value = 10
+    if (pressedKeys[keys.buy20]) buyAmount.value = 20
+    for (let i = 0; i < buyAmount.value; i++) {
         const lvl = savedPlayer.value.skills[skillId] || 0
         if (lvl < detailsSkill.value[skillId].maxLvl && points.value[0] < points.value[1] && points.value[0] >= detailsSkill.value[skillId].usedPointsNeed) {
             const required = detailsSkill.value[skillId].required

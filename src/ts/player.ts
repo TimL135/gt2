@@ -81,7 +81,7 @@ export function move(pressedKeys: Record<string, boolean>) {
     }
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize.value)
-        if (savedPlayer.value.passivs.selected == 1) charge = detailsPassiv.value[1].effect(charge)
+        if (savedPlayer.value.passivs.selected == 2) charge = detailsPassiv.value[2].effect(charge)
         player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
         // if (player.value.direction != lastDirection) playSound("move")
         // lastDirection = player.value.direction

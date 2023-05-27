@@ -1,13 +1,13 @@
 <template>
     <div class="text-center">
         <div class="mb-2">
-            <button v-for="port of ['shop', 'building', 'score', 'hangar']" @click="view = port" class="me-1 btn "
+            <button v-for="port of ['shop', 'building', 'honor', 'hangar']" @click="view = port" class="me-1 btn "
                 :class="view == port ? 'btn-success' : 'btn-primary'">
                 {{ port }}</button>
         </div>
         <Shop v-if="view == 'shop'"></Shop>
         <Building v-if="view == 'building'"></Building>
-        <Score v-if="view == 'score'"></Score>
+        <Score v-if="view == 'honor'"></Score>
         <Hangar v-if="view == 'hangar'"></Hangar>
     </div>
 </template>

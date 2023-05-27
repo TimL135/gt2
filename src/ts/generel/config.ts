@@ -8,6 +8,7 @@ export const generalSize = computed(() => (window.innerWidth / 2560 + window.inn
 
 export const xpNeed = 120
 export const maxLvl = 49//is displayed with +1
+export const honorNeed = 500
 
 export const cost = {
     abilitys: 250,

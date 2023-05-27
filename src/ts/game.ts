@@ -151,7 +151,7 @@ function getScore() {
     }, 0))
     if (score > savedPlayer.value.score.highScore) {
         let newHighScore = score
-        updateInfo("highScore", `you got a new highscore: ${newHighScore}`)
+        updateInfo("honor", `you now have ${newHighScore} honor`)
         savedPlayer.value.score.highScore = newHighScore
     }
 }

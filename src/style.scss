@@ -28,9 +28,9 @@ button {
 }
 
 $colors: (
-    blue,
+    olive,
     orange,
-    yellow,
+    brown,
     violet
 );
 
@@ -42,6 +42,10 @@ $colors: (
     }
 
     button.ability#{$i - 1} {
+        background-color: $color;
+    }
+
+    button.ability#{$i - 1}:hover {
         background-color: $color;
     }
 }

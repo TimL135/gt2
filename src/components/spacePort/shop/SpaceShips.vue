@@ -1,5 +1,7 @@
 <template>
     <div>
+        <div>here you can buy a new spaceship there are different models, the maximum stats are increased with each level
+        </div>
         <button class="btn btn-primary" @click="buy()">
             <p> buy</p>
             <p class="m-0">cost: {{ Math.round(cost.spaceShip * getMultiplier("discount")) }}</p>

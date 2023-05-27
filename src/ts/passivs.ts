@@ -39,7 +39,7 @@ export const details = ref<{ [key: number]: { name: string; description: string;
         name: "energy explosion",
         description: "enemies are stunted when the energy is recharged.",
         effect: () => {
-            increaseEffectDuration(2, 1.5)
+            increaseEffectDuration(2, 1)
         }
     },
     4: {
