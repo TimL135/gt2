@@ -19,3 +19,10 @@ export const cost = {
 }
 
 export const getCurrencyInfo = "Scrap is a currency used to buy items. You can get scrap by killing enemies. You can also get scrap by selling items."
+
+export const lvlInfo = [
+    "you get xp when you defeat enemies, collect items and survive.",
+    "lvl increase the skill points received.",
+    "lvl increase the maximum stats of the newly purchased spaceships.",
+    "lvl increases your received honor."
+]

@@ -1,15 +1,18 @@
 <template>
-    <div class="text-center">
-        {{ savedPlayer.lvl.lvl + 1 }}
-    </div>
-    <div class="d-flex justify-content-center mb-2">
-        <div class="progress w-50">
-            <div class="progress-bar bg-info" style="--bs-progress-bar-transition: width 0.0s ease;"
-                :style="{ width: (savedPlayer.lvl.xp / ((savedPlayer.lvl.lvl + 1) * xpNeed)) * 100 + '%' }">
+    <div class="accordion px-2" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingLvl">
+                <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseLvl">
+                    lvl
+                </button>
+            </h2>
+            <div id="collapseLvl" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <Lvl></Lvl>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="accordion px-2" id="accordionExample">
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingSpaceShips">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
@@ -79,9 +82,9 @@
 import { savedPlayer } from '../../../ts/player';
 import { getStats } from '../../../ts/spaceShip';
 import { imgs } from '../../../ts/spaceShip';
-import { xpNeed } from '../../../ts/generel/config';
 import Ability from './Ability.vue';
 import Crystal from "./Crystal.vue"
+import Lvl from './Lvl.vue';
 import Standard from "./standard.vue"
 
 function selectedSpaceShip(id: number) {

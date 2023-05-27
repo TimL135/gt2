@@ -29,7 +29,8 @@
         <div>
             <button v-for="(ability, index) of savedPlayer.abilitys.selected" class="btn me-1 mb-1"
                 :class="`ability${index}`"
-                @click="savedPlayer.abilitys.selected[index] = selectedAbility, selectedAbility = -1">
+                @click="savedPlayer.abilitys.selected[index] = selectedAbility, selectedAbility = -1"
+                :title="detailsAbilitys[ability].description">
                 {{ detailsAbilitys[ability].name }}
             </button>
         </div>

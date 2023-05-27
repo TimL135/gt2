@@ -18,7 +18,7 @@ import { secondsToTicks, ticksToSeconds } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, } from "./skills";
 import { getMultiplier, updateMultiplier } from "./multiplier";
-import { getXp } from "./lvl";
+import { getScore, getXp } from "./lvl";
 import { getCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
@@ -139,19 +139,5 @@ function getCurrency() {
         let currency = Math.round(actionsPlayer.value["currency"] * getMultiplier("currency"))
         updateInfo("currency", `you got ${currency} scrap`)
         savedPlayer.value.currency = Math.round((savedPlayer.value.currency || 0) + currency)
-    }
-}
-function getScore() {
-    let score = Math.round(Object.entries(actionsPlayer.value).reduce((a, b) => {
-        if (b[0] == "time") return a + b[1] * 1
-        if (b[0] == 'deathEnemies') return a + b[1] * 3
-        if (b[0] == 'collect') return a + b[1] * 10
-        if (b[0] == 'kills') return a + b[1] * 12
-        return a
-    }, 0))
-    if (score > savedPlayer.value.score.highScore) {
-        let newHighScore = score
-        updateInfo("honor", `you now have ${newHighScore} honor`)
-        savedPlayer.value.score.highScore = newHighScore
     }
 }
