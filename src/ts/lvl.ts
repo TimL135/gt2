@@ -34,17 +34,3 @@ export function increaseLvl() {
 export function lvlMultiplier() {
     skillTrees.value.forEach(e => updateMultiplier(`tree${e.id}`, 'playerLvl', computed(() => percent(savedPlayer.value.lvl.lvl, "in"))))
 }
-export function getScore() {
-    let score = Math.round(Object.entries(actions.value).reduce((a, b) => {
-        if (b[0] == "time") return a + b[1] * 1
-        if (b[0] == 'deathEnemies') return a + b[1] * 3
-        if (b[0] == 'collect') return a + b[1] * 10
-        if (b[0] == 'kills') return a + b[1] * 12
-        return a
-    }, 0) * percent(savedPlayer.value.lvl.lvl, "in"))
-    if (score > savedPlayer.value.score.highScore) {
-        let newHighScore = score
-        updateInfo("honor", `you now have ${newHighScore} honor`)
-        savedPlayer.value.score.highScore = newHighScore
-    }
-}

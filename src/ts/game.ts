@@ -18,10 +18,11 @@ import { secondsToTicks, ticksToSeconds } from "./generel/helpers";
 import { decreaseLifeDuration, spawn as spawnItem, clear as clearItems } from "./items";
 import { getPoints, } from "./skills";
 import { getMultiplier, updateMultiplier } from "./multiplier";
-import { getScore, getXp } from "./lvl";
+import { getXp } from "./lvl";
 import { getCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
+import { getScore } from "./score";
 
 export const field = ref({
     size: {

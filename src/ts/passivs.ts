@@ -28,7 +28,7 @@ export const details = ref<{ [key: number]: { name: string; description: string;
         description: "you generate energy when you move.",
         effect: (charge: number) => {
             charge += player.value.speed
-            if (charge > 1000 && player.value.energy < player.value.energyMax) {
+            if (charge > 1500 && player.value.energy < player.value.energyMax) {
                 player.value.energy++
                 charge = 0
             }

@@ -7,7 +7,7 @@ export const details = ref({
         speed: 6,
         hpMax: 5,
         energyMax: 5,
-        size: 50,
+        size: 40,
         statsMultiplier: {
             speed: "const",
             hpMax: "in",
@@ -31,7 +31,7 @@ export const details = ref({
         speed: 4,
         hpMax: 8,
         energyMax: 8,
-        size: 60,
+        size: 55,
         statsMultiplier: {
             speed: "const",
             hpMax: "in",
