@@ -12,9 +12,10 @@
     </div>
 </template>
 <script setup lang='ts'>
+import { Key } from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys, touchscreen } from '../ts/game';
-import { Key } from '../types';
+
 function updateKey(key: Key) {
     if (!Object.entries(pressedKeys).find(e => e[1])) return
     savedPlayer.value.settings.keys[key] = Object.entries(pressedKeys).find(e => e[1])?.[0] ?? savedPlayer.value.settings.keys[key]

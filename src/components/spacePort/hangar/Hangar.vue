@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item" v-for="crystal of ['time_crystal', 'power_crystal']">
+        <div class="accordion-item" v-for="crystal of (['time_crystal', 'power_crystal'] as const)">
             <h2 class="accordion-header" :id="`heading${crystal}`">
                 <button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${crystal}`">
@@ -81,7 +81,7 @@
             </h2>
             <div :id="`collapse${crystal}`" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <Crystal :crystalProp="crystal.replace('_c', 'C')"></Crystal>
+                    <Crystal :crystalProp="crystal.replaceAll('_c', 'C') as 'timeCrystal' | 'powerCrystal'"></Crystal>
                 </div>
             </div>
         </div>

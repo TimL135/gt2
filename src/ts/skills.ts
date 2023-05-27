@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { SkillDetail } from "../types";
+import { SkillDetail, SkillDetails } from "../types";
 import { actions as actionsPlayer, savedPlayer } from './player';
 import { percent } from "./generel/helpers";
 import { updateMultiplier, getMultiplier } from "./multiplier";
@@ -223,7 +223,7 @@ export const details = ref({
         maxLvl: 20,
         multiplier: () => updateMultiplier("powerCrystalChance", "304", computed(() => percent((savedPlayer.value.skills[304] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
-})
+} as SkillDetails)
 export function skillMultiplier() {
     Object.values(details.value).forEach(e => e.multiplier())
 }

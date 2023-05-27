@@ -90,7 +90,9 @@ export interface SavedPlayer {
         highScore: number
     }
 }
+
 export type Key = keyof SavedPlayer["settings"]["keys"]
+
 export interface SpaceShipStats {
     speed: number,
     hpMax: number,
