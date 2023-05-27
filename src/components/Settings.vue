@@ -11,6 +11,11 @@
             title="press a key on your keyboard and click this button to change">
             {{ e[1] == ' ' ? 'space' : e[1] }}</button>
     </div>
+    <input class="form-check-input shadow-none" type="checkbox" v-model="savedPlayer.settings.showMultipliers"
+        id="showMultipliers">
+    <label class="form-check-label ms-2" for="showMultipliers">
+        show multipliers
+    </label>
 </template>
 <script setup lang='ts'>
 import * as Type from '../types';

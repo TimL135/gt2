@@ -20,7 +20,8 @@ export function getSavedPlayer(): SavedPlayer {
                 ability1: "2",
                 ability2: "3",
                 ability3: "4",
-            }
+            },
+            showMultipliers: false
         },
         skills: {},
         points: {},
@@ -66,6 +67,9 @@ export function getSavedPlayer(): SavedPlayer {
     if (savedPlayer.artefacts) {
         newPlayer.timeCrystal = savedPlayer.artefacts
         delete savedPlayer.artefacts
+    }
+    if (savedPlayer.settings && typeof savedPlayer.settings.showMultipliers !== 'boolean') {
+        savedPlayer.settings.showMultipliers = false
     }
     if (savedPlayer.abilitys) {
         for (let i of [0, 1, 2, 3]) {

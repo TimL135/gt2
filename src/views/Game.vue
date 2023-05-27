@@ -17,7 +17,11 @@
         </div>
     </div>
     <div class="game row g-0">
-        <div class="col" style="height: 90vh;">
+        <div class="col" style="height: 90vh; overflow: hidden;">
+            <div v-if="savedPlayer.settings.showMultipliers"
+                v-for="[key, value] of Object.entries(multiplierValues) as [string, number][]">
+                {{ key }}: {{ value.toFixed(2) }}
+            </div>
         </div>
         <div class="col-8">
             <PlayingArea></PlayingArea>
@@ -41,7 +45,8 @@
             <div v-for="index in savedPlayer.abilitys.selected.length" class="mx-2">
                 <div v-if="savedPlayer.abilitys.selected[index - 1] != -1">
                     <div class="text-center" :class="touchscreen ? `ability${index - 1}` : ''">
-                        {{ detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].name }}
+                        {{ detailsAbilitys[savedPlayer.abilitys.selected[index - 1]].name }}{{
+                            !touchscreen ? `(${savedPlayer.settings.keys[`ability${index - 1}` as Key]})` : '' }}
                     </div>
                     <div class="progress">
                         <div class="progress-bar " style="--bs-progress-bar-transition: width 0.0s ease;"
@@ -79,6 +84,8 @@ import { details as detailsAbilitys } from "../ts/abilitys";
 import Touchscreen from '../components/Touchscreen.vue';
 import { touchscreen } from '../ts/game';
 import { resetInfo } from '../ts/info';
+import { multiplierValues } from '@/ts/multiplier';
+import { Key, SavedPlayer } from '@/types';
 resetInfo()
 
 buildingMultiplier()

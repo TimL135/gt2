@@ -51,6 +51,7 @@ export interface SavedPlayer {
             ability2: string
             ability3: string
         }
+        showMultipliers: boolean
     }
     spaceShip: {
         selected: number
