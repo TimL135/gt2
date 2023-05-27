@@ -4,7 +4,8 @@
 
     <label for="sounds" class="form-label ">sounds volume</label>
     <input type="range" class="form-range" id="sounds" v-model="savedPlayer.settings.soundsVolume">
-    <div v-if="!touchscreen" v-for=" e of  Object.entries(savedPlayer.settings.keys) as [Key, string][]" class="grid mb-1">
+    <div v-if="!touchscreen" v-for=" e of  Object.entries(savedPlayer.settings.keys) as [Type.Key, string][]"
+        class="grid mb-1">
         <p>{{ e[0] }}:</p>
         <button class="btn btn-primary" @click="updateKey(e[0])"
             title="press a key on your keyboard and click this button to change">
@@ -12,11 +13,11 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { Key } from '../types';
+import * as Type from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys, touchscreen } from '../ts/game';
 
-function updateKey(key: Key) {
+function updateKey(key: Type.Key) {
     if (!Object.entries(pressedKeys).find(e => e[1])) return
     savedPlayer.value.settings.keys[key] = Object.entries(pressedKeys).find(e => e[1])?.[0] ?? savedPlayer.value.settings.keys[key]
 }
