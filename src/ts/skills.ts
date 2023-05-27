@@ -33,14 +33,16 @@ export const details = ref({
     0: {
         name: "super charger",
         description: "increases the energy production.",
+        deatils: "multiplies the charging time by",
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("chargeSpeed", "skill0", computed(() => percent((savedPlayer.value.skills[0] || 0) * getMultiplier("skills0"), "in")))
+        multiplier: () => updateMultiplier("chargeSpeed", "skill0", computed(() => percent((savedPlayer.value.skills[0] || 0) * getMultiplier("skills0"), "de")))
     } as SkillDetail,
     1: {
         name: "reload automatic",
         description: "increases the reloading speed.",
+        deatils: "multiplies the reloading time by",
         skillTreeId: 0,
         usedPointsNeed: 0,
         maxLvl: 20,
@@ -49,6 +51,7 @@ export const details = ref({
     3: {
         name: "slow enemies",
         description: "enemies move slower.",
+        deatils: "multiplies the speed by",
         skillTreeId: 0,
         usedPointsNeed: 40,
         maxLvl: 20,
@@ -57,6 +60,7 @@ export const details = ref({
     4: {
         name: "smaller enemies",
         description: "enemies are smaller.",
+        deatils: "multiplies the size by",
         skillTreeId: 0,
         usedPointsNeed: 40,
         maxLvl: 20,
@@ -65,6 +69,7 @@ export const details = ref({
     5: {
         name: "big plasma",
         description: "plasma are bigger.",
+        deatils: "multiplies the size by",
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -73,6 +78,7 @@ export const details = ref({
     6: {
         name: "fast plasma",
         description: "plasma move faster.",
+        deatils: "multiplies the speed by",
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -81,6 +87,7 @@ export const details = ref({
     7: {
         name: "strong plasma",
         description: "plasma makes more damage.",
+        deatils: "multiplies the damage by",
         skillTreeId: 0,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -89,6 +96,7 @@ export const details = ref({
     100: {
         name: "plaid",
         description: "you move faster.",
+        deatils: "multiplies the speed by",
         skillTreeId: 1,
         usedPointsNeed: 0,
         maxLvl: 20,
@@ -96,6 +104,7 @@ export const details = ref({
     } as SkillDetail,
     101: {
         name: "4680 battery",
+        deatils: "increases the energy maximum by",
         description: "increases the maximum energy.",
         skillTreeId: 1,
         usedPointsNeed: 0,
@@ -105,6 +114,7 @@ export const details = ref({
     102: {
         name: "shrink ray",
         description: "makes you smaller.",
+        deatils: "multiplies the size by",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -113,6 +123,7 @@ export const details = ref({
     103: {
         name: "overclocking",
         description: "reduces the cooldown of the ability.",
+        deatils: "multiplies the cooldown by",
         skillTreeId: 1,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -121,6 +132,7 @@ export const details = ref({
     104: {
         name: "armor",
         description: "gives you more life.",
+        deatils: "increases the maximum life by",
         skillTreeId: 1,
         usedPointsNeed: 40,
         maxLvl: 20,
@@ -129,6 +141,7 @@ export const details = ref({
     200: {
         name: "more items",
         description: "items spawn more often.",
+        deatils: "multiplies the spawn rate by",
         skillTreeId: 2,
         usedPointsNeed: 0,
         maxLvl: 20,
@@ -137,6 +150,7 @@ export const details = ref({
     201: {
         name: "longer items",
         description: "it takes longer for items to despawn.",
+        deatils: "multiplies the time until respawn by",
         skillTreeId: 2,
         usedPointsNeed: 0,
         maxLvl: 20,
@@ -145,6 +159,7 @@ export const details = ref({
     202: {
         name: "longer slow",
         description: "the slow effect lasts longer.",
+        deatils: "multiplies the effect time by",
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -153,6 +168,7 @@ export const details = ref({
     203: {
         name: "longer speed",
         description: "the speed effect lasts longer.",
+        deatils: "multiplies the effect time by",
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -161,6 +177,7 @@ export const details = ref({
     204: {
         name: "longer stun",
         description: "the stun effect lasts longer.",
+        deatils: "multiplies the effect time by",
         skillTreeId: 2,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -169,6 +186,7 @@ export const details = ref({
     205: {
         name: "stronger slow",
         description: "the slow effect is stronger.",
+        deatils: "multiplies the slow effect by",
         skillTreeId: 2,
         usedPointsNeed: 40,
         required: {
@@ -181,6 +199,7 @@ export const details = ref({
     206: {
         name: "stronger speed",
         description: "the speed effect is stronger.",
+        deatils: "multiplies the speed effect by",
         skillTreeId: 2,
         usedPointsNeed: 40,
         required: {
@@ -193,23 +212,26 @@ export const details = ref({
     300: {
         name: "more scrap",
         description: "you get more scrap.",
+        deatils: "multiplies the scrap by",
         skillTreeId: 3,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("currency", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("currency", "300", computed(() => percent((savedPlayer.value.skills[300] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
 
     301: {
         name: "more xp",
         description: "you get more xp.",
+        deatils: "multiplies the xp by",
         skillTreeId: 3,
         usedPointsNeed: 0,
         maxLvl: 20,
-        multiplier: () => updateMultiplier("xp", "302", computed(() => percent((savedPlayer.value.skills[302] || 0) * getMultiplier("skills300"), "in")))
+        multiplier: () => updateMultiplier("xp", "301", computed(() => percent((savedPlayer.value.skills[301] || 0) * getMultiplier("skills300"), "in")))
     } as SkillDetail,
     303: {
         name: "four-leaf clover",
-        description: "you get more and better Time Crystals",
+        description: "you get more and better time crystals",
+        deatils: "multiplies the time crystal chance by",
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,
@@ -218,6 +240,7 @@ export const details = ref({
     304: {
         name: "more power crystals",
         description: "you get more and better power crystals.",
+        deatils: "multiplies the power crystal chance by",
         skillTreeId: 3,
         usedPointsNeed: 20,
         maxLvl: 20,

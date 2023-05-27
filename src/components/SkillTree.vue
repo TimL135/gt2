@@ -4,16 +4,19 @@
     </div>
     <div class="d-flex align-items-center mb-2 flex-column">
         <select class="form-select w-50" aria-label="Default select example" v-model="buyAmount">
-            <option value="1">buy 1</option>
-            <option value="5">buy 5</option>
-            <option value="10">buy 10</option>
-            <option value="15">buy 15</option>
-            <option value="20">buy 20</option>
+            <option v-for="amount of [1, 5, 10, 15, 20]" :value="amount">buy {{ amount }}</option>
         </select>
+        <div class="w-50">
+            <input class="form-check-input shadow-none" type="checkbox" v-model="savedPlayer.settings.showSkillDeatils"
+                id="showDetails">
+            <label class="form-check-label ms-2" for="showDetails">
+                show details
+            </label>
+        </div>
     </div>
     <div v-for="tier of tiers">
         <button v-for="skill of tier" @click="buy(+skill[0])" class="shadow-none m-1 btn btn-primary"
-            :title="getTitle(skill[1])">
+            :title="getTitle(skill[1], +skill[0])">
             <p> {{ skill[1].name }}</p>
             <p class="m-0"> {{ savedPlayer.skills[+skill[0]] || 0 }} / {{ detailsSkill[+skill[0]].maxLvl }}</p>
         </button>
@@ -30,7 +33,10 @@ import { details as detailsSkill, skillTrees } from '../ts/skills';
 import { SkillDetail } from '../types';
 import { savedPlayer } from '../ts/player';
 import { pressedKeys } from '../ts/game';
-
+import { percent } from '@/ts/generel/helpers';
+import { getMultiplier } from '@/ts/multiplier';
+percent
+getMultiplier
 const props = withDefaults(
     defineProps<{
         treeId: number,
@@ -59,13 +65,21 @@ const points = computed(() => {
     keys.forEach(k => used += tiers.value[+k].reduce((a, b) => a += (savedPlayer.value.skills[+b[0]] || 0), 0))
     return [used, (savedPlayer.value.points[treeId.value] || 0)]
 })
-function getTitle(skill: SkillDetail) {
+function getTitle(skill: SkillDetail, skillId: number) {
     let text = ""
     if (skill.usedPointsNeed > points.value[0]) text += `you must use ${skill.usedPointsNeed} point${skill.usedPointsNeed > 1 ? 's' : ''}. \n`
     const required = skill.required
     if (required && (savedPlayer.value.skills[required.skillId] || 0) < required.skillLvl)
         text += `you need "${detailsSkill.value[required.skillId].name}" on level ${required.skillLvl}.\n`
     text += skill.description
+    if (savedPlayer.value.settings.showSkillDeatils) {
+        const s = skill.multiplier.toString().split("computed")[1]
+        const effect = skill.multiplier.toString().split("\"")[1]
+        text += `\ndetails \n${(skill.deatils || "")}`
+        text += `\ncurrent lvl: ${(eval(s.trim().slice(0, -1))()).toFixed(2)}`
+        if ((savedPlayer.value.skills[skillId] || 0) < skill.maxLvl)
+            text += `\nnext lvl: ${(eval(s.trim().slice(0, -1).replace("0)", "0)+1"))()).toFixed(2)}`
+    }
     return text
 }
 const buyAmount = ref(20)

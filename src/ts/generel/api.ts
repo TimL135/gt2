@@ -21,7 +21,9 @@ export function getSavedPlayer(): SavedPlayer {
                 ability2: "3",
                 ability3: "4",
             },
-            showMultipliers: false
+            showMultipliers: false,
+            showSkillDeatils: false,
+            showBuildingsDeatils: false
         },
         skills: {},
         points: {},
@@ -70,6 +72,12 @@ export function getSavedPlayer(): SavedPlayer {
     }
     if (savedPlayer.settings && typeof savedPlayer.settings.showMultipliers !== 'boolean') {
         savedPlayer.settings.showMultipliers = false
+    }
+    if (savedPlayer.settings && typeof savedPlayer.settings.showSkillDeatils !== 'boolean') {
+        savedPlayer.settings.showSkillDeatils = false
+    }
+    if (savedPlayer.settings && typeof savedPlayer.settings.showBuildingsDeatils !== 'boolean') {
+        savedPlayer.settings.showBuildingsDeatils = false
     }
     if (savedPlayer.abilitys) {
         for (let i of [0, 1, 2, 3]) {

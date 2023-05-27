@@ -52,6 +52,8 @@ export interface SavedPlayer {
             ability3: string
         }
         showMultipliers: boolean
+        showSkillDeatils: boolean
+        showBuildingsDeatils: boolean
     }
     spaceShip: {
         selected: number
@@ -130,6 +132,7 @@ export interface SkillDetails {
 export interface SkillDetail {
     name: string
     description: string
+    deatils: string
     skillTreeId: number
     usedPointsNeed: number
     required?: {
