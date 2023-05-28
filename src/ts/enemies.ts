@@ -148,7 +148,7 @@ export function spawn() {
 export function doEnemieSpecial() {
     for (const e of enemies.value) {
         e.specialCooldown -= +!!e.specialCooldown
-        if (!e.specialCooldown) {
+        if (!e.specialCooldown && !player.value.effects[2]) {
             e.special(e)
             e.specialCooldown = e.specialMaxCooldown
         }
