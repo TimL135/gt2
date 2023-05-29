@@ -24,5 +24,6 @@ export const lvlInfo = [
     "you get xp when you defeat enemies, collect items and survive.",
     "lvl increase the skill points received.",
     "lvl increase the maximum stats of the newly purchased spaceships.",
-    "lvl increases your received honor."
+    "lvl increases your received honor.",
+    "a high lvl allows you to find better crystals."
 ]

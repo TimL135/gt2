@@ -74,7 +74,6 @@ function getTitle(skill: SkillDetail, skillId: number) {
     text += skill.description
     if (savedPlayer.value.settings.showSkillDeatils) {
         const s = skill.multiplier.toString().split("computed")[1]
-        const effect = skill.multiplier.toString().split("\"")[1]
         text += `\ndetails \n${(skill.deatils || "")}`
         text += `\ncurrent lvl: ${(eval(s.trim().slice(0, -1))()).toFixed(2)}`
         if ((savedPlayer.value.skills[skillId] || 0) < skill.maxLvl)
