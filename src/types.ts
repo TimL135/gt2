@@ -54,6 +54,7 @@ export interface SavedPlayer {
         showMultipliers: boolean
         showSkillDeatils: boolean
         showBuildingsDeatils: boolean
+        showHitBoxes: boolean
     }
     spaceShip: {
         selected: number

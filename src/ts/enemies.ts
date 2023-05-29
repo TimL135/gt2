@@ -84,7 +84,7 @@ export const details = ref<EnemieDetails>({
         img: 'shot',
         special: (enemie) => { spawnEnemiePlasma(enemie) },
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
-        specialCooldown: secondsToTicks(4),
+        specialCooldown: secondsToTicks(1),
         specialMaxCooldown: secondsToTicks(4),
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {

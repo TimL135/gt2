@@ -1,10 +1,10 @@
 <template>
     <div class="playingArea" :class="gameloopInterval ? 'inGame' : ''">
-        <GameObject v-for="enemie of enemies" :object="enemie"></GameObject>
-        <GameObject v-for="plasma of plasmas" :object="plasma"></GameObject>
-        <GameObject v-for="plasma of enemiePlasmas" :object="plasma"></GameObject>
-        <GameObject v-for="item of items" :object="item"></GameObject>
-        <GameObject :object="player"></GameObject>
+        <GameObject v-for="enemie of enemies" :object="enemie" border-color="red"></GameObject>
+        <GameObject v-for="plasma of plasmas" :object="plasma" border-color="blue"></GameObject>
+        <GameObject v-for="plasma of enemiePlasmas" :object="plasma" border-color="red"></GameObject>
+        <GameObject v-for="item of items" :object="item" border-color="orange"></GameObject>
+        <GameObject :object="player" border-color="green"></GameObject>
         <Point :points="points"></Point>
         <GameMenu v-if="!gameloopInterval"></GameMenu>
     </div>

@@ -23,6 +23,7 @@ import { getCrystal } from "./crystals";
 import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
 import { getScore } from "./score";
+import { details as detailsPassiv } from "./passivs";
 
 export const field = ref({
     size: {
@@ -75,6 +76,10 @@ export function start() {
     resetPlayer()
     resetInfo()
     clearPoints()
+
+    if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
+    if (savedPlayer.value.passivs.selected == 6) detailsPassiv.value[6].effect()
+
     gameloopTicks.value = 0
     for (let i = 0; i < 7; i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {

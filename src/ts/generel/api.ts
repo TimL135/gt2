@@ -23,7 +23,8 @@ export function getSavedPlayer(): SavedPlayer {
             },
             showMultipliers: false,
             showSkillDeatils: false,
-            showBuildingsDeatils: false
+            showBuildingsDeatils: false,
+            showHitBoxes: false
         },
         skills: {},
         points: {},
@@ -78,6 +79,9 @@ export function getSavedPlayer(): SavedPlayer {
     }
     if (savedPlayer.settings && typeof savedPlayer.settings.showBuildingsDeatils !== 'boolean') {
         savedPlayer.settings.showBuildingsDeatils = false
+    }
+    if (savedPlayer.settings && typeof savedPlayer.settings.showHitBoxes !== 'boolean') {
+        savedPlayer.settings.showHitBoxes = false
     }
     if (savedPlayer.abilitys) {
         for (let i of [0, 1, 2, 3]) {

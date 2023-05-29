@@ -25,15 +25,22 @@ export const details = ref<ItemdDetails>({
     2: {
         name: "stun",
         img: "stun",
-        effect: () => increaseEffectDuration(2, 0.5 * getMultiplier("stunDuration")),
+        effect: () => increaseEffectDuration(2, 1 * getMultiplier("stunDuration")),
         multiplier: () => updateMultiplier("enemieSpeed", "item2", computed(() => player.value.effects[2] ? 0 : 1))
     },
     3: {
+        name: "shield",
+        img: "shield",
+        effect: () => increaseEffectDuration(3, 2 * getMultiplier("shieldDuration")),
+        multiplier: () => updateMultiplier("playerGetDamage", "item3", computed(() => player.value.effects[3] ? 0.75 * getMultiplier("shieldStrength") : 1))
+    },
+    4: {
         name: "heal",
         img: "heal",
         effect: () => { healPlayer(1) },
         multiplier: () => 1
     },
+
 
 })
 export function itemMultiplier() {

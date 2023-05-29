@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { increaseEffectDuration, player } from "./player";
+import { increaseEffectDuration, player, savedPlayer } from "./player";
 import { plasmas } from "./plasma";
 import { percent } from "./generel/helpers";
 import { collisionsCheck } from "./colliosion";
@@ -56,14 +56,14 @@ export const details = ref<{ [key: number]: { name: string; description: string;
         name: "fear rabbit",
         description: "you become smaller and faster with low life",
         effect: () => {
-            updateMultiplier("playerSize", "passiv5", computed(() => (percent((100 - (player.value.hp / player.value.hpMax) * 100), "de"))))
-            updateMultiplier("playerSpeed", "passiv5", computed(() => (percent((100 - (player.value.hp / player.value.hpMax) * 100), "in"))))
+            updateMultiplier("playerSize", "passiv5", computed(() => (savedPlayer.value.passivs.selected == 5 ? percent((100 - (player.value.hp / player.value.hpMax) * 100), "de") : 1)))
+            updateMultiplier("playerSpeed", "passiv5", computed(() => (savedPlayer.value.passivs.selected == 5 ? percent((100 - (player.value.hp / player.value.hpMax) * 100), "in") : 1)))
         }
     },
     6: {
         name: "energy shield",
         description: "the more energy you have the less damage you get.",
         effect: () =>
-            percent((player.value.energy / player.value.energyMax) * 100, "de")
+            updateMultiplier("playerGetDamage", "passiv6", computed(() => (savedPlayer.value.passivs.selected == 6 ? percent((player.value.energy / (player.value.energyMax * 2)) * 100, "de") : 1)))
     }
 })

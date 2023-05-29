@@ -130,13 +130,22 @@ export const details = ref({
         multiplier: () => updateMultiplier("abilityCooldown", "skill103", computed(() => percent((savedPlayer.value.skills[103] || 0) * getMultiplier("skills100"), "de")))
     } as SkillDetail,
     104: {
-        name: "armor",
+        name: "health points",
         description: "gives you more life.",
         deatils: "increases the maximum life by.",
         skillTreeId: 1,
         usedPointsNeed: 40,
         maxLvl: 20,
         multiplier: () => updateMultiplier("playerHpMax", "skill104", computed(() => Math.round((savedPlayer.value.skills[104] || 0) * getMultiplier("skills100"))))
+    } as SkillDetail,
+    105: {
+        name: "armor",
+        description: "you get less damage.",
+        deatils: "multiplied the preserving damage with.",
+        skillTreeId: 1,
+        usedPointsNeed: 40,
+        maxLvl: 20,
+        multiplier: () => updateMultiplier("playerGetDamage", "skill105", computed(() => percent((savedPlayer.value.skills[105] || 0) * getMultiplier("skills100"), "de")))
     } as SkillDetail,
     200: {
         name: "more items",
@@ -208,6 +217,28 @@ export const details = ref({
         },
         maxLvl: 20,
         multiplier: () => updateMultiplier("speedStrength", "skill206", computed(() => percent((savedPlayer.value.skills[206] || 0) * getMultiplier("skills200"), "in")))
+    } as SkillDetail,
+    207: {
+        name: "stronger shield",
+        description: "the shield effect is stronger.",
+        deatils: "multiplies the shield effect by.",
+        skillTreeId: 2,
+        usedPointsNeed: 40,
+        required: {
+            skillId: 203,
+            skillLvl: 20
+        },
+        maxLvl: 20,
+        multiplier: () => updateMultiplier("shieldStrength", "skill207", computed(() => percent((savedPlayer.value.skills[207] || 0) * getMultiplier("skills200"), "in")))
+    } as SkillDetail,
+    208: {
+        name: "longer shield",
+        description: "the shield effect lasts longer.",
+        deatils: "multiplies the effect time by.",
+        skillTreeId: 2,
+        usedPointsNeed: 20,
+        maxLvl: 20,
+        multiplier: () => updateMultiplier("shieldDuration", "skill208", computed(() => percent((savedPlayer.value.skills[208] || 0) * getMultiplier("skills200"), "in")))
     } as SkillDetail,
     300: {
         name: "more scrap",

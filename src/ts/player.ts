@@ -161,16 +161,10 @@ export function healPlayer(amount: number) {
 }
 export function getDamage(amount: number, cords: Vector) {
     if (player.value.invincible) return
-    if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
-    if (savedPlayer.value.passivs.selected == 5) detailsPassiv.value[5].effect()
-    if (player.value.big) {
-        player.value.big = false
-    } else {
-        if (savedPlayer.value.passivs.selected == 6) {
-            player.value.hp -= amount * detailsPassiv.value[6].effect()
-        } else {
-            player.value.hp -= amount
-        }
+    amount *= getMultiplier("playerGetDamage")
+    if (player.value.big) player.value.big = false
+    else {
+        player.value.hp -= amount
         addPoint(Math.ceil(amount), "damagePlayer", { ...cords })
         playSound("hitHurt")
         checkHp()

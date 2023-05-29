@@ -11,11 +11,21 @@
             title="press a key on your keyboard and click this button to change">
             {{ e[1] == ' ' ? 'space' : e[1] }}</button>
     </div>
-    <input class="form-check-input shadow-none" type="checkbox" v-model="savedPlayer.settings.showMultipliers"
-        id="showMultipliers">
-    <label class="form-check-label ms-2" for="showMultipliers">
-        show multipliers
-    </label>
+    <div>
+        <input class="form-check-input shadow-none" type="checkbox" v-model="savedPlayer.settings.showHitBoxes"
+            id="showHitBoxes">
+        <label class="form-check-label ms-2" for="showHitBoxes">
+            show hitboxes
+        </label>
+    </div>
+    <div class="mb-1 mt-2">recommended for developers only</div>
+    <div>
+        <input class="form-check-input shadow-none" type="checkbox" v-model="savedPlayer.settings.showMultipliers"
+            id="showMultipliers">
+        <label class="form-check-label ms-2" for="showMultipliers">
+            show multipliers
+        </label>
+    </div>
 </template>
 <script setup lang='ts'>
 import * as Type from '../types';
