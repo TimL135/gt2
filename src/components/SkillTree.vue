@@ -73,11 +73,11 @@ function getTitle(skill: SkillDetail, skillId: number) {
         text += `you need "${detailsSkill.value[required.skillId].name}" on level ${required.skillLvl}.\n`
     text += skill.description
     if (savedPlayer.value.settings.showSkillDeatils) {
-        const s = skill.multiplier.toString().split("computed")[1]
+        const s = skill.multiplier.toString().split("computed")[1].slice(0, -1)
         text += `\ndetails \n${(skill.deatils || "")}`
-        text += `\ncurrent lvl: ${(eval(s.trim().slice(0, -1))()).toFixed(2)}`
+        text += `\ncurrent lvl: ${(eval(s)()).toFixed(2)}`
         if ((savedPlayer.value.skills[skillId] || 0) < skill.maxLvl)
-            text += `\nnext lvl: ${(eval(s.trim().slice(0, -1).replace("0)", "0)+1"))()).toFixed(2)}`
+            text += `\nnext lvl: ${(eval(s.replace("+ 0", "+ 1"))()).toFixed(2)}`
     }
     return text
 }

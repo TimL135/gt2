@@ -65,5 +65,10 @@ export const details = ref<{ [key: number]: { name: string; description: string;
         description: "the more energy you have the less damage you get.",
         effect: () =>
             updateMultiplier("playerGetDamage", "passiv6", computed(() => (savedPlayer.value.passivs.selected == 6 ? percent((player.value.energy / (player.value.energyMax * 2)) * 100, "de") : 1)))
+    },
+    7: {
+        name: "energy steal",
+        description: "you steal hp from enemies when you hit them.",
+        effect: () => { }
     }
 })

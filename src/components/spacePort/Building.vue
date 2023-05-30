@@ -47,11 +47,11 @@ function getTitle(buildindId: Id) {
     const building = detailsBuilding.value[buildindId]
     text += building.description
     if (savedPlayer.value.settings.showBuildingsDeatils) {
-        const s = building.multiplier.toString().split("computed")[1]
+        const s = building.multiplier.toString().split("computed")[1].slice(0, -1)
         text += `\ndetails \nmultiplies the effects of the skills in the skilltree by`
-        text += `\ncurrent lvl: ${(eval(s.trim().slice(0, -1))()).toFixed(2)}`
+        text += `\ncurrent lvl: ${(eval(s)()).toFixed(2)}`
         if ((savedPlayer.value.buildings[buildindId] || 0) < getMaxLvl(buildindId))
-            text += `\nnext lvl: ${(eval(s.trim().slice(0, -1).replace("0)", "0)+1"))()).toFixed(2)}`
+            text += `\nnext lvl: ${(eval(s.replace("+ 0", "+ 1"))()).toFixed(2)}`
     }
     return text
 }

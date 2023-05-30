@@ -4,7 +4,7 @@ import { field, gameloopInterval } from "./game";
 import { getRandomInt, secondsToTicks } from './generel/helpers';
 import { dirVec, norVec } from "./generel/vector";
 import { defaultGameObject } from "./gameObject";
-import { player, actions as actionsPlayer } from "./player";
+import { player, actions as actionsPlayer, savedPlayer, healPlayer } from "./player";
 import { getMultiplier, multiplier } from "./multiplier";
 import { playSound } from "./generel/sounds";
 import { addPoint } from "./points";
@@ -165,6 +165,7 @@ export function checkPosition() {
 
 export function hitPlasma(enemie: Enemie, plasma: Plasma) {
     enemie.hp -= plasma.damage
+    if (savedPlayer.value.passivs.selected == 7) healPlayer(plasma.damage / 4)
     addPoint(plasma.damage, "damageEnemie", { ...enemie.cords })
     if (enemie.hp <= 0) {
         actionsPlayer.value["kills"] = (actionsPlayer.value["kills"] || 0) + 1
