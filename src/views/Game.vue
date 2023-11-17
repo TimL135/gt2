@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="game row g-0">
+    <div class="row g-0">
         <div class="col" style="height: 90vh; overflow: hidden;">
             <div v-if="savedPlayer.settings.showMultipliers"
                 v-for="[key, value] of Object.entries(multiplierValues) as [string, number][]">
@@ -26,7 +26,7 @@
         <div class="col-8">
             <PlayingArea></PlayingArea>
         </div>
-        <div class="col">
+        <div class="col" style="height: 90vh;">
             <div class="text-center">
                 cooldowns
             </div>
@@ -71,6 +71,15 @@
             </div>
         </div>
     </div>
+    <div style="height: 5vh;" class="pt-2" v-if="gameloopInterval">
+        <div class="row g-0 ">
+            <div class="col-2"></div>
+            <div class="progress col-8">
+                <div class="progress-bar bg-info" :class="isCharging ? 'bg-danger' : 'bg-info'"
+                    :style="{ width: (worldPoints / worldPointsNeed) * 100 + '%' }"></div>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import PlayingArea from '../components/PlayingArea.vue';
@@ -86,15 +95,12 @@ import { touchscreen } from '../ts/game';
 import { resetInfo } from '../ts/info';
 import { multiplierValues } from '@/ts/multiplier';
 import { Key, SavedPlayer } from '@/types';
+import { worldPointsNeed,worldPoints } from '@/ts/worldLvl';
 resetInfo()
 
 buildingMultiplier()
 </script>
 <style scoped lang="scss">
-.game {
-    height: 100%;
-    width: 100%;
-}
 
 .progress {
     @media screen and (max-width: 1000px) {

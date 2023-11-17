@@ -10,6 +10,7 @@ import { playSound } from "./generel/sounds";
 import { addPoint } from "./points";
 import { spawnEnemiePlasma } from "./plasma";
 import { spawn as spawnItem } from "./items";
+import { worldPoints } from '@/ts/worldLvl';
 
 export const enemies = ref<Enemie[]>([])
 export const details = ref<EnemieDetails>({
@@ -183,6 +184,7 @@ export function death(enemie: Enemie) {
 
 export function remove(enemie: Enemie) {
     if (gameloopInterval.value) {
+        worldPoints.value++
         actionsPlayer.value["deathEnemies"] = (actionsPlayer.value["deathEnemies"] || 0) + 1
         enemies.value = enemies.value.filter(e => e.id != enemie.id)
         spawn()

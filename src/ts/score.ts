@@ -11,7 +11,6 @@ export function getScoreMultiplier() {
     updateMultiplier("discount", "score", computed(() => percent(scoreLvl.value, "de")))
 }
 export function getScore() {
-    console.log(actions.value.time)
     let score = Math.round(Object.entries(actions.value).reduce((a, b) => {
         if (b[0] == "time") return a + b[1] * 2
         if (b[0] == 'deathEnemies') return a + b[1] * 5

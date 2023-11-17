@@ -64,6 +64,9 @@ export function getSavedPlayer(): SavedPlayer {
         },
         score: {
             highScore: 0,
+        },
+        world: {
+            lvl: 0
         }
     }
     let savedPlayer = JSON.parse(localStorage.getItem('savedPlayer') || '{}')

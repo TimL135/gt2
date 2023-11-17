@@ -24,11 +24,12 @@ import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
 import { getScore } from "./score";
 import { details as detailsPassiv } from "./passivs";
+import { worldPoints } from '@/ts/worldLvl';
 
 export const field = ref({
     size: {
         x: window.innerWidth / 12 * 8,
-        y: window.innerHeight * 0.95
+        y: window.innerHeight * 0.90
     }
 })
 export const touchscreen = ref((('ontouchstart' in window) || (navigator.maxTouchPoints > 0)))
@@ -66,6 +67,7 @@ updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamag
 updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.1 * getMultiplier("enemieSpecialPower")) + 1))
 export function start() {
     if (gameloopInterval.value) return
+    worldPoints.value = 0
     enemieSpeedTime.value = 1
     enemieHpTime.value = 1
     enemieDamageTime.value = 1
@@ -121,6 +123,7 @@ function gameloop() {
     executeActionEverySec(10 * getMultiplier("enemieSpecialTime"), increaceEnemieSpecial)
     executeActionEverySec(15 * getMultiplier("enemieSpawnTime"), spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
+    executeActionEverySec(1, () => worldPoints.value++)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {

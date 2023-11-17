@@ -93,6 +93,9 @@ export interface SavedPlayer {
     score: {
         highScore: number
     }
+    world: {
+        lvl: number
+    }
 }
 
 export type Key = keyof SavedPlayer["settings"]["keys"]
