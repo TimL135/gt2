@@ -24,7 +24,7 @@ import { resetInfo, updateInfo } from "./info";
 import { clearPoints, decreasePointsLifeDuration } from "./points";
 import { getScore } from "./score";
 import { details as detailsPassiv } from "./passivs";
-import { worldPoints } from '@/ts/worldLvl';
+import { worldPoints, worldPointsNeed } from '@/ts/worldLvl';
 
 export const field = ref({
     size: {
@@ -103,6 +103,11 @@ export function stop() {
 }
 
 function gameloop() {
+    if (worldPoints.value > worldPointsNeed.value) {
+        savedPlayer.value.world.lvl++
+        updateInfo("lvl", `finish lvl ${savedPlayer.value.world.lvl}`)
+        stop()
+    }
     movePlayer(pressedKeys)
     move(enemies.value)
     move(plasmas.value)
