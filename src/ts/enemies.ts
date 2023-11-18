@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Enemie, EnemieDetails, Plasma } from "../types";
 import { field, gameloopInterval } from "./game";
 import { getRandomInt, secondsToTicks } from './generel/helpers';
@@ -127,9 +127,9 @@ function getSpecial(enemie: Enemie) {
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
+export const posibleDetails = computed(() => Math.ceil(savedPlayer.value.world.lvl / 2) > Object.values(details.value).length ? Object.values(details.value).length : Math.ceil(savedPlayer.value.world.lvl / 2))
 function getRandomDeatils() {
-    const detailsNumber = savedPlayer.value.world.lvl > Object.values(details.value).length ? Object.values(details.value).length : savedPlayer.value.world.lvl
-    return details.value[getRandomInt(detailsNumber)]
+    return details.value[getRandomInt(posibleDetails.value)]
 }
 export function spawn() {
     const enemie = {

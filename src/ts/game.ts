@@ -105,7 +105,7 @@ export function stop() {
 function gameloop() {
     if (worldPoints.value > worldPointsNeed.value) {
         savedPlayer.value.world.lvl++
-        updateInfo("lvl", `finish lvl ${savedPlayer.value.world.lvl}`)
+        updateInfo("lvl", `finish world ${savedPlayer.value.world.lvl}`)
         stop()
     }
     movePlayer(pressedKeys)
