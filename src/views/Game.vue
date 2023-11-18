@@ -74,10 +74,12 @@
     <div style="height: 5vh;" class="pt-2" v-if="gameloopInterval">
         <div class="row g-0 ">
             <div class="col-2"></div>
-            <div class="progress col-8">
+            <div class="col-1">{{ savedPlayer.world.lvl+1 }}</div>
+            <div class="progress col-6">
                 <div class="progress-bar bg-info" :class="isCharging ? 'bg-danger' : 'bg-info'"
                     :style="{ width: (worldPoints / worldPointsNeed) * 100 + '%' }"></div>
             </div>
+            <div class="col-1 text-end">{{ savedPlayer.world.lvl+2 }}</div>
         </div>
     </div>
 </template>
@@ -96,6 +98,7 @@ import { resetInfo } from '../ts/info';
 import { multiplierValues } from '@/ts/multiplier';
 import { Key, SavedPlayer } from '@/types';
 import { worldPointsNeed,worldPoints } from '@/ts/worldLvl';
+import { showText } from '@/ts/generel/text';
 resetInfo()
 
 buildingMultiplier()

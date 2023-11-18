@@ -41,7 +41,7 @@ export function getCrystal(type: "time" | "power") {
             if (buffs.length)
                 crystal[buffs.splice(getRandomInt(buffs.length), 1)[0]] = getRandomInt(savedPlayer.value.lvl.lvl + 1) + savedPlayer.value.lvl.lvl + 1
         }
-        updateInfo(type + "Crystal", `you got a ${Object.keys(crystal).length} star "${type} crystal"`)
+        updateInfo(type + "Crystal", `you got a ${'star '.repeat(Object.keys(crystal).length)} "${type}-crystal"`)
         savedCrystal.owned[createId()] = crystal
     }
 }
@@ -69,4 +69,5 @@ export function showStatCrystal(id: number, stat: keyof PowerCrystal | keyof Tim
         return `reduces enemies ${statTextPowerCrystal[stat as keyof PowerCrystal]} increase by ${Math.round((1 - percent(savedPlayer.value.powerCrystal.owned[id][stat as keyof PowerCrystal], "de")) * 100)}%`
     if (crystalType == "timeCrystal")
         return `increase the time until ${statTextTimeCrystal[stat as keyof TimeCrystal]} by ${savedPlayer.value.timeCrystal.owned[id][stat as keyof TimeCrystal]}%`
+    return ''
 }

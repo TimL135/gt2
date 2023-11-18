@@ -127,6 +127,10 @@ function getSpecial(enemie: Enemie) {
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
+function getRandomDeatils() {
+    const detailsNumber = savedPlayer.value.world.lvl > Object.values(details.value).length ? Object.values(details.value).length : savedPlayer.value.world.lvl
+    return details.value[getRandomInt(detailsNumber)]
+}
 export function spawn() {
     const enemie = {
         ...defaultGameObject(),
@@ -135,8 +139,7 @@ export function spawn() {
         damage: 1 * getMultiplier("enemieDamage"),
         hp: 1,
         hpMax: 1 * getMultiplier("enemieHp"),
-        ...details.value[getRandomInt(Object.values(details.value).length)]
-        // ...details.value[3]
+        ...getRandomDeatils()
     } as Enemie
     enemie.size *= getMultiplier("enemieSize")
     getSpecial(enemie)

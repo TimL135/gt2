@@ -13,8 +13,8 @@
             </button>
         </div>
         <div class="mt-2">
-            <div class="text-white bg-secondary px-2" v-for="e of Object.values(info)">
-                {{ e }}
+            <div class="text-white bg-secondary px-2" v-for="e of Object.values(info)"
+            v-html="showText(e)">
             </div>
         </div>
     </div>
@@ -37,6 +37,7 @@
 import { start as startGame } from '../ts/game';
 import { info } from '../ts/info'
 import Settings from './Settings.vue';
+import { showText } from '@/ts/generel/text';
 document.onkeyup = (e: any) => {
     if (e.code == 'Enter') startGame();
 };

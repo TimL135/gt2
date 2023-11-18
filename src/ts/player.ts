@@ -51,6 +51,7 @@ export function getAllMultiplier() {
 }
 setTimeout(() => getAllMultiplier(), 0)
 export const actions = ref({} as { [key: string]: number })
+
 export function reset() {
     const stats = getStats(savedPlayer.value.spaceShip.owned[savedPlayer.value.spaceShip.selected])
     player.value.size = stats.size * getMultiplier("playerSize")
