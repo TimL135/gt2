@@ -12,8 +12,8 @@
 </template>
 <script setup lang="ts">
 import { savedPlayer } from '@/ts/player';
-import { imgs } from '../ts/spaceShip';
-import { GameObject } from '../types';
+import { imgs } from '@/ts/spaceShip';
+import { GameObject } from '@/types';
 
 const props = withDefaults(
     defineProps<{

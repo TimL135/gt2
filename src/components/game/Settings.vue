@@ -28,9 +28,9 @@
     </div>
 </template>
 <script setup lang='ts'>
-import * as Type from '../types';
-import { savedPlayer } from '../ts/player';
-import { pressedKeys, touchscreen } from '../ts/game';
+import * as Type from '@/types';
+import { savedPlayer } from '@/ts/player';
+import { pressedKeys, touchscreen } from '@/ts/game';
 
 function updateKey(key: Type.Key) {
     if (!Object.entries(pressedKeys).find(e => e[1])) return

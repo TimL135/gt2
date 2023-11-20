@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
 import { Enemie, Plasma, Player, SavedPlayer, Vector } from "../types";
 import { field, stop as stopGame } from "./game";
-import { norVec } from "./generel/vector";
+import { directionVectorToAngle, norVec } from "./generel/vector";
 import { remove as removeEnemie } from "./enemies";
 import { secondsToTicks } from "./generel/helpers";
 import { defaultGameObject } from "./gameObject";
@@ -83,7 +83,7 @@ export function move(pressedKeys: Record<string, boolean>) {
     if (player.value.moveVector.x != 0 || player.value.moveVector.y != 0) {
         actions.value["move"] = (actions.value["move"] || 0) + player.value.speed * (getMultiplier("playerSpeed") / generalSize.value)
         if (savedPlayer.value.passivs.selected == 2) charge = detailsPassiv.value[2].effect(charge)
-        player.value.direction = Math.atan2(player.value.moveVector.x, player.value.moveVector.y * -1) * 180 / Math.PI;
+        player.value.direction = directionVectorToAngle(player.value.moveVector);
         // if (player.value.direction != lastDirection) playSound("move")
         // lastDirection = player.value.direction
     }

@@ -61,3 +61,6 @@ export function angleToDirectionVector(angle: number): Vector {
     const radians = angle * Math.PI / 180;
     return { x: Math.sin(radians), y: Math.cos(radians) * -1 };
 }
+export function directionVectorToAngle(vektor: Vector) {
+    return Math.atan2(vektor.x, vektor.y * -1) * 180 / Math.PI
+}

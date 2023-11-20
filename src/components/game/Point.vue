@@ -8,9 +8,9 @@
     </div>
 </template>
 <script setup lang='ts'>
-import { Point } from '../types';
-import { secondsToTicks } from '../ts/generel/helpers';
-import { generalSize } from '../ts/generel/config';
+import { Point } from '@/types';
+import { secondsToTicks } from '@/ts/generel/helpers';
+import { generalSize } from '@/ts/generel/config';
 
 const props = withDefaults(
     defineProps<{

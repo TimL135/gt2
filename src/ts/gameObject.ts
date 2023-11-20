@@ -1,10 +1,11 @@
 import { Enemie, Plasma } from "../types";
 import { createId } from "./generel/helpers";
+import { directionVectorToAngle } from "./generel/vector";
 
 export function move(array: Enemie[] | Plasma[]) {
     for (const e of array) {
         e.move(e as Enemie & Plasma);
-        e.direction = Math.atan2(e.moveVector.x, e.moveVector.y * -1) * 180 / Math.PI;
+        e.direction = directionVectorToAngle(e.moveVector);
     }
 }
 

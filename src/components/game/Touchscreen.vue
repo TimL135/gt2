@@ -17,10 +17,10 @@
     </div>
 </template >
 <script setup lang = 'ts' >
-import { pressedKeys } from '../ts/game';
+import { pressedKeys } from '@/ts/game';
 import Joystick from 'vue-joystick-component'
-import { savedPlayer, player, isCharging } from '../ts/player';
-import { Key } from "../types"
+import { savedPlayer, player, isCharging } from '@/ts/player';
+import { Key } from "@/types"
 
 const stop = () => (['moveUp', 'moveDown', 'moveLeft', 'moveRight'] as const).forEach(e => pressedKeys[savedPlayer.value.settings.keys[e]] = false)
 const move = ({ x, y }: any) => {

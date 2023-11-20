@@ -34,8 +34,8 @@
     </div>
 </template>
 <script setup lang="ts">
-import { start as startGame } from '../ts/game';
-import { info } from '../ts/info'
+import { start as startGame } from '@/ts/game';
+import { info } from '@/ts/info'
 import Settings from './Settings.vue';
 import { showText } from '@/ts/generel/text';
 document.onkeyup = (e: any) => {

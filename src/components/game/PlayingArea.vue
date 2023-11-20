@@ -12,13 +12,13 @@
 <script setup lang="ts">
 import GameObject from "./GameObject.vue";
 import GameMenu from "./GameMenu.vue";
-import { plasmas, enemiePlasmas } from "../ts/plasma";
-import { player } from "../ts/player";
-import { enemies } from "../ts/enemies"
-import { items } from "../ts/items";
-import { gameloopInterval } from "../ts/game";
+import { plasmas, enemiePlasmas } from "@/ts/plasma";
+import { player } from "@/ts/player";
+import { enemies } from "@/ts/enemies"
+import { items } from "@/ts/items";
+import { gameloopInterval } from "@/ts/game";
 import Point from "./Point.vue";
-import { points } from "../ts/points";
+import { points } from "@/ts/points";
 </script>
 <style scoped>
 .playingArea {
