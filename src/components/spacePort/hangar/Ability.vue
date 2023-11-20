@@ -16,7 +16,7 @@
         <h5>
             available abilitys
         </h5>
-        <button v-for="(ability, index) of availableAbilitys" class="me-1 mb-1 btn btn-primary border-0"
+        <button v-for="ability of availableAbilitys" class="me-1 mb-1 btn btn-primary border-0"
             :title="detailsAbilitys[ability]?.description" @click="selectedAbility = ability">
             {{ detailsAbilitys[ability].name }}
         </button>
@@ -29,7 +29,7 @@
         <div>
             <button v-for="(ability, index) of savedPlayer.abilitys.selected" class="btn me-1 mb-1"
                 :class="`ability${index}`"
-                @click="savedPlayer.abilitys.selected[index] = selectedAbility, selectedAbility = -1"
+                @click=" selectAbility(index)"
                 :title="detailsAbilitys[ability].description">
                 {{ detailsAbilitys[ability].name }}
             </button>
@@ -45,5 +45,10 @@ const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))
 })
 const selectedAbility = ref(-1)
+function selectAbility(index: number) {
+    if (selectedAbility.value == -1) return
+    savedPlayer.value.abilitys.selected[index] = selectedAbility.value
+    selectedAbility.value = -1
+}
 </script>
 <style scoped></style>
