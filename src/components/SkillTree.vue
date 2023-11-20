@@ -77,7 +77,7 @@ function getTitle(skill: SkillDetail, skillId: number) {
         text += `\ndetails \n${(skill.deatils || "")}`
         text += `\ncurrent lvl: ${(eval(s)()).toFixed(2)}`
         if ((savedPlayer.value.skills[skillId] || 0) < skill.maxLvl)
-            text += `\nnext lvl: ${(eval(s.replace("+ 0", "+ 1"))()).toFixed(2)}`
+            text += `\nnext lvl: ${(eval(s)(1)).toFixed(2)}`
     }
     return text
 }
