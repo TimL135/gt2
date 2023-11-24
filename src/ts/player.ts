@@ -49,7 +49,7 @@ export function getAllMultiplier() {
     skillMultiplier()
     itemMultiplier()
 }
-setTimeout(() => getAllMultiplier(), 0)
+
 export const actions = ref({} as { [key: string]: number })
 
 export function reset() {

@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { Enemie, EnemieDetails, Plasma } from "../types";
+import { Enemie, EnemieDetail, Plasma } from "../types";
 import { field, gameloopInterval } from "./game";
 import { getRandomInt, secondsToTicks } from './generel/helpers';
 import { dirVec, norVec } from "./generel/vector";
@@ -13,8 +13,8 @@ import { spawn as spawnItem } from "./items";
 import { worldPoints } from '@/ts/worldLvl';
 
 export const enemies = ref<Enemie[]>([])
-export const details = ref<EnemieDetails>({
-    0: {
+export const details = ref<EnemieDetail[]>(
+    [{
         move: (enemie: Enemie) => {
             for (const e of ["x", "y"] as const) {
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * getMultiplier("enemieSpeed") * (enemie.hp / enemie.hpMax);
@@ -25,6 +25,8 @@ export const details = ref<EnemieDetails>({
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: 0,
         specialMaxCooldown: 0,
+        minWorldLvl: 0,
+        maxWorldLvl: 5,
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -44,7 +46,7 @@ export const details = ref<EnemieDetails>({
             }
         }
     },
-    1: {
+    {
         move: (enemie: Enemie) => {
             for (const e of ["x", "y"] as const) {
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * getMultiplier("enemieSpeed") * (enemie.hp / enemie.hpMax);
@@ -55,11 +57,13 @@ export const details = ref<EnemieDetails>({
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: 0,
         specialMaxCooldown: 0,
+        minWorldLvl: 2,
+        maxWorldLvl: 10,
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
     },
-    2: {
+    {
         move: (enemie: Enemie) => {
             if (enemie.specialCooldown)
                 enemie.getMoveVector(enemie)
@@ -72,11 +76,13 @@ export const details = ref<EnemieDetails>({
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: secondsToTicks(10),
         specialMaxCooldown: secondsToTicks(10),
+        minWorldLvl: 5,
+        maxWorldLvl: 15,
         getMoveVector: (enemie: Enemie) => {
             enemie.moveVector = dirVec(player.value.cords, enemie.cords)
         }
     },
-    3: {
+    {
         move: (enemie: Enemie) => {
             for (const e of ["x", "y"] as const) {
                 enemie.cords[e] += enemie.moveVector[e] * enemie.speed * getMultiplier("enemieSpeed") * (enemie.hp / enemie.hpMax);
@@ -87,6 +93,8 @@ export const details = ref<EnemieDetails>({
         onKill: (enemie: Enemie) => { spawnItem(enemie.cords) },
         specialCooldown: secondsToTicks(1),
         specialMaxCooldown: secondsToTicks(4),
+        minWorldLvl: 10,
+        maxWorldLvl: 20,
         getMoveVector: (enemie: Enemie) => {
             if (enemie.cords.y == -enemie.size) {
                 enemie.moveVector.y = 1;
@@ -105,8 +113,8 @@ export const details = ref<EnemieDetails>({
                 enemie.moveVector.y = (Math.random() - 0.5) * 2;
             }
         }
-    },
-})
+    }]
+)
 function getSpawnPosition(enemie: Enemie) {
     const positions = {
         0: () => enemie.cords.y = 0 - enemie.size,
@@ -118,6 +126,7 @@ function getSpawnPosition(enemie: Enemie) {
     if (!enemie.cords.x) enemie.cords.x = getRandomInt(field.value.size.x);
     if (!enemie.cords.y) enemie.cords.y = getRandomInt(field.value.size.y);
 }
+
 function getSpecial(enemie: Enemie) {
     const specials = {
         0: () => enemie.size *= 1.1 * getMultiplier("enemieSpecial"),
@@ -127,9 +136,10 @@ function getSpecial(enemie: Enemie) {
     } as { [key: number]: Function }
     specials[getRandomInt(Object.keys(specials).length)]()
 }
-export const posibleDetails = computed(() => Math.ceil(savedPlayer.value.world.lvl / 2) > Object.values(details.value).length ? Object.values(details.value).length : Math.ceil(savedPlayer.value.world.lvl / 2))
+export const posibleDetails = computed(() => details.value.filter(d => d.minWorldLvl <= savedPlayer.value.world.lvl && d.maxWorldLvl >= savedPlayer.value.world.lvl))
+
 function getRandomDeatils() {
-    return details.value[getRandomInt(posibleDetails.value)]
+    return posibleDetails.value[getRandomInt(posibleDetails.value.length)]
 }
 export function spawn() {
     const enemie = {

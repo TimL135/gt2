@@ -38,8 +38,8 @@
 </template>
 <script setup lang='ts'>
 import { touchscreen } from '@/ts/game';
-import { details as detailsAbilitys } from '../../../ts/abilitys';
-import { savedPlayer } from '../../../ts/player';
+import { details as detailsAbilitys } from '@/ts/abilitys';
+import { savedPlayer } from '@/ts/player';
 import { computed, ref } from 'vue';
 const availableAbilitys = computed(() => {
     return savedPlayer.value.abilitys.owned.filter(e => !savedPlayer.value.abilitys.selected.includes(e))

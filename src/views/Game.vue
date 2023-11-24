@@ -19,10 +19,11 @@
     <div class="row g-0">
         <div class="col" style="height: 90vh; overflow: hidden;">
             <Cooldowns v-if="touchscreen"/>
-            <div v-if="savedPlayer.settings.showMultipliers"
-                v-for="[key, value] of Object.entries(multiplierValues) as [string, number][]">
+            <template v-if="savedPlayer.settings.showMultipliers">
+                <div v-for="[key, value] of Object.entries(multiplierValues)">
                 {{ key }}: {{ value.toFixed(2) }}
             </div>
+            </template>
         </div>
         <div class="col-8">
             <PlayingArea></PlayingArea>

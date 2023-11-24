@@ -1,6 +1,6 @@
 import {
     move as movePlayer,
-    reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, decreaseEffectDuration, actions as actionsPlayer, savedPlayer
+    reset as resetPlayer, abilities as abilitiesPlayer, reduceCooldowns, decreaseEffectDuration, actions as actionsPlayer, savedPlayer, getAllMultiplier
 } from "./player";
 import {
     spawn as spawnEnemie,
@@ -56,34 +56,36 @@ window.onkeydown = (e: any) => {
     pressedKeys[e.key] = true;
 };
 export const gameloopInterval = ref<number | NodeJS.Timer>(0)
-
-const enemieSpeedTime = ref(1)
-const enemieHpTime = ref(1)
-const enemieDamageTime = ref(1)
-const enemieSpecialTime = ref(1)
-updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => (enemieSpeedTime.value * 0.1 * getMultiplier("enemieSpeedPower")) + 1))
-updateMultiplier("enemieHp", "enemieHpTime", computed(() => (enemieHpTime.value * 0.1 * getMultiplier("enemieHpPower")) + 1))
-updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamageTime.value * 0.1 * getMultiplier("enemieDamagePower")) + 1))
-updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.1 * getMultiplier("enemieSpecialPower")) + 1))
+const enemieSpeedTime = ref(0)
+const enemieHpTime = ref(0)
+const enemieDamageTime = ref(0)
+const enemieSpecialTime = ref(0)
+function setupMultipliers() {
+    updateMultiplier("enemieSpeed", "enemieSpeedTime", computed(() => (enemieSpeedTime.value * 0.1 * getMultiplier("enemieSpeedPower")) + 1))
+    updateMultiplier("enemieHp", "enemieHpTime", computed(() => (enemieHpTime.value * 0.1 * getMultiplier("enemieHpPower")) + 1))
+    updateMultiplier("enemieDamage", "enemieDamageTime", computed(() => (enemieDamageTime.value * 0.1 * getMultiplier("enemieDamagePower")) + 1))
+    updateMultiplier("enemieSpecial", "enemieSpecialTime", computed(() => (enemieSpecialTime.value * 0.1 * getMultiplier("enemieSpecialPower")) + 1))
+}
+setupMultipliers()
 export function start() {
     if (gameloopInterval.value) return
     worldPoints.value = 0
-    enemieSpeedTime.value = 1
-    enemieHpTime.value = 1
-    enemieDamageTime.value = 1
-    enemieSpecialTime.value = 1
+    enemieSpeedTime.value = savedPlayer.value.world.lvl
+    enemieHpTime.value = savedPlayer.value.world.lvl
+    enemieDamageTime.value = savedPlayer.value.world.lvl
+    enemieSpecialTime.value = savedPlayer.value.world.lvl
     clearEnemies()
     clearItems()
     clearPlasma()
     resetPlayer()
     resetInfo()
     clearPoints()
-
+    getAllMultiplier()
     if (savedPlayer.value.passivs.selected == 4) detailsPassiv.value[4].effect()
     if (savedPlayer.value.passivs.selected == 6) detailsPassiv.value[6].effect()
 
     gameloopTicks.value = 0
-    for (let i = 0; i < 7; i++)spawnEnemie()
+    for (let i = 0; i < ((savedPlayer.value.world.lvl * 2) + 5) * getMultiplier("enemieSpawnTime"); i++)spawnEnemie()
     gameloopInterval.value = setInterval(async () => {
         gameloop();
     }, 1000 / gameTicks);
@@ -122,30 +124,12 @@ function gameloop() {
     decreasePointsLifeDuration()
     doEnemieSpecial()
     gameloopTicks.value++
-    executeActionEverySec(10 * getMultiplier("enemieSpeedTime"), increaseEnemieSpeed)
-    executeActionEverySec(10 * getMultiplier("enemieHpTime"), increaceEnemieHpMax)
-    executeActionEverySec(10 * getMultiplier("enemieDamageTime"), increaceEnemieDamage)
-    executeActionEverySec(10 * getMultiplier("enemieSpecialTime"), increaceEnemieSpecial)
-    executeActionEverySec(15 * getMultiplier("enemieSpawnTime"), spawnEnemie)
     executeActionEverySec(5 * getMultiplier("itemSpawn"), spawnItem)
     executeActionEverySec(1, () => worldPoints.value++)
 }
 
 export function executeActionEverySec(sec: number, action: Function) {
     if (gameloopTicks.value % secondsToTicks(sec) == 0) action()
-}
-
-export function increaseEnemieSpeed() {
-    enemieSpeedTime.value++
-}
-export function increaceEnemieHpMax() {
-    enemieHpTime.value++
-}
-export function increaceEnemieSpecial() {
-    enemieSpecialTime.value++
-}
-export function increaceEnemieDamage() {
-    enemieDamageTime.value++
 }
 
 function getCurrency() {
